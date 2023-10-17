@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
-using static UnityEngine.Rendering.LineRendering;
+<<<<<<< HEAD
+using UnityEngine.Rendering;
+=======
+>>>>>>> main/YBO2
 
 public class GameManager : MonoBehaviour, IPauseSubject
 {
@@ -21,6 +23,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
             heroMng = FindFirstObjectByType<HeroUnitManager>();
             fogMng = FindFirstObjectByType<FogManager>();
             debugMng = FindFirstObjectByType<DebugModeManager>();
+            audioMng = FindFirstObjectByType<AudioManager>();
 
             mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
         }
@@ -58,19 +61,127 @@ public class GameManager : MonoBehaviour, IPauseSubject
         InitCommandList();
         InitManagers();
         RegistObserver();
+<<<<<<< HEAD
+
+        GraphicsSettings.defaultRenderPipeline = HgihDefinitionRP;
+        QualitySettings.renderPipeline = UniversalRP;
+
+        DisplayCurrentRenderPipeline();
     }
 
+    #region RenderingPipeLineChange
+    void Update()
+    {
+        // When the user presses the left shift key, switch the default render pipeline
+        if (Input.GetKeyDown(KeyCode.PageUp) && Input.GetKeyDown(KeyCode.F1))
+        {
+            SwitchDefaultRenderPipeline();
+            DisplayCurrentRenderPipeline();
+        }
+        // When the user presses the right shift key, switch the override render pipeline
+        else if (Input.GetKeyDown(KeyCode.PageDown) && Input.GetKeyDown(KeyCode.F1))
+        {
+            SwitchOverrideRenderPipeline();
+            DisplayCurrentRenderPipeline();
+        }
+    }
+
+    // Switch the default render pipeline between null,
+    // and the render pipeline defined in defaultRenderPipelineAsset
+    void SwitchDefaultRenderPipeline()
+    {
+        if (GraphicsSettings.defaultRenderPipeline == HgihDefinitionRP)
+        {
+            GraphicsSettings.defaultRenderPipeline = null;
+        }
+        else
+        {
+            GraphicsSettings.defaultRenderPipeline = HgihDefinitionRP;
+        }
+    }
+
+    // Switch the override render pipeline between null,
+    // and the render pipeline defined in overrideRenderPipelineAsset
+    void SwitchOverrideRenderPipeline()
+    {
+        if (QualitySettings.renderPipeline == UniversalRP)
+        {
+            QualitySettings.renderPipeline = null;
+        }
+        else
+        {
+            QualitySettings.renderPipeline = UniversalRP;
+        }
+    }
+
+    // Print the current render pipeline information to the console
+    void DisplayCurrentRenderPipeline()
+    {
+        // GraphicsSettings.defaultRenderPipeline determines the default render pipeline
+        // If it is null, the default is the Built-in Render Pipeline
+        if (GraphicsSettings.defaultRenderPipeline != null)
+        {
+            Debug.Log("The default render pipeline is defined by " + GraphicsSettings.defaultRenderPipeline.name);
+        }
+        else
+        {
+            Debug.Log("The default render pipeline is the Built-in Render Pipeline");
+        }
+
+        // QualitySettings.renderPipeline determines the override render pipeline for the current quality level
+        // If it is null, no override exists for the current quality level
+        if (QualitySettings.renderPipeline != null)
+        {
+            Debug.Log("The override render pipeline for the current quality level is defined by " + QualitySettings.renderPipeline.name);
+        }
+        else
+        {
+            Debug.Log("No override render pipeline exists for the current quality level");
+        }
+
+        // If an override render pipeline is defined, Unity uses that
+        // Otherwise, it falls back to the default value
+        if (QualitySettings.renderPipeline != null)
+        {
+            Debug.Log("The active render pipeline is the override render pipeline");
+        }
+        else
+        {
+            Debug.Log("The active render pipeline is the default render pipeline");
+        }
+
+        // To get a reference to the Render Pipeline Asset that defines the active render pipeline,
+        // without knowing if it is the default or an override, use GraphicsSettings.currentRenderPipeline
+        if (GraphicsSettings.currentRenderPipeline != null)
+        {
+            Debug.Log("The active render pipeline is defined by " + GraphicsSettings.currentRenderPipeline.name);
+        }
+        else
+        {
+            Debug.Log("The active render pipeline is the Built-in Render Pipeline");
+        }
+    }
+    #endregion
+
+=======
+    }
+
+>>>>>>> main/YBO2
     private void InitManagers()
     {
         cameraMng.Init();
         uiMng.Init();
+        audioMng.Init();
 
-<<<<<<< HEAD
         if (isInGame)
         {
             inputMng.Init(mainBaseTr.GetComponent<SelectableObject>(), TriggerDebugMode);
 
+<<<<<<< HEAD
+            pathMng.Init(worldSizeX, worldSizeY, unitVisibleRangeRadius);
+=======
             pathMng.Init(worldSizeX, worldSizeY);
+>>>>>>> main/YBO2
             grid = pathMng.GetComponent<PF_Grid>();
             structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
 
@@ -89,11 +200,11 @@ public class GameManager : MonoBehaviour, IPauseSubject
         {
             inputMng.MainInit();
         }
+<<<<<<< HEAD
 =======
-        heroMng.Init(FindFirstObjectByType<UnitHero>());
-        // fogMng.Init();
-        InitMainBase();
->>>>>>> 1st_Project/YBO
+
+
+>>>>>>> main/YBO2
     }
 
     private void InitCommandList()
@@ -134,6 +245,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_UPGRADE_MELEE_UNIT_HP, new CommandCompleteUpgradeMeleeUnitHp(selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.DEAD_HERO, new CommandFriendlyDeadHero(heroMng, uiMng, selectMng));
         ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.COMPLETE_SPAWN_UNIT, new CommandCompleteSpawnUnit(selectMng));
+        ArrayFriendlyObjectCommand.Add(EFriendlyObjectCommand.REMOVE_AT_CROWD, new CommandFriendlyRemoveAtCrowd(selectMng));
 
         ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, currencyMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
@@ -160,6 +272,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArraySelectCommand.Add(ESelectCommand.SELECT_FINISH, new CommandSelectFinish(selectMng));
         ArraySelectCommand.Add(ESelectCommand.SELECT_START, new CommandSelectStart(selectMng));
         ArraySelectCommand.Add(ESelectCommand.REMOVE_FROM_LIST, new CommandRemoveFromList(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.SET_LIST_TO_CROWD, new CommandSetListToCrowd(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.LOAD_CROWD_WITH_IDX, new CommandLoadCrowdWithIdx(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.ADD_TO_LIST, new CommandAddToList(selectMng));
 
         ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_WITH_POS, new CommandUnitMoveWithPos(selectMng));
         ArrayUnitActionCommand.Add(EUnitActionCommand.MOVE_ATTACK, new CommandUnitMoveAttack(selectMng));
@@ -181,6 +296,11 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayDebugModeCommand.Add(EDebugModeCommand.MOVE_STATE_INDICATOR, new CommandMoveCurStateIndicator(debugMng));
 
         ArrayChangeHotkeyCommand.Add(EChangeHotkeyCommand.SELECT_UNIT_FUNC_BUTTON, new CommandChangeUnitFuncHotkey(inputMng));
+<<<<<<< HEAD
+
+        ArrayCheckNodeBuildableCommand.Add(ECheckNodeBuildable.CHECK_NODE_BUILDABLE_UNIT, new CommandCheckNodeBuildable(pathMng));
+=======
+>>>>>>> main/YBO2
     }
 
     private void TriggerDebugMode()
@@ -212,17 +332,32 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     public void RegisterPauseObserver(IPauseObserver _observer)
     {
+<<<<<<< HEAD
+=======
+        // AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.PAUSE);
+>>>>>>> main/YBO2
         pauseObserverList.Add(_observer);
     }
 
     public void RemovePauseObserver(IPauseObserver _observer)
     {
+<<<<<<< HEAD
+=======
+        // AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.RESUME);
+>>>>>>> main/YBO2
         pauseObserverList.Remove(_observer);
     }
 
     public void TogglePause()
     {
         isPause = !isPause;
+<<<<<<< HEAD
+=======
+        
+        if(isPause) AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.PAUSE);
+        else AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.RESUME);
+        
+>>>>>>> main/YBO2
         for (int i = 0; i < pauseObserverList.Count; ++i)
             pauseObserverList[i].CheckPause(isPause);
     }
@@ -233,6 +368,11 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private float worldSizeY = 100f; // 미니맵에 표시할 월드의 세로길이
     [SerializeField]
     private Texture2D customCursor = null;
+<<<<<<< HEAD
+    [SerializeField]
+    private SUnitVisibleRangeNodeCnt unitVisibleRangeRadius;
+=======
+>>>>>>> main/YBO2
 
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;
@@ -246,6 +386,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private HeroUnitManager heroMng = null;
     private FogManager fogMng = null;
     private DebugModeManager debugMng = null;
+    private AudioManager audioMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
@@ -258,4 +399,12 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private bool isMainMenu = false;
     [SerializeField]
     private bool isInGame = false;
+<<<<<<< HEAD
+    [SerializeField]
+    private RenderPipelineAsset HgihDefinitionRP;
+    [SerializeField]
+    private RenderPipelineAsset UniversalRP;
+=======
+    
+>>>>>>> main/YBO2
 }

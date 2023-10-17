@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/RenderAsset/New Universal Render Pipeline Asset_Renderer.asset.meta
 guid: c620931a2e11746459ce4b14fb24661f
+========
+guid: 6eed13054e3c18a498c2b9a4ac649e4c
+>>>>>>>> main/YBO2:Assets/Resources/Fonts & Materials/DNF/SDF/DNFForgedBlade-Light SDF.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000

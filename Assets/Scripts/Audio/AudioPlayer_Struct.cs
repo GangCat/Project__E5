@@ -42,5 +42,5 @@ public class AudioPlayer_Struct : AudioPlayerBase
     private int channelIndex;
     
     public static AudioPlayer_Struct instance;
-    public enum EAudioType_Struct { NONE = -1, SELECT, BUILD, ATTACK, LOAD, UNLOAD, PRODUCE, LENGTH } 
+    public enum EAudioType_Struct { NONE = -1, BUILD, DESTROY, MAIN_BASE, NUCLEAR, TURRET, BARRACK, BUNKER, WALL,  LENGTH } 
 }
