@@ -49,7 +49,6 @@ public class PF_Grid : MonoBehaviour
 
     public void CheckBuildableTest(PF_Node[] _arrFriendlyObject)
     {
-        //GetBuildableNode(Vector3.zero, 10);
         for (int i = 0; i < listPrevBuildableNode.Count; ++i)
             listPrevBuildableNode[i].buildable = false;
 
@@ -142,9 +141,6 @@ public class PF_Grid : MonoBehaviour
 
         }
 
-        Debug.Log(i);
-        
-        
         //do
         //{
         //    k = centerX - i;
@@ -232,8 +228,8 @@ public class PF_Grid : MonoBehaviour
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
 
-        int x = Mathf.RoundToInt((gridSizeX - 1) * percentX);
-        int y = Mathf.RoundToInt((gridSizeY - 1) * percentY);
+        int x = Mathf.Clamp(Mathf.RoundToInt((gridSizeX - 1) * percentX), 0, gridSizeX);
+        int y = Mathf.Clamp(Mathf.RoundToInt((gridSizeY - 1) * percentY), 0, gridSizeY);
 
         return grid[x, y];
     }
@@ -312,13 +308,14 @@ public class PF_Grid : MonoBehaviour
 
     public bool GetNodeIsWalkable(int _gridX, int _gridY)
     {
-        return grid[_gridX, _gridY].walkable;
+        
+        return grid[Mathf.Clamp(_gridX, 0, gridSizeX), Mathf.Clamp(_gridY,0,gridSizeY)].walkable;
     }
 
     public PF_Node GetNodeWithGrid(int _gridX, int _gridY)
     {
         // 예외처리
-        return grid[_gridX, _gridY];
+        return grid[Mathf.Clamp(_gridX, 0, gridSizeX), Mathf.Clamp(_gridY,0,gridSizeY)];
     }
 
     private void OnDrawGizmos()
