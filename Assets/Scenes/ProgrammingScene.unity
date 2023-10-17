@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 353.4, y: 135.9}
+  m_AnchoredPosition: {x: 350, y: 130}
   m_SizeDelta: {x: 150, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &17971879
@@ -1133,7 +1133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.035300255, g: 0, b: 1, a: 1}
+  m_Color: {r: 0.49038807, g: 0.7169812, b: 0.7169812, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10931,7 +10931,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b88ddd15e680beb48ad3c7b9cee51666, type: 3}
   - {fileID: 8300000, guid: 41cc59e21ecd7df4db9bcd1fba9d38e6, type: 3}
   - {fileID: 8300000, guid: 7cbfc690e078e8647a5079d9532ced0b, type: 3}
-  audioChannels: 0
+  audioChannels: 10
 --- !u!1 &794635001
 GameObject:
   m_ObjectHideFlags: 0
@@ -13404,7 +13404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5281983, g: 0.7830189, b: 0.4986205, a: 1}
+  m_Color: {r: 0.6156863, g: 0.8117647, b: 0.7911399, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -13868,20 +13868,10 @@ MonoBehaviour:
   worldSizeX: 128
   worldSizeY: 128
   customCursor: {fileID: 2800000, guid: c169812d5d34873469949f2e47465473, type: 3}
-  unitVisibleRangeRadius:
-    meleeUnitRangeRadius: 7
-    rangedUnitRangeRadius: 10
-    heroUnitRangeRadius: 15
-    mainbaseRangeRadius: 10
-    barrackRangeRadius: 10
-    turretRangeRadius: 10
-    bunkerRangeRadius: 10
-    nuclearRangeRadius: 10
-    wallRangeRadius: 10
   isMainMenu: 0
   isInGame: 1
   HgihDefinitionRP: {fileID: 11400000, guid: 3e5473055ebede54b9e3e99d0728cbb7, type: 2}
-  UniversalRP: {fileID: 11400000, guid: 056d3d23aae5895429430038cf1f60d9, type: 2}
+  UniversalRP: {fileID: 11400000, guid: ba0590ba02836a844b657f231e8386b1, type: 2}
 --- !u!1 &936201668
 GameObject:
   m_ObjectHideFlags: 0
@@ -21994,7 +21984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayNodeGizmos: 0
   displayUnwalkableNodeGizmos: 0
-  displayBuildableNodeGizmos: 1
+  displayBuildableNodeGizmos: 0
   unWalkableMask:
     serializedVersion: 2
     m_Bits: 1536
@@ -25972,7 +25962,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 344, y: 64}
+  m_AnchoredPosition: {x: 350, y: 70}
   m_SizeDelta: {x: 150, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1788282423
@@ -27082,11 +27072,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1e6cedf8382d7478941fe8b83b5658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySupplyAmount: 10
-  curEnergy: 30000
+  energySupplyAmount: 200
+  curEnergy: 500
   maxEnergy: 100000
-  energySupplyRate: 10
-  curCore: 1000
+  energySupplyRate: 5
+  curCore: 0
   maxCore: 100000
   buildBarrack: 150
   buildBunker: 100
@@ -28181,7 +28171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 350.1, y: 216.6}
+  m_AnchoredPosition: {x: 350, y: 200}
   m_SizeDelta: {x: 150, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!1001 &1988736976

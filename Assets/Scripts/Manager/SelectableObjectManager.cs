@@ -320,6 +320,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                         isFriendlyUnitInList = true;
                         isFriendlyStructureInList = false;
                         isEnemyObjectInList = false;
+                        tempObj = null;
                     }
                     else
                         listSelectedFriendlyObject.Add(obj.GetComponent<FriendlyObject>());
@@ -348,7 +349,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
 
         
-        if( tempObj!= null)
+        if( tempObj != null)
         {
             // AudioManager.instance.PlayAudio_Select(/*tempObj.GetObjectType()*/EObjectType.UNIT_01);     // Select Audio(Unit)
             AudioManager.instance.PlayAudio_Select(tempObj.GetObjectType());     // Select Audio(Unit)
