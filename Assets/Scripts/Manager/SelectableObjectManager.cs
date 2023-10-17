@@ -347,6 +347,17 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             }
         }
 
+        
+        if( tempObj!= null)
+        {
+            // AudioManager.instance.PlayAudio_Select(/*tempObj.GetObjectType()*/EObjectType.UNIT_01);     // Select Audio(Unit)
+            AudioManager.instance.PlayAudio_Select(tempObj.GetObjectType());     // Select Audio(Unit)
+        }
+        else
+        {
+            AudioManager.instance.PlayAudio_Select(listSelectedFriendlyObject[0].GetObjectType());     // Select Audio(Struct)
+        }
+        
         // 임시 리스트에 적 유닛만 있을 경우
         if (isEnemyObjectInList)
         {
@@ -633,8 +644,13 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         if (isFriendlyStructureInList) return;
         if (isEnemyObjectInList) return;
 
+        // Click Move Order Audio
+        AudioManager.instance.PlayAudio_Order(objectType);
+        
         if (isAttackMove)
         {
+            AudioManager.instance.PlayAudio_Order(objectType);      // Click Order Audio
+            
             Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
             foreach (FriendlyObject obj in listSelectedFriendlyObject)
                 obj.MoveAttack(_targetPos + CalcPosInFormation(obj.Position, centerPos));
@@ -655,12 +671,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void Stop()
     {
+        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Stop();
     }
 
     public void Hold()
     {
+        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Hold();
     }
@@ -738,8 +756,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void MoveUnitByPicking(Transform _targetTr)
     {
+        if (IsListEmpty) return;
         if (isFriendlyStructureInList) return;
         if (isEnemyObjectInList) return;
+        
+        // Click Move Order Audio
+        AudioManager.instance.PlayAudio_Order(objectType);
 
         if (_targetTr.GetComponent<IGetObjectType>().GetObjectType().Equals(EObjectType.BUNKER))
         {
@@ -768,24 +790,28 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     {
         ++levelRangedUnitDmgUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_RANGED_DMG);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);      // Advisor Audio
     }
 
     public void CompleteUpgradeRangedUnitHp()
     {
         ++levelRangedUnitHpUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_RANGED_HP);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);      // Advisor Audio
     }
 
     public void CompleteUpgradeMeleeUnitDmg()
     {
         ++levelMeleeUnitDmgUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_MELEE_DMG);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);      // Advisor Audio
     }
 
     public void CompleteUpgradeMeleeUnitHp()
     {
         ++levelMeleeUnitHpUpgrade;
         PushMessageToBroker(EMessageType.UPGRADE_MELEE_HP);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);      // Advisor Audio
     }
 
     [Header("-Melee/Ranged")]
@@ -826,4 +852,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private List<FriendlyObject>[] arrCrowd = null;
 
     private SelectableObject enemyCurSelected = null;
+    
+    private EObjectType objectType;
+    private EAudioType_Advisor audioType;
 }
