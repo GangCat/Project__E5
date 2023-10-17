@@ -3,32 +3,39 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - StageFloor
+  - FriendlyStructure
+  - EnemyStructure
+  - EnemyUnit
+  - FriendlyUnit
+  - PowerCore
+  - MainBase
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - decal
   - Water
   - UI
+  - StageFloor
+  - SelectableObject
+  - SelectableArea
+  - UnWalkable
+  - SelectableStructure
+  - UnitInBunker
+  - EnemyDead
+  - RuinStructure
+  - DamageableCollider
+  - MissileNuclear
+  - CollectCoreCollider
+  - PowerCore
+  - Fog
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - VisibleArea
   - 
   - 
   - 
