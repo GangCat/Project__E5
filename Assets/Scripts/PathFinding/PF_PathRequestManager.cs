@@ -19,11 +19,11 @@ public class PF_PathRequestManager : MonoBehaviour
         }
     }
 
-    public void Init(float _gridWorldSizeX, float _gridWorldSizeY, SUnitVisibleRangeNodeCnt _structVisibleRange)
+    public void Init(float _gridWorldSizeX, float _gridWorldSizeY)
     {
         instance = this;
         pathFinding = GetComponent<PF_PathFinding>();
-        pathFinding.Init(FinishedProcessingPath, _gridWorldSizeX, _gridWorldSizeY, _structVisibleRange);
+        pathFinding.Init(FinishedProcessingPath, _gridWorldSizeX, _gridWorldSizeY);
     }
 
     public void CheckNodeBuildable(PF_Node[] _arrSelectableObject)

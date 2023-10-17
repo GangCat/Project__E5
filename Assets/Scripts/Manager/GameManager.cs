@@ -33,25 +33,25 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     private void Start()
     {
-        // ¸¶¿ì½º °¡µÎ±â
+        // ë§ˆìš°ìŠ¤ ê°€ë‘ê¸°
         Cursor.lockState = CursorLockMode.Confined;
-        // ¸¶¿ì½º ¸ğ¾ç ¹Ù²Ù±â
+        // ë§ˆìš°ìŠ¤ ëª¨ì–‘ ë°”ê¾¸ê¸°
         //Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.ForceSoftware);
-        // À¯´ÏÆ¼ ¿¡µğÅÍ¿¡¼­ ½ÇÇàÇÒ ¶§ Ã¢ ¸ğµå·Î ½ÇÇà
+        // ìœ ë‹ˆí‹° ì—ë””í„°ì—ì„œ ì‹¤í–‰í•  ë•Œ ì°½ ëª¨ë“œë¡œ ì‹¤í–‰
         //#if UNITY_EDITOR
         //        Screen.SetResolution(Screen.width, Screen.height, false);
         //#endif
 
-        // ºôµåµÈ °ÔÀÓ¿¡¼­ ½ÇÇàÇÒ ¶§ Ã¢ ¸ğµå·Î ½ÇÇà
+        // ë¹Œë“œëœ ê²Œì„ì—ì„œ ì‹¤í–‰í•  ë•Œ ì°½ ëª¨ë“œë¡œ ì‹¤í–‰
         //#if !UNITY_EDITOR
         //        Screen.SetResolution(1920, 1080, false);
         //#endif
 
-        //ºôµåµÈ °ÔÀÓ¿¡¼­ ½ÇÇàÇÒ ¶§ ÀüÃ¼ È­¸é ¸ğµå·Î ½ÇÇà
+        //ë¹Œë“œëœ ê²Œì„ì—ì„œ ì‹¤í–‰í•  ë•Œ ì „ì²´ í™”ë©´ ëª¨ë“œë¡œ ì‹¤í–‰
 #if !UNITY_EDITOR
                 Screen.SetResolution(1920, 1080, true);
 
-                // °ËÀº ¿©¹é Ã¤¿ì±â
+                // ê²€ì€ ì—¬ë°± ì±„ìš°ê¸°
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
 #endif
 
@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         {
             inputMng.Init(mainBaseTr.GetComponent<SelectableObject>(), TriggerDebugMode);
 
-            pathMng.Init(worldSizeX, worldSizeY, unitVisibleRangeRadius);
+            pathMng.Init(worldSizeX, worldSizeY);
             grid = pathMng.GetComponent<PF_Grid>();
             structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
 
@@ -328,13 +328,11 @@ public class GameManager : MonoBehaviour, IPauseSubject
     }
 
     [SerializeField]
-    private float worldSizeX = 100f; // ¹Ì´Ï¸Ê¿¡ Ç¥½ÃÇÒ ¿ùµåÀÇ °¡·Î±æÀÌ
+    private float worldSizeX = 100f; // ë¯¸ë‹ˆë§µì— í‘œì‹œí•  ì›”ë“œì˜ ê°€ë¡œê¸¸ì´
     [SerializeField]
-    private float worldSizeY = 100f; // ¹Ì´Ï¸Ê¿¡ Ç¥½ÃÇÒ ¿ùµåÀÇ ¼¼·Î±æÀÌ
+    private float worldSizeY = 100f; // ë¯¸ë‹ˆë§µì— í‘œì‹œí•  ì›”ë“œì˜ ì„¸ë¡œê¸¸ì´
     [SerializeField]
     private Texture2D customCursor = null;
-    [SerializeField]
-    private SUnitVisibleRangeNodeCnt unitVisibleRangeRadius;
 
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;

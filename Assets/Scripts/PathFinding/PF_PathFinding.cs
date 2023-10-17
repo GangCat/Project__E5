@@ -7,10 +7,10 @@ public class PF_PathFinding : MonoBehaviour
 {
     public delegate void FinishPathFindDelegate(PF_Node[] _waypoints, bool _isPathSuccess);
 
-    public void Init(FinishPathFindDelegate _finishPathFindCallback, float _gridWorldSizeX, float _gridWorldSizeY, SUnitVisibleRangeNodeCnt _structVisibleRange)
+    public void Init(FinishPathFindDelegate _finishPathFindCallback, float _gridWorldSizeX, float _gridWorldSizeY)
     {
         grid = GetComponent<PF_Grid>();
-        grid.Init(_gridWorldSizeX, _gridWorldSizeY, _structVisibleRange);
+        grid.Init(_gridWorldSizeX, _gridWorldSizeY);
         finishPathFindCallback = _finishPathFindCallback;
 
         openSet = new PF_Heap<PF_Node>(grid.MaxSize);
@@ -88,7 +88,7 @@ public class PF_PathFinding : MonoBehaviour
                     break;
                 }
 
-                // µµÂøÇß´Ù¸é
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ß´Ù¸ï¿½
                 if (curNode.Equals(targetNode))
                 {
                     isPathSuccess = true;
@@ -134,7 +134,7 @@ public class PF_PathFinding : MonoBehaviour
     private PF_Node neighbor = null;
 
     /// <summary>
-    /// ÇØ´ç ³ëµåÀÇ ºÎ¸ð¸¦ Å¸°í ¿Ã¶ó°¡¼­ °æ·Î¸¦ ¿ªÅ½»öÇÏ°í ¸¶Áö¸·¿¡ ´Ù½Ã ¼ø¼­¸¦ µÚÁý¾î¼­ °æ·Î¸¦ ¼³Á¤ÇÔ.
+    /// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ Å¸ï¿½ï¿½ ï¿½Ã¶ó°¡¼ï¿½ ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½Å½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
     /// </summary>
     /// <param name="_startNode"></param>
     /// <param name="_endNode"></param>
@@ -155,7 +155,7 @@ public class PF_PathFinding : MonoBehaviour
     }
 
     /// <summary>
-    /// ÀÌµ¿ÇÏ´Â °æ·Î¸¦ ºÎµå·´°Ô ¸¸µé¾îÁÖ´Â ÇÔ¼ö.
+    /// ï¿½Ìµï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Î¸ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½.
     /// </summary>
     /// <param name="_path"></param>
     /// <returns></returns>
@@ -166,7 +166,7 @@ public class PF_PathFinding : MonoBehaviour
 
     //    for (int i = 1; i < _path.Count; ++i)
     //    {
-    //        // Áö±Ý °Ë»çÇÒ ³ëµå°¡ ÇâÇÏ´Â ¹æÇâÀÌ µ¿ÀÏÇÏ¸é ±»ÀÌ ¸®½ºÆ®¿¡ ³ÖÁö ¾ÊÀ½. ÃÖÀûÈ­
+    //        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½ï¿½È­
     //        Vector2 directionNew = new Vector2(_path[i - 1].gridX - _path[i].gridX, _path[i - 1].gridY - _path[i].gridY);
     //        if (directionNew != directionOld)
     //            waypoints.Add(_path[i].worldPos);
@@ -177,8 +177,8 @@ public class PF_PathFinding : MonoBehaviour
     //}
 
     /// <summary>
-    /// nodeA¿¡¼­ nodeB·Î °¡´Â ÃÖ´Ü°Å¸®¸¦ ÀÓÀÇ·Î °è»êÇØ¼­ ±× °ªÀ» ¹ÝÈ¯ÇÏ´Â ÇÔ¼ö.
-    /// À¯Å¬¸®µð¾È °Å¸® »ç¿ë
+    /// nodeAï¿½ï¿½ï¿½ï¿½ nodeBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ü°Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½.
+    /// ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="_nodeA"></param>
     /// <param name="_nodeB"></param>

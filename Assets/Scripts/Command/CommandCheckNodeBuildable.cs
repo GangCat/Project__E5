@@ -12,8 +12,6 @@ public class CommandCheckNodeBuildable : Command
     public override void Execute(params object[] _objects)
     {
         PF_Node[] nodes = (PF_Node[])_objects;
-        //FriendlyObject[] fos = (FriendlyObject[])_objects;
-        //FriendlyObject fo = fos[0];
         pathMng.CheckNodeBuildable(nodes);
     }
 
