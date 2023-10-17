@@ -19,11 +19,6 @@ public class AudioPlayer_Misc : AudioPlayerBase
 
     }
 
-    public void addComponents()
-    {
-        
-    }
-    
     public void PlayAudio(EAudioType_Misc _audioType)
     {
         for (int i = 0; i < audioPlayers.Length; ++i)
