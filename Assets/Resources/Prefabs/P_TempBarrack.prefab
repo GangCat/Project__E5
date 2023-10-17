@@ -78,8 +78,8 @@ MonoBehaviour:
   demolishDelay: 4
   modelGo: {fileID: 2733166738310973005}
   arrSpawnUnitDelay:
-  - 20
-  - 3
+  - 8
+  - 6
   - 3
   arrUnitPrefab:
   - {fileID: 186232715040071189, guid: 1a6427e02f043fb49b31dd80f757f371, type: 3}
@@ -113,7 +113,6 @@ MonoBehaviour:
   overlapLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  displayCircleObject: {fileID: 0}
   isMovable: 0
   unitType: -1
 --- !u!65 &1015171124448447549

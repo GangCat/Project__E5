@@ -11,7 +11,9 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         SelectableObjectManager.InitNodeEnemy(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
-        displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
+        // ì´ê±° ë©”ëª¨ë¦¬í’€ì´ë¼ì„œ ì• ë“¤ ë¹„í™œì„±í™”ë  ë•Œ unselectë‹¹í•˜ê³  ë¹„í™œì„±í™”í•´ì„œ ë‹¤ì‹œ í™œì„±í™”í•  ë•Œ ëª»ì°¾ì•„ì„œ ì—ëŸ¬ë‚˜ëŠ”ê±°ì„.
+        if(!displayCircleObject)
+            displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
         displayCircleObject.Init();
         statusHp.Init();
 
@@ -124,17 +126,17 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         yield return new WaitForSeconds(0.1f);
         while (true)
         {
-            // ÃßÀû ¹üÀ§¸¸Å­ overlapLayerMask¿¡ ÇØ´çÇÏ´Â Ãæµ¹Ã¼¸¦ overlapSphere·Î °Ë»ç
+            // ì¶”ì  ë²”ìœ„ë§Œí¼ overlapLayerMaskì— í•´ë‹¹í•˜ëŠ” ì¶©ëŒì²´ë¥¼ overlapSphereë¡œ ê²€ì‚¬
             Collider[] arrCollider = null;
             arrCollider = overlapSphere(chaseStartRange);
-            // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®°¡ Á¸ÀçÇÑ´Ù¸é
+            // ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ê°€ ì¡´ì¬í•œë‹¤ë©´
             if (arrCollider.Length > 1)
             {
                 foreach (Collider c in arrCollider)
                 {
-                    // ÇØ´ç ¿ÀºêÁ§Æ®ÀÇ ObjectTypeÀ» °¡Á®¿Â´Ù.
+                    // í•´ë‹¹ ì˜¤ë¸Œì íŠ¸ì˜ ObjectTypeì„ ê°€ì ¸ì˜¨ë‹¤.
                     EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
-                    // ÂÑ´Â ´ë»óÀº ¾ø´Âµ¥ °Ë»çÇÑ ´ë»óÀÌ Àû À¯´ÖÀÌ ¾Æ´Ò °æ¿ì(Àû À¯´Ö¸¸ »ç¿ëÇÒ Á¶°ÇÀÌ±â ¶§¹®)
+                    // ì«“ëŠ” ëŒ€ìƒì€ ì—†ëŠ”ë° ê²€ì‚¬í•œ ëŒ€ìƒì´ ì  ìœ ë‹›ì´ ì•„ë‹ ê²½ìš°(ì  ìœ ë‹›ë§Œ ì‚¬ìš©í•  ì¡°ê±´ì´ê¸° ë•Œë¬¸)
                     if (!targetType.Equals(EObjectType.ENEMY_UNIT))
                     {
                         stateMachine.TargetTr = c.transform;
@@ -286,12 +288,12 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 stateMachine.SetWaitForNewPath(false);
             }
 
-            // ³ëµå¿¡ µµÂøÇÒ ¶§¸¶´Ù »õ·Î¿î ³ëµå·Î ÀÌµ¿ °»½Å
+            // ë…¸ë“œì— ë„ì°©í•  ë•Œë§ˆë‹¤ ìƒˆë¡œìš´ ë…¸ë“œë¡œ ì´ë™ ê°±ì‹ 
             if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 ++targetIdx;
                 UpdateCurNode();
-                // ¸ñÀûÁö¿¡ µµÂø½Ã 
+                // ëª©ì ì§€ì— ë„ì°©ì‹œ 
                 CheckIsTargetInAttackRange();
 
                 if (targetIdx >= arrPath.Length)
@@ -496,7 +498,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             }
             else if (targetTr.gameObject.activeSelf == false)
             {
-                // Ãß°İ, Á¤Âû, ´ë±â, È¦µå µî ¹¹µç°£¿¡ ÀÌÀüÀ¸·Î µ¹¾Æ°¨.
+                // ì¶”ê²©, ì •ì°°, ëŒ€ê¸°, í™€ë“œ ë“± ë­ë“ ê°„ì— ì´ì „ìœ¼ë¡œ ëŒì•„ê°.
                 targetTr = null;
                 stateMachine.TargetTr = null;
                 FinishState();
@@ -643,6 +645,5 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected StatusHp statusHp = null;
 
     protected int nodeIdx = 0;
-    [SerializeField]
     protected PickObjectDisplay displayCircleObject = null;
 }

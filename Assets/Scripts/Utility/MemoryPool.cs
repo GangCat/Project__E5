@@ -18,8 +18,8 @@ public class MemoryPool
 
         poolObject = _poolObject;
 
-        arrList = new List<GameObject>[10];
-        for(int i = 0; i < 10; ++i)
+        arrList = new List<GameObject>[100];
+        for(int i = 0; i < 100; ++i)
             arrList[i] = new List<GameObject>(30);
 
         poolListEnable = new List<GameObject>();

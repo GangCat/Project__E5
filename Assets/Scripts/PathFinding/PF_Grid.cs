@@ -125,8 +125,10 @@ public class PF_Grid : MonoBehaviour
 
         for(int h = 0; h < ttlCnt; ++h)
         {
-            grid[curIdxX, idxY].buildable = true;
-            listPrevBuildableNode.Add(grid[curIdxX, idxY]);
+            int tempIdxX = Mathf.Clamp(curIdxX, 0, gridSizeX);
+            int tempIdxY = Mathf.Clamp(idxY, 0, gridSizeY);
+            grid[tempIdxX, tempIdxY].buildable = true;
+            listPrevBuildableNode.Add(grid[tempIdxY, tempIdxY]);
             ++curIdxX;
             if(curIdxX.Equals(endIdxX))
             {
@@ -137,7 +139,6 @@ public class PF_Grid : MonoBehaviour
                 endIdxX = centerX + i + 1;
                 idxY = centerY + (_radius - i) * factor;
             }
-
         }
 
         //do

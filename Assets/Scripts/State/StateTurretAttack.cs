@@ -27,14 +27,13 @@ public class StateTurretAttack : IState
         if (elapsedTime > attRate)
         {
             elapsedTime = 0f;
-            // °ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç Ãâ·Â
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
             
 
             GameObject missile = GameObject.Instantiate(_structState.TurretMissile, spawnTr.position, spawnTr.rotation);
             missile.GetComponent<MissileTurret>().Init(spawnTr.position);
 
-            // ¹Ì»çÀÏ ¹ß»ç
-            Debug.Log("Missile Fire!!");
+            // ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ß»ï¿½
             AudioManager.instance.PlayAudio_Attack(objectType);
         }
     }

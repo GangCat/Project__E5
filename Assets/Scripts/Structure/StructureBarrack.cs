@@ -75,7 +75,6 @@ public class StructureBarrack : Structure, ISubscriber
     protected override void UpgradeComplete()
     {
         base.UpgradeComplete();
-        Debug.Log("BarrackUpgradeComplete");
         upgradeHpCmd.Execute(upgradeHpAmount);
     }
 
@@ -105,7 +104,7 @@ public class StructureBarrack : Structure, ISubscriber
         if (myObj.IsSelect)
             ArrayHUDSpawnUnitCommand.Use(EHUDSpawnUnitCommand.UPDATE_SPAWN_UNIT_LIST, listUnit);
         RequestSpawnUnit();
-        // ui¿¡ ³ªÅ¸³»´Â ³»¿ë
+        // uiï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
     public override void Demolish()

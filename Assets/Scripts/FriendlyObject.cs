@@ -10,7 +10,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
         SelectableObjectManager.InitNodeFriendly(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
-        displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
+        if(!displayCircleObject)
+            displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
         displayCircleObject.Init();
         statusHp.Init();
 
@@ -273,19 +274,17 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
         while (true)
         {
-            // ÃßÀû ¹üÀ§¸¸Å­ overlapLayerMask¿¡ ÇØ´çÇÏ´Â Ãæµ¹Ã¼¸¦ overlapSphere·Î °Ë»ç
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­ overlapLayerMaskï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½æµ¹Ã¼ï¿½ï¿½ overlapSphereï¿½ï¿½ ï¿½Ë»ï¿½
             Collider[] arrCollider = null;
             arrCollider = overlapSphere(chaseStartRange);
 
             if (targetTr != null)
             {
-                Debug.Log("part1");
-
                 for (int i = 0; i < arrCollider.Length; ++i)
                 {
                     if (arrCollider[i].transform.Equals(targetTr))
                     {
-                        // ÇöÀç ÀÌµ¿ Á¶°ÇÀ» prev¿¡ ÀúÀåÇÏ°í ÀÌµ¿ Á¶°ÇÀ» ÃßÀûÀ¸·Î º¯°æÇÑ µÚ ÃßÀû.
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ prevï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
                         prevMoveCondition = curMoveCondition;
                         curMoveCondition = EMoveState.CHASE;
                         PushState();
@@ -296,15 +295,13 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
             else
             {
-                //Debug.Log("part2");
-
                 for (int i = 0; i < arrCollider.Length; ++i)
                 {
                     EObjectType targetType = arrCollider[i].GetComponent<IGetObjectType>().GetObjectType();
 
                     if (targetType.Equals(EObjectType.ENEMY_UNIT))
                     {
-                        // ÇØ´ç ÀûÀÌ »ì¾ÆÀÖ´Ù¸é
+                        // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´Ù¸ï¿½
                         if (arrCollider[i].gameObject.activeSelf)
                         {
                             targetTr = arrCollider[i].transform;
@@ -408,12 +405,12 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 stateMachine.SetWaitForNewPath(false);
             }
 
-            // ³ëµå¿¡ µµÂøÇÒ ¶§¸¶´Ù »õ·Î¿î ³ëµå·Î ÀÌµ¿ °»½Å
+            // ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
             if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 ++targetIdx;
                 UpdateCurNode();
-                // ¸ñÀûÁö¿¡ µµÂø½Ã 
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
                 if (isAttack)
                     CheckIsTargetInAttackRange();
 
@@ -475,7 +472,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 stateMachine.SetWaitForNewPath(false);
             }
 
-            // ³ëµå¿¡ µµÂøÇÒ ¶§¸¶´Ù »õ·Î¿î ³ëµå·Î ÀÌµ¿ °»½Å
+            // ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
             if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
                 ++targetIdx;
@@ -677,14 +674,12 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 if (unitType.Equals(EUnitType.RANGED))
                 {
                     UpgradeHp(SelectableObjectManager.LevelRangedUnitHpUpgrade);
-                    Debug.Log("RangedUpgradeHp");
                 }
                 break;
             case EMessageType.UPGRADE_RANGED_DMG:
                 if (unitType.Equals(EUnitType.RANGED))
                 {
                     UpgradeDmg(SelectableObjectManager.LevelRangedUnitDmgUpgrade);
-                    Debug.Log("RangedUpgradeDmg");
                 }
                 break;
             case EMessageType.UPGRADE_MELEE_HP:
@@ -692,14 +687,12 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 {
                     UpgradeHp(SelectableObjectManager.LevelMeleeUnitHpUpgrade);
                     statusHp.UpgradeHp((SelectableObjectManager.LevelMeleeUnitHpUpgrade - 1) * 10);
-                    Debug.Log("MeleeUpgradeHp");
                 }
                 break;
             case EMessageType.UPGRADE_MELEE_DMG:
                 if (unitType.Equals(EUnitType.MELEE))
                 {
                     UpgradeDmg(SelectableObjectManager.LevelMeleeUnitDmgUpgrade);
-                    Debug.Log("MeleeUpgradeDmg");
                 }
                 break;
             default:

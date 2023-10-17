@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -68,6 +69,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
     #region RenderingPipeLineChange
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Home))
+            enemyMng.StartBigWaveCheat();
+        
         // When the user presses the left shift key, switch the default render pipeline
         if (Input.GetKeyDown(KeyCode.PageUp) && Input.GetKeyDown(KeyCode.F1))
         {

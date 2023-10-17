@@ -110,13 +110,9 @@ public class Structure : MonoBehaviour, IPauseObserver
     {
         if (!isProcessingUpgrade && upgradeLevel < StructureManager.UpgradeLimit)
         {
-            Debug.Log("structure" + upgradeLevel);
-            Debug.Log("Limit" + StructureManager.UpgradeLimit);
             StartCoroutine("UpgradeCoroutine");
             return true;
         }
-        Debug.Log("structure" + upgradeLevel);
-        Debug.Log("Limit" + StructureManager.UpgradeLimit);
         return false;
     }
 

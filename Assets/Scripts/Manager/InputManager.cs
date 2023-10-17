@@ -122,7 +122,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         isBuildOperation = false;
         isLaunchNuclearClick = false;
         Destroy(pickPosDisplayGo);
-        // µîµî ±â´É°ú °ü·ÃµÈ bool°ª ¸ðµÎ ÃÊ±âÈ­
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½É°ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ boolï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON);
         ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.HIDE_CANCLE_BUTTON);
     }
@@ -332,7 +332,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         {
             Debug.Log("1");
         }
-            //Array ´ëÃæ ¾Æ·¡°°Àº ´À³¦À¸·Î Ä¿¸Çµå ¸¸µé±â
+            //Array ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½Çµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
         else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.DEMOLISH]))
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
         else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE]))
@@ -353,13 +353,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 if (_isCrowdCommandReady)
                 {
                     ArraySelectCommand.Use(ESelectCommand.SET_LIST_TO_CROWD, i);
-                    Debug.Log("SetIdx: " + i);
                     return;
                 }
                 else
                 {
                     ArraySelectCommand.Use(ESelectCommand.LOAD_CROWD_WITH_IDX, i);
-                    Debug.Log("LoadIdx: " + i);
                     return;
                 }
             }
@@ -551,8 +549,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                     if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList().transform))
                     {
                         Debug.Log("double Click");
-                        // ¿©±â¼­ Ä«¸Þ¶ó Ä¿¸Çµå·Î ¹Ú½ºÄ³½ºÆ®³ª ¿À¹ö·¦ ¹Ú½º·Î È­¸é³»ÀÇ selectable´Ù Ã£¾Æ³»°í
-                        // ±× ¹è¿­ ¹Þ¾Æ¿Í¼­ ±× ¹è¿­¿¡ ÀÖ´Â ¾Öµé Áß hit¶û Å¸ÀÔ °°Àº ¾Öµé¸¸ °ñ¶ó¼­ temp¿¡ ÀÏÀÏÀÌ ´Ù ³Ö¾îÁÖ±â
+                        // ï¿½ï¿½ï¿½â¼­ Ä«ï¿½Þ¶ï¿½ Ä¿ï¿½Çµï¿½ï¿½ ï¿½Ú½ï¿½Ä³ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ È­ï¿½é³»ï¿½ï¿½ selectableï¿½ï¿½ Ã£ï¿½Æ³ï¿½ï¿½ï¿½
+                        // ï¿½ï¿½ ï¿½è¿­ ï¿½Þ¾Æ¿Í¼ï¿½ ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Öµï¿½ ï¿½ï¿½ hitï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Öµé¸¸ ï¿½ï¿½ï¿½ tempï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö±ï¿½
                     }
 
                     isCheckDoubleClick = false;
@@ -691,7 +689,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     {
         foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
         {
-            // ÇØ´ç Å°°¡ ´­·È´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+            // ï¿½Ø´ï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             if (Input.GetKeyDown(keyCode))
             {
                 return keyCode;

@@ -12,7 +12,6 @@ public class AudioManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("AudioManager initialized.");
         }
         else if (instance != this)
         {
@@ -29,23 +28,18 @@ public class AudioManager : MonoBehaviour
         switch (_objectType)
         {
             case EObjectType.UNIT_01:
-                Debug.Log("UNIT_01 Audio!");
                 AudioPlayer_Friendly_U01.instance.PlayAudio(AudioPlayer_Friendly_U01.EAudioType_Friendly_U01.ATTACK);
                 break;
             case EObjectType.UNIT_02:
-                Debug.Log("UNIT_01 Audio!");
                 AudioPlayer_Friendly_U02.instance.PlayAudio(AudioPlayer_Friendly_U02.EAudioType_Friendly_U02.ATTACK);
                 break;
             case EObjectType.UNIT_HERO:
-                Debug.Log("UNIT_HERO Audio!");
                 AudioPlayer_Hero.instance.PlayAudio(AudioPlayer_Hero.EAudioType_Hero.ATTACK);
                 break;
             case EObjectType.ENEMY_UNIT:
-                Debug.Log("ENEMY_UNIT Audio!");
                 AudioPlayer_Enemy.instance.PlayAudio(AudioPlayer_Enemy.EAudioType_Enemy.ATTACK);
                 break;
             case EObjectType.TURRET:
-                Debug.Log("TURRET Audio!");
                 AudioPlayer_Turret.instance.PlayAudio(AudioPlayer_Turret.EAudioType_Turret.ATTACK);
                 break;
             default:

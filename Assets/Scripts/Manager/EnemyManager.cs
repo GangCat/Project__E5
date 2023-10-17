@@ -20,11 +20,16 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         StartCoroutine("WaveControll");
     }
 
+    public void StartBigWaveCheat()
+    {
+        bigWaveTimeDelay = bigWaveDelay_sec;
+    }
+
     private IEnumerator WaveControll()
     {
-        int bigWaveCnt = 0;
-        float bigWaveTimeDelay = 0f;
-        float smallWaveTimeDelay = 0f;
+        bigWaveCnt = 0;
+        bigWaveTimeDelay = 0f;
+        smallWaveTimeDelay = 0f;
 
         while (bigWaveCnt < totalBigWaveCnt)
         {
@@ -91,7 +96,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     {
         GameObject enemyGo = memoryPoolWave.DeactivatePoolItemWithIdx(_removeGo, _waveEnemyIdx);
         if (enemyGo == null) return;
-        // ·¹ÀÌ¾î º¯°æ
+        // ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
         enemyGo.layer = LayerMask.NameToLayer("EnemyDead");
     }
 
@@ -189,6 +194,10 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 
     private bool isBigWaveTurn = false;
     private bool isPause = false;
+    private int bigWaveCnt = 0;
+    private float bigWaveTimeDelay = 0f;
+    private float smallWaveTimeDelay = 0f;
+    
 
     private PF_Grid grid = null;
 }
