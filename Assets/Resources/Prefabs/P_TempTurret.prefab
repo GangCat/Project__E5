@@ -227,7 +227,6 @@ MonoBehaviour:
   overlapLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  displayCircleObject: {fileID: 0}
   isMovable: 1
   unitType: -1
 --- !u!65 &7500083397440671529
@@ -319,6 +318,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 538694836601353340, guid: 88cf32768c7728947b5c34bcf79703c6,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 538694836601353340, guid: 88cf32768c7728947b5c34bcf79703c6,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 538694836601353340, guid: 88cf32768c7728947b5c34bcf79703c6,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 538694836601353340, guid: 88cf32768c7728947b5c34bcf79703c6,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 29147fbb05ebf844abbb17f6f06eba8a, type: 2}
     - target: {fileID: 919132149155446097, guid: 88cf32768c7728947b5c34bcf79703c6,
         type: 3}
       propertyPath: m_Name
@@ -566,6 +585,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1068852101221538321, guid: 01509efb56e347e4b8713bc9f04218f6,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1068852101221538321, guid: 01509efb56e347e4b8713bc9f04218f6,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1068852101221538321, guid: 01509efb56e347e4b8713bc9f04218f6,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1068852101221538321, guid: 01509efb56e347e4b8713bc9f04218f6,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 29147fbb05ebf844abbb17f6f06eba8a, type: 2}
     - target: {fileID: 919132149155446097, guid: 01509efb56e347e4b8713bc9f04218f6,
         type: 3}
       propertyPath: m_Name
