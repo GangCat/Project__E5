@@ -228,10 +228,10 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         {
             case EMoveState.ATTACK:
                 StartCoroutine("CheckNormalMoveCoroutine");
-                StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
+                
                 break;
             case EMoveState.CHASE:
-                if (targetTr == null || targetTr.gameObject.activeSelf == false)
+                if (!targetTr || targetTr.gameObject.activeSelf.Equals(false))
                 {
                     if (prevMoveCondition != EMoveState.NONE)
                     {
@@ -266,6 +266,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             yield return null;
 
         stateMachine.SetWaitForNewPath(false);
+        StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
         while (true)
         {
             if (!curWayNode.walkable)

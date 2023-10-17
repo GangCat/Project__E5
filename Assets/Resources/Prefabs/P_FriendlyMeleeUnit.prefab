@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8204235503644602067}
   - component: {fileID: 3650822248373926283}
   - component: {fileID: 2341253079211249543}
-  m_Layer: 7
+  m_Layer: 19
   m_Name: P_FriendlyMeleeUnit
   m_TagString: FriendlyUnit
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -126,7 +126,7 @@ MonoBehaviour:
   followOffset: 3
   overlapLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1048704
   isMovable: 1
   unitType: 0
 --- !u!1 &3256322658277572286

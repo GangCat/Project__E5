@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8204235503644602067}
   - component: {fileID: 4815547369824481657}
   - component: {fileID: 4548737042386696750}
-  m_Layer: 7
+  m_Layer: 20
   m_Name: P_EnemyUnitSmall
   m_TagString: EnemyUnit
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   followOffset: 1
   overlapLayerMask:
     serializedVersion: 2
-    m_Bits: 16512
+    m_Bits: 524288
   powerCorePrefab: {fileID: 5884904722928855986, guid: 1a643c881652e6d4098d4f2d254e4038,
     type: 3}
 --- !u!1001 &3695916250467921622
