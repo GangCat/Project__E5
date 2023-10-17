@@ -44,16 +44,8 @@ public class PF_Grid : MonoBehaviour
             grid[idxX, idxY] = new PF_Node(walkable, worldPos, idxX, idxY);
             ++idx;
         }
-
-        //CheckBuildableTest();
-        //StartCoroutine("CheckBuildableTest");
-        //CheckBuildableTest();
+        
     }
-
-    //public void CheckBuildableTest()
-    //{
-
-    //}
 
     public void CheckBuildableTest(PF_Node[] _arrFriendlyObject)
     {
@@ -132,11 +124,11 @@ public class PF_Grid : MonoBehaviour
         int curIdxX = centerX;
         int idxY = centerY + _radius;
         int endIdxX = centerX + 1;
-        i = 0;
 
         for(int h = 0; h < ttlCnt; ++h)
         {
             grid[curIdxX, idxY].buildable = true;
+            listPrevBuildableNode.Add(grid[curIdxX, idxY]);
             ++curIdxX;
             if(curIdxX.Equals(endIdxX))
             {
@@ -151,6 +143,8 @@ public class PF_Grid : MonoBehaviour
         }
 
         Debug.Log(i);
+        
+        
         //do
         //{
         //    k = centerX - i;
