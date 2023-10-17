@@ -13809,16 +13809,6 @@ MonoBehaviour:
   worldSizeX: 128
   worldSizeY: 128
   customCursor: {fileID: 2800000, guid: c169812d5d34873469949f2e47465473, type: 3}
-  unitVisibleRangeRadius:
-    meleeUnitRangeRadius: 7
-    rangedUnitRangeRadius: 10
-    heroUnitRangeRadius: 15
-    mainbaseRangeRadius: 10
-    barrackRangeRadius: 10
-    turretRangeRadius: 10
-    bunkerRangeRadius: 10
-    nuclearRangeRadius: 10
-    wallRangeRadius: 10
   isMainMenu: 0
   isInGame: 1
   HgihDefinitionRP: {fileID: 11400000, guid: 3e5473055ebede54b9e3e99d0728cbb7, type: 2}

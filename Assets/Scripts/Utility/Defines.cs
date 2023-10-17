@@ -45,20 +45,6 @@ public struct SFriendlyUnitInfo
     public float curHpPercent;
 }
 
-[Serializable]
-public struct SUnitVisibleRangeNodeCnt
-{
-    public int meleeUnitRangeRadius;
-    public int rangedUnitRangeRadius;
-    public int heroUnitRangeRadius;
-    public int mainbaseRangeRadius;
-    public int barrackRangeRadius;
-    public int turretRangeRadius;
-    public int bunkerRangeRadius;
-    public int nuclearRangeRadius;
-    public int wallRangeRadius;
-}
-
 [System.Serializable]
 public enum EObjectType { NONE = -1, UNIT_01, UNIT_02, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, PROCESSING_CONSTRUCT_STRUCTURE, LENGTH }
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, TURRET_ATTACK, LENGTH }

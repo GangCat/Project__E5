@@ -8,11 +8,10 @@ public class PF_Grid : MonoBehaviour
 {
     public int MaxSize => gridSizeX * gridSizeY;
 
-    public void Init(float _gridWorldSizeX, float _gridWorldSizeY, SUnitVisibleRangeNodeCnt _structVisibleRange)
+    public void Init(float _gridWorldSizeX, float _gridWorldSizeY)
     {
         gridWorldSize.x = _gridWorldSizeX;
         gridWorldSize.y = _gridWorldSizeY;
-        sUnitVisibleRange = _structVisibleRange;
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
@@ -386,6 +385,5 @@ public class PF_Grid : MonoBehaviour
 
     private PF_Node[,] grid = null;
 
-    private SUnitVisibleRangeNodeCnt sUnitVisibleRange;
     private List<PF_Node> listPrevBuildableNode = null;
 }
