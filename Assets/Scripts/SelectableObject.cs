@@ -130,7 +130,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             Collider[] arrCollider = null;
             arrCollider = overlapSphere(chaseStartRange);
             // 충돌한 오브젝트가 존재한다면
-            if (arrCollider.Length > 1)
+            if (arrCollider.Length > 0)
             {
                 foreach (Collider c in arrCollider)
                 {
