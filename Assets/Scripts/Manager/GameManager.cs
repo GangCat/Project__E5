@@ -68,6 +68,16 @@ public class GameManager : MonoBehaviour, IPauseSubject
             enemyMng.StartBigWaveCheat();
     }
 
+    public void UpdateDisplayRatio()
+    {
+
+    }
+
+    public void ToggleFullscreen()
+    {
+        isFullScreen = !isFullScreen;
+        Screen.SetResolution(1920, 1080, isFullScreen);
+    }
 
     private void InitManagers()
     {
@@ -269,4 +279,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private bool isMainMenu = false;
     [SerializeField]
     private bool isInGame = false;
+
+    private bool isFullScreen = false;
 }
