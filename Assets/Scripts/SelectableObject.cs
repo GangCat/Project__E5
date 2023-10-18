@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPauseObserver
@@ -7,6 +8,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected enum EMoveState { NONE = -1, NORMAL, ATTACK, PATROL, CHASE, FOLLOW, FOLLOW_ENEMY }
     public virtual void Init()
     {
+        gridInstance = PF_Grid.instance;
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         SelectableObjectManager.InitNodeEnemy(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
@@ -17,7 +19,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         displayCircleObject.Init();
         statusHp.Init();
 
-        if (stateMachine != null)
+        if (stateMachine)
         {
             stateMachine.Init(GetCurState);
             ResetStateStack();
@@ -38,7 +40,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     {
         get
         {
-            if (stateMachine != null)
+            if (stateMachine)
                 return stateMachine.AttDmg;
             else
                 return 0;
@@ -48,7 +50,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     {
         get
         {
-            if (stateMachine != null)
+            if (stateMachine)
                 return stateMachine.AttRate;
             else
                 return 0;
@@ -195,7 +197,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     protected void CheckIsTargetInAttackRange()
     {
-        if (targetTr != null && targetTr.gameObject.activeSelf.Equals(true))
+        if (targetTr&& targetTr.gameObject.activeSelf.Equals(true))
         {
             if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
                 StateAttack();
@@ -271,21 +273,26 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         {
             if (!curWayNode.walkable)
             {
-                stateMachine.TargetPos = transform.position;
                 curWayNode = null;
-
-                RequestPath(transform.position, targetPos);
                 stateMachine.SetWaitForNewPath(true);
+                RequestPath(transform.position, targetPos);
+
                 while (curWayNode == null)
                     yield return null;
 
                 stateMachine.SetWaitForNewPath(false);
+
+                //stateMachine.SetWaitForNewPath(true);
+                //curWayNode = GetNearWalkableNode(curWayNode);
+                //yield return new WaitForSeconds(0.1f);
+                //stateMachine.SetWaitForNewPath(false);
             }
 
             if (IsObjectBlocked())
             {
                 stateMachine.SetWaitForNewPath(true);
-                yield return new WaitForSeconds(0.5f);
+                curWayNode = GetNearWalkableNode(curWayNode);
+                yield return new WaitForSeconds(0.1f);
                 stateMachine.SetWaitForNewPath(false);
             }
 
@@ -335,7 +342,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
         while (true)
         {
-            if (targetTr == null)
+            if (!targetTr)
             {
                 stateMachine.TargetTr = null;
                 FinishState();
@@ -378,12 +385,18 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                             yield return null;
 
                         stateMachine.SetWaitForNewPath(false);
+
+                        //stateMachine.SetWaitForNewPath(true);
+                        //curWayNode = GetNearWalkableNode(curWayNode);
+                        //yield return null;
+                        //stateMachine.SetWaitForNewPath(false);
                     }
 
                     if (IsObjectBlocked())
                     {
                         stateMachine.SetWaitForNewPath(true);
-                        yield return new WaitForSeconds(0.5f);
+                        curWayNode = GetNearWalkableNode(curWayNode);
+                        yield return null;
                         stateMachine.SetWaitForNewPath(false);
                     }
 
@@ -576,6 +589,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         }
     }
 
+    protected PF_Node GetNearWalkableNode(PF_Node _curWayNode)
+    {
+        return gridInstance.GetAccessibleNodeWithoutTargetNode(_curWayNode);
+    }
+
     public void OnDrawGizmos()
     {
         if (arrPath != null)
@@ -647,4 +665,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     protected int nodeIdx = 0;
     protected PickObjectDisplay displayCircleObject = null;
+
+    protected PF_Grid gridInstance = null;
 }

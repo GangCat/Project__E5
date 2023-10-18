@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Manager/AudioManager.cs" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Manager/SelectableObjectManager.cs" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/PathFinding/PF_Grid.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/Scripts/PathFinding/PF_PathFinding.cs" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Structure/Structure.cs" charset="x-windows-949" />
     <file url="file://$PROJECT_DIR$/Assets/Scripts/Utility/MemoryPool.cs" charset="x-windows-949" />
   </component>

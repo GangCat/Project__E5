@@ -142,15 +142,20 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             }
         }
 
-
-
         elapsedTime += Time.deltaTime;
+
         if (isCheckDoubleClick)
         {
             if (leftClickElapsedTime > 0.5f)
             {
                 isCheckDoubleClick = false;
                 leftClickElapsedTime = 0f;
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
+                isCheckDoubleClick = false;
+                DoubleClickFunc();
+                return;
             }
             else
                 leftClickElapsedTime += Time.deltaTime;
@@ -192,6 +197,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             }
             else if (isLaunchNuclearClick)
                 LaunchNuclear();
+            else if (Input.GetKey(UnitSelectComandKey))
+                SelectUnitWithCommand();
             else
                 DragOperateWithMouseClick();
 
@@ -332,7 +339,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         {
             Debug.Log("1");
         }
-            //Array ���� �Ʒ����� �������� Ŀ�ǵ� �����
+        //Array ���� �Ʒ����� �������� Ŀ�ǵ� �����
         else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.DEMOLISH]))
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
         else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE]))
@@ -521,45 +528,53 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         Destroy(_go);
     }
 
-    private void DragOperateWithMouseClick()
+    private void DoubleClickFunc()
     {
+        Debug.Log("doubleClick");
+        //RaycastHit hit;
 
+        //if (Functions.Picking(selectableLayer, out hit))
+        //{
+        //    SelectableObject sObj = hit.transform.GetComponent<SelectableObject>();
+
+        //    if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList().transform))
+        //    {
+        //        Debug.Log("double Click");
+        //        // ���⼭ ī�޶� Ŀ�ǵ�� �ڽ�ĳ��Ʈ�� ������ �ڽ��� ȭ�鳻�� selectable�� ã�Ƴ���
+        //        // �� �迭 �޾ƿͼ� �� �迭�� �ִ� �ֵ� �� hit�� Ÿ�� ���� �ֵ鸸 ��� temp�� ������ �� �־��ֱ�
+        //    }
+
+        //    isCheckDoubleClick = false;
+        //    return;
+        //}
+    }
+
+    private void SelectUnitWithCommand()
+    {
+        if (SelectableObjectManager.GetFirstSelectedObjectInList().GetUnitType.Equals(EUnitType.NONE)) return;
+        Debug.Log("!");
 
         RaycastHit hit;
-        
+
+        if (Functions.Picking(friendlyLayer, out hit))
+        {
+            FriendlyObject tempFObj = hit.transform.GetComponent<FriendlyObject>();
+
+            if (tempFObj.IsSelect)
+                ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, tempFObj);
+            else
+                ArraySelectCommand.Use(ESelectCommand.ADD_TO_LIST, tempFObj);
+        }
+    }
+
+    private void DragOperateWithMouseClick()
+    {
+        RaycastHit hit;
 
         if (Functions.Picking(selectableLayer, out hit))
         {
-            SelectableObject sObj = hit.transform.GetComponent<SelectableObject>();
-
-            if (sObj != null)
-            {
-                if (Input.GetKey(UnitSelectComandKey))
-                {
-                    FriendlyObject tempFObj = sObj.GetComponent<FriendlyObject>();
-                    if (tempFObj.IsSelect)
-                        ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, tempFObj);
-                    else
-                        ArraySelectCommand.Use(ESelectCommand.ADD_TO_LIST, sObj);
-
-                    return;
-                }
-                else if (isCheckDoubleClick)
-                {
-                    if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList().transform))
-                    {
-                        Debug.Log("double Click");
-                        // ���⼭ ī�޶� Ŀ�ǵ�� �ڽ�ĳ��Ʈ�� ������ �ڽ��� ȭ�鳻�� selectable�� ã�Ƴ���
-                        // �� �迭 �޾ƿͼ� �� �迭�� �ִ� �ֵ� �� hit�� Ÿ�� ���� �ֵ鸸 ��� temp�� ������ �� �־��ֱ�
-                    }
-
-                    isCheckDoubleClick = false;
-                    return;
-                }
-
-                ArraySelectCommand.Use(ESelectCommand.SELECT_START);
-                ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, sObj);
-            }
+            ArraySelectCommand.Use(ESelectCommand.SELECT_START);
+            ArraySelectCommand.Use(ESelectCommand.TEMP_SELECT, hit.transform.GetComponent<SelectableObject>());
         }
 
         Functions.Picking("StageFloor", floorLayer, ref dragStartPos);
@@ -739,7 +754,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 return false;
         }
 
-        for(int i = 0; i < arrDeveloperMenuHotkey.Length; ++i)
+        for (int i = 0; i < arrDeveloperMenuHotkey.Length; ++i)
         {
             if (_changeKey.Equals(arrDeveloperMenuHotkey[i]))
                 return false;
@@ -759,6 +774,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private LayerMask floorLayer;
     [SerializeField]
     private LayerMask selectableLayer;
+    [SerializeField]
+    private LayerMask friendlyLayer;
 
     [Header("-Hotkeys")]
     [SerializeField]

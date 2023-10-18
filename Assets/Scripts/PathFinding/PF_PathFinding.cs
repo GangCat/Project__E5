@@ -13,7 +13,10 @@ public class PF_PathFinding : MonoBehaviour
         grid.Init(_gridWorldSizeX, _gridWorldSizeY);
         finishPathFindCallback = _finishPathFindCallback;
 
-        openSet = new PF_Heap<PF_Node>(grid.MaxSize);
+        openSet = new PF_Heap<PF_Node>(searchLimitCnt + 100);
+        closedSet = new HashSet<PF_Node>(searchLimitCnt + 100);
+        listNeighbor = new List<PF_Node>(8);
+        listWayNode = new List<PF_Node>();
     }
 
     public void CheckNodeBuildable(PF_Node[] _arrFriendlyObject)
@@ -33,11 +36,7 @@ public class PF_PathFinding : MonoBehaviour
         }
 
         StartCoroutine(FindPath(startNode, targetNode));
-        ++i;
     }
-
-    private int i = 0;
-    private int j = 0;
 
     private IEnumerator FindPath(PF_Node startNode, PF_Node targetNode)
     {
@@ -47,6 +46,7 @@ public class PF_PathFinding : MonoBehaviour
         {
             targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
         }
+        
         if (targetNode != null)
         {
             listWayNode.Clear();
@@ -75,20 +75,17 @@ public class PF_PathFinding : MonoBehaviour
 
             while (openSet.Count > 0)
             {
-                ++j;
-
                 listNeighbor.Clear();
                 curNode = openSet.RemoveFirstItem();
 
                 closedSet.Add(curNode);
 
-                if (openSet.Count > 50)
+                if (openSet.Count > 200)
                 {
                     isPathSuccess = true;
                     break;
                 }
 
-                // �����ߴٸ�
                 if (curNode.Equals(targetNode))
                 {
                     isPathSuccess = true;
@@ -132,11 +129,6 @@ public class PF_PathFinding : MonoBehaviour
     private PF_Node curNode = null;
     private PF_Node neighbor = null;
 
-    /// <summary>
-    /// �ش� ����� �θ� Ÿ�� �ö󰡼� ��θ� ��Ž���ϰ� �������� �ٽ� ������ ����� ��θ� ������.
-    /// </summary>
-    /// <param name="_startNode"></param>
-    /// <param name="_endNode"></param>
     private List<PF_Node> RetracePath(PF_Node _startNode, PF_Node _endNode)
     {
         List<PF_Node> path = new List<PF_Node>();
@@ -153,11 +145,6 @@ public class PF_PathFinding : MonoBehaviour
         return path;
     }
 
-    /// <summary>
-    /// �̵��ϴ� ��θ� �ε巴�� ������ִ� �Լ�.
-    /// </summary>
-    /// <param name="_path"></param>
-    /// <returns></returns>
     //private Vector3[] SimplifyPath(List<PF_Node> _path)
     //{
     //    List<Vector3> waypoints = new List<Vector3>();
@@ -165,7 +152,6 @@ public class PF_PathFinding : MonoBehaviour
 
     //    for (int i = 1; i < _path.Count; ++i)
     //    {
-    //        // ���� �˻��� ��尡 ���ϴ� ������ �����ϸ� ���� ����Ʈ�� ���� ����. ����ȭ
     //        Vector2 directionNew = new Vector2(_path[i - 1].gridX - _path[i].gridX, _path[i - 1].gridY - _path[i].gridY);
     //        if (directionNew != directionOld)
     //            waypoints.Add(_path[i].worldPos);
@@ -175,13 +161,6 @@ public class PF_PathFinding : MonoBehaviour
     //    return waypoints.ToArray();
     //}
 
-    /// <summary>
-    /// nodeA���� nodeB�� ���� �ִܰŸ��� ���Ƿ� ����ؼ� �� ���� ��ȯ�ϴ� �Լ�.
-    /// ��Ŭ����� �Ÿ� ���
-    /// </summary>
-    /// <param name="_nodeA"></param>
-    /// <param name="_nodeB"></param>
-    /// <returns></returns>
     private int CalcLowestCostWithNode(PF_Node _nodeA, PF_Node _nodeB)
     {
         int distX = Mathf.Abs(_nodeA.gridX - _nodeB.gridX);
@@ -192,6 +171,9 @@ public class PF_PathFinding : MonoBehaviour
         return 14 * distX + 10 * (distY - distX);
     }
 
+    [SerializeField]
+    private int searchLimitCnt = 200;
+
     private PF_Grid grid;
 
     private FinishPathFindDelegate finishPathFindCallback = null;
@@ -200,4 +182,6 @@ public class PF_PathFinding : MonoBehaviour
     private HashSet<PF_Node> closedSet = new HashSet<PF_Node>();
     private List<PF_Node> listNeighbor = new List<PF_Node>();
     private List<PF_Node> listWayNode = new List<PF_Node>();
+
+    private Dictionary<Tuple<PF_Node, PF_Node>, int> distanceCache = new Dictionary<Tuple<PF_Node, PF_Node>, int>();
 }

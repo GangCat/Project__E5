@@ -1,15 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 public class PF_Grid : MonoBehaviour
 {
-    public int MaxSize => gridSizeX * gridSizeY;
 
     public void Init(float _gridWorldSizeX, float _gridWorldSizeY)
     {
+        instance = this;
         gridWorldSize.x = _gridWorldSizeX;
         gridWorldSize.y = _gridWorldSizeY;
         nodeDiameter = nodeRadius * 2;
@@ -18,6 +17,19 @@ public class PF_Grid : MonoBehaviour
         listPrevBuildableNode = new List<PF_Node>();
         CreateGrid();
     }
+    
+    public int MaxSize => gridSizeX * gridSizeY;
+    public static PF_Grid Instance
+    {
+        get
+        {
+            if (!instance)
+                instance = FindAnyObjectByType<PF_Grid>();
+            return instance;
+        }
+    }
+
+    private PF_Grid(){}
 
     private void CreateGrid()
     {
@@ -374,6 +386,8 @@ public class PF_Grid : MonoBehaviour
     private LayerMask buildableMask;
     [SerializeField]
     private float nodeRadius = 0f;
+
+    public static PF_Grid instance = null;
 
     private float nodeDiameter = 0f;
     private int gridSizeX = 0;

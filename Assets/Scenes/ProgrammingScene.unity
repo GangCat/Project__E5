@@ -24548,8 +24548,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1446206864}
   - component: {fileID: 1446206863}
-  - component: {fileID: 1446206865}
   - component: {fileID: 1446206867}
+  - component: {fileID: 1446206868}
   m_Layer: 0
   m_Name: PathRequestManager
   m_TagString: Untagged
@@ -24594,18 +24594,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1446206865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446206862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839df6b60ac23c54c8fc34328b06ec20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1446206867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24618,6 +24606,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5c69ef649be7f44838fa1609c9dc82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1446206868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446206862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839df6b60ac23c54c8fc34328b06ec20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchLimitCnt: 200
 --- !u!1 &1446712261
 GameObject:
   m_ObjectHideFlags: 0
@@ -26687,7 +26688,7 @@ MonoBehaviour:
     m_Bits: 64
   selectableLayer:
     serializedVersion: 2
-    m_Bits: 1152
+    m_Bits: 525440
   arrUnitFuncHotkey: 6d000000730000006800000070000000610000006e000000
   arrBuildFuncHotkey: 7400000075000000620000006e00000077000000
   arrBarrackFuncHotkey: 790000006c0000007200000061000000730000006400000066000000
