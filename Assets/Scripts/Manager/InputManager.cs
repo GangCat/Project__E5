@@ -552,7 +552,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private void SelectUnitWithCommand()
     {
         if (SelectableObjectManager.GetFirstSelectedObjectInList().GetUnitType.Equals(EUnitType.NONE)) return;
-        Debug.Log("!");
 
         RaycastHit hit;
 

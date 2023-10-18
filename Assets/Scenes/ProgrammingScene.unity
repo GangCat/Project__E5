@@ -26689,6 +26689,9 @@ MonoBehaviour:
   selectableLayer:
     serializedVersion: 2
     m_Bits: 525440
+  friendlyLayer:
+    serializedVersion: 2
+    m_Bits: 524288
   arrUnitFuncHotkey: 6d000000730000006800000070000000610000006e000000
   arrBuildFuncHotkey: 7400000075000000620000006e00000077000000
   arrBarrackFuncHotkey: 790000006c0000007200000061000000730000006400000066000000
