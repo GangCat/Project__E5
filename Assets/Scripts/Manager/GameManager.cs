@@ -70,13 +70,12 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     public void UpdateDisplayRatio(int _ratioNum)
     {
-        if(_ratioNum.Equals(0))
+        if(_ratioNum.Equals(0)) // 16:9
             Screen.SetResolution(1920, 1080, isFullScreen);
-        else if(_ratioNum.Equals(1))
+        else if(_ratioNum.Equals(1)) // 16:10
             Screen.SetResolution(1600, 1000, isFullScreen);
-        else if(_ratioNum.Equals(2))
-            Screen.SetResolution(1600, 900, isFullScreen);
-
+        else if(_ratioNum.Equals(2)) // 21:9
+            Screen.SetResolution(2560, 1080, isFullScreen);
     }
 
     public void ToggleFullscreen()
