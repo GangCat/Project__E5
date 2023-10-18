@@ -183,6 +183,7 @@ MonoBehaviour:
   myGridY: 4
   upgradeDelay: 0
   demolishDelay: 4
+  modelGo: {fileID: 0}
   turretHeadTr: {fileID: 3077076975496337010}
   upgradeDmgAmount: 0
   upgradeRangeAmount: 0
@@ -204,6 +205,7 @@ MonoBehaviour:
     targetTr: {fileID: 0}
     targetPos: {x: 0, y: 0, z: 0}
     isWaitForNewPath: 0
+    isPause: 0
     moveSpeed: 0
     attRate: 3
     attDmg: 5
@@ -224,6 +226,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectType: 2
   selectDisplayCircle: {fileID: 0}
+  objectDisplayName: 
+  objectDisplayDescription: 
   chaseStartRange: 0
   chaseFinishRange: 0
   attackRange: 10
@@ -292,6 +296,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 538694836601353340, guid: 88cf32768c7728947b5c34bcf79703c6,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 54ee677ea9a331c4ba6fa43d25eb82d3, type: 2}
     - target: {fileID: 919132149155446097, guid: 88cf32768c7728947b5c34bcf79703c6,
         type: 3}
       propertyPath: m_Name
@@ -371,6 +380,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1068852101221538321, guid: 01509efb56e347e4b8713bc9f04218f6,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 54ee677ea9a331c4ba6fa43d25eb82d3, type: 2}
     - target: {fileID: 919132149155446097, guid: 01509efb56e347e4b8713bc9f04218f6,
         type: 3}
       propertyPath: m_Name

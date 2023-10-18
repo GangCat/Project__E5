@@ -129,7 +129,7 @@ MonoBehaviour:
   followOffset: 3
   overlapLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1048576
   isMovable: 1
   unitType: 2
 --- !u!114 &8690997603253739059

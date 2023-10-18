@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4815547369824481657}
   - component: {fileID: 4548737042386696750}
   m_Layer: 20
-  m_Name: P_EnemyUnitSmall
+  m_Name: P_EnemyUnitBig
   m_TagString: EnemyUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
