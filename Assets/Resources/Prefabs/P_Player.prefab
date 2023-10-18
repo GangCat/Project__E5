@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7330500162855589593}
   - component: {fileID: 7179781643778605711}
   - component: {fileID: 8690997603253739059}
-  m_Layer: 7
+  m_Layer: 19
   m_Name: P_Player
   m_TagString: FriendlyUnit
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -118,7 +119,7 @@ public class CameraMovement : MonoBehaviour
         mainCamera.targetTexture = fogRenderTexture;
         mainCamera.cullingMask = visibleLayer;
         mainCamera.Render();
-
+        
         mainCamera.targetTexture = mapRenderTexture;
         mainCamera.cullingMask = mapLayer;
         mainCamera.Render();

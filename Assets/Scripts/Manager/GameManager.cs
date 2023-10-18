@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         GraphicsSettings.defaultRenderPipeline = HgihDefinitionRP;
         QualitySettings.renderPipeline = UniversalRP;
 
+        SwitchOverrideRenderPipeline();
         DisplayCurrentRenderPipeline();
     }
 
@@ -76,13 +77,13 @@ public class GameManager : MonoBehaviour, IPauseSubject
         if (Input.GetKeyDown(KeyCode.PageUp))
         {
             SwitchDefaultRenderPipeline();
-            DisplayCurrentRenderPipeline();
+            //DisplayCurrentRenderPipeline();
         }
         // When the user presses the right shift key, switch the override render pipeline
         else if (Input.GetKeyDown(KeyCode.PageDown))
         {
             SwitchOverrideRenderPipeline();
-            DisplayCurrentRenderPipeline();
+            //DisplayCurrentRenderPipeline();
         }
     }
 
