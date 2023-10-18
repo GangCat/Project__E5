@@ -125,7 +125,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     protected virtual IEnumerator CheckIsEnemyInChaseStartRangeCoroutine()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         while (true)
         {
             // 추적 범위만큼 overlapLayerMask에 해당하는 충돌체를 overlapSphere로 검사

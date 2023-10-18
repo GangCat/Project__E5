@@ -531,22 +531,28 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private void DoubleClickFunc()
     {
         Debug.Log("doubleClick");
-        //RaycastHit hit;
 
-        //if (Functions.Picking(selectableLayer, out hit))
-        //{
-        //    SelectableObject sObj = hit.transform.GetComponent<SelectableObject>();
+        if (SelectableObjectManager.IsListEmpty) return;
 
-        //    if (hit.transform.Equals(SelectableObjectManager.GetFirstSelectedObjectInList().transform))
-        //    {
-        //        Debug.Log("double Click");
-        //        // ���⼭ ī�޶� Ŀ�ǵ�� �ڽ�ĳ��Ʈ�� ������ �ڽ��� ȭ�鳻�� selectable�� ã�Ƴ���
-        //        // �� �迭 �޾ƿͼ� �� �迭�� �ִ� �ֵ� �� hit�� Ÿ�� ���� �ֵ鸸 ��� temp�� ������ �� �־��ֱ�
-        //    }
+        EUnitType curUnitType = SelectableObjectManager.GetFirstSelectedObjectInList().GetUnitType;
+        if (curUnitType.Equals(EUnitType.NONE)) return;
 
-        //    isCheckDoubleClick = false;
-        //    return;
-        //}
+        RaycastHit hit;
+        FriendlyObject tempFriendlyObj = null;
+
+        ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, SelectableObjectManager.GetFirstSelectedObjectInList());
+
+        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000f, floorLayer);
+        Collider[] arrCol = Physics.OverlapBox(hit.point, new Vector3(Camera.main.orthographicSize * Camera.main.aspect, 0f, Camera.main.orthographicSize / Mathf.Cos(20f * Mathf.Deg2Rad)), Quaternion.Euler(new Vector3(0f, 45f, 0f)), friendlyLayer);
+
+        for(int i = 0; i < arrCol.Length; ++i)
+        {
+            tempFriendlyObj = arrCol[i].GetComponent<FriendlyObject>();
+
+            if (tempFriendlyObj.GetUnitType.Equals(curUnitType))
+                ArraySelectCommand.Use(ESelectCommand.ADD_TO_LIST, tempFriendlyObj);
+        }
+
     }
 
     private void SelectUnitWithCommand()
@@ -764,6 +770,34 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
         return true;
     }
+
+    //public void OnDrawGizmos()
+    //{
+    //    Vector3 boxSize = new Vector3(Camera.main.orthographicSize * Camera.main.aspect, 0f, Camera.main.orthographicSize);
+    //    Vector3[] points = new Vector3[8];
+
+    //    // Calculate the 8 corner points of the rotated box
+    //    for (int i = 0; i < 8; ++i)
+    //    {
+    //        Vector3 offset = new Vector3(
+    //            ((i & 1) == 0 ? -1 : 1) * boxSize.x,
+    //            ((i & 2) == 0 ? -1 : 1) * boxSize.y,
+    //            ((i & 4) == 0 ? -1 : 1) * boxSize.z
+    //        );
+
+    //        points[i] = transform.position + tempCenter + offset;
+    //        points[i] = Quaternion.Euler(new Vector3(0f, 70f, 0f)) * points[i];
+    //    }
+
+    //    // Draw lines between the points to form the rotated box
+    //    Gizmos.color = Color.red;
+    //    for (int i = 0; i < 4; ++i)
+    //    {
+    //        Gizmos.DrawLine(points[i], points[(i + 1) % 2]);
+    //        Gizmos.DrawLine(points[i + 4], points[(i + 1) % 2 + 4]);
+    //        Gizmos.DrawLine(points[i], points[i + 4]);
+    //    }
+    //}
 
     [SerializeField]
     private GameObject pickPosPrefab = null;

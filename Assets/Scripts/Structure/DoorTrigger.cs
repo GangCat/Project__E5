@@ -14,23 +14,9 @@ public class DoorTrigger : MonoBehaviour
 
     private IEnumerator CheckIsUnitEnter()
     {
-        Collider[] arrCol;
-        bool isUnitIn = false;
         while (true)
         {
-            isUnitIn = false;
-            arrCol = Physics.OverlapSphere(transform.position, 2f, LayerMask.GetMask("SelectableObject"));
-
-            for (int i = 0; i < arrCol.Length; ++i)
-            {
-                if (arrCol[i].CompareTag("FriendlyUnit"))
-                {
-                    isUnitIn = true;
-                    break;
-                }
-            }
-
-            if (isUnitIn)
+            if(Physics.CheckSphere(transform.position, 2f, friendlyUnitLayer))
             {
                 if(!isOpen)
                 {
@@ -50,6 +36,9 @@ public class DoorTrigger : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
     }
+
+    [SerializeField]
+    private LayerMask friendlyUnitLayer;
 
     private VoidVoidDelegate openDoorCallback = null;
     private VoidVoidDelegate closeDoorCallback = null;
