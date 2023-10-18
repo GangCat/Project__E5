@@ -96,7 +96,7 @@ MonoBehaviour:
   demolishDelay: 4
   modelGo: {fileID: 3034071328867266968}
   nuclearProduceDelay: 10
-  nuclearSpawnPos: {x: 0.75, y: 2.5, z: 0.75}
+  nuclearSpawnPos: {x: 0.75, y: 2, z: 0.75}
 --- !u!114 &-4067709134023557582
 MonoBehaviour:
   m_ObjectHideFlags: 0
