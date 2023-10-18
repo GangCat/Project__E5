@@ -68,7 +68,6 @@ public class StructureWall : Structure
     {
         base.UpgradeComplete();
         upgradeHpCmd.Execute(upgradeHpAmount);
-        Debug.Log("UpgradeCompleteWall");
     }
 
     public override void UpdateNodeWalkable(bool _walkable)

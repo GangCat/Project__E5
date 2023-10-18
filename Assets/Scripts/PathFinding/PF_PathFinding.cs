@@ -124,7 +124,6 @@ public class PF_PathFinding : MonoBehaviour
         if (isPathSuccess)
         {
             listWayNode = RetracePath(startNode, curNode);
-            //UnityEngine.Debug.Log("true");
         }
 
         finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess);

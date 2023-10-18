@@ -31,8 +31,8 @@ TagManager:
   - CollectCoreCollider
   - PowerCore
   - Fog
-  - 
-  - 
+  - FriendlySelectableObject
+  - EnemySelectableObject
   - 
   - 
   - VisibleArea

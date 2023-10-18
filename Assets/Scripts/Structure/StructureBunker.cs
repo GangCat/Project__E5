@@ -33,7 +33,6 @@ public class StructureBunker : Structure
         base.UpgradeComplete();
         upgradeHpCmd.Execute(increaseHpAmount);
         upgradeBuffRatioCmd.Execute();
-        Debug.Log("UpgradeCompleteBunker");
     }
 
     public void UpgradeBuffRatio()
@@ -70,18 +69,18 @@ public class StructureBunker : Structure
     public void OutOneUnit()
     {
         if (queueUnitInBunker.Count < 1) return;
-        // ³» ÁÖÀ§ÀÇ ³ëµå Áß walkable Å½»ö
-        // ºÎ¸ð º¯°æ
-        // °á°ú ³ëµå¿¡ ³» ÀÚ½Ä À§Ä¡ ÀÌµ¿
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ walkable Å½ï¿½ï¿½
+        // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½å¿¡ ï¿½ï¿½ ï¿½Ú½ï¿½ ï¿½ï¿½Ä¡ ï¿½Ìµï¿½
         FriendlyObject unitObj = queueUnitInBunker.Dequeue();
         unitObj.transform.parent = prevParentTransform;
         unitObj.Position = SelectableObjectManager.ResetPosition(transform.position);
-        // ·¹ÀÌ¾î, °ø°Ý·Â, °ø°Ý¹üÀ§ ¸®¼Â
+        // ï¿½ï¿½ï¿½Ì¾ï¿½, ï¿½ï¿½ï¿½Ý·ï¿½, ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         unitObj.ResetAttackDmg();
         unitObj.ResetAttackRange();
         unitObj.ResetLayer();
         unitObj.UpdateCurNode();
-        // ³» À§Ä¡ walkable false·Î º¯°æ
+        // ï¿½ï¿½ ï¿½ï¿½Ä¡ walkable falseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         grid.UpdateNodeWalkable(grid.GetNodeFromWorldPoint(transform.position), false);
     }
 

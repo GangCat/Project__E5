@@ -12,7 +12,7 @@ public class EnemyObject : SelectableObject
     {
         spawnType = _spawnType;
         myIdx = _myIdx;
-        gameObject.layer = LayerMask.NameToLayer("SelectableObject");
+        gameObject.layer = LayerMask.NameToLayer("EnemySelectableObject");
     }
 
     public override void UpdateCurNode()

@@ -51,7 +51,6 @@ public class GroupUnitInfo : MonoBehaviour
                 default:
                     break;
             }
-            //Debug.Log(listFriendlyUnitInfo[i].curHpPercent);
         }
     }
 

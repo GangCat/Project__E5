@@ -29,9 +29,7 @@ public class AudioPlayer_Friendly_U01 : AudioPlayerBase
 
             channelIndex = loopIndex;
             audioPlayers[loopIndex].clip = audioClips[(int)_audioType];
-            Debug.Log("Friendly AudioPlayers.Play Start");
             audioPlayers[loopIndex].Play();
-            Debug.Log("Friendly AudioPlayers.Play End");
             break;
         }
     }

@@ -168,14 +168,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void RemoveUnitAtList(FriendlyObject _removeObj)
     {
-        if (_removeObj == null) return;
+        if (!_removeObj) return;
 
         bool isDeleted = false;
 
         for (int i = 0; i < listSelectedFriendlyObject.Count;)
         {
             if (isDeleted)
-                listSelectedFriendlyObject[i].UpdatelistIdx(i);
+                listSelectedFriendlyObject[i].UpdatelistIdx(i - 1);
             else if (listSelectedFriendlyObject[i].Equals(_removeObj))
             {
                 listSelectedFriendlyObject[i].unSelect();

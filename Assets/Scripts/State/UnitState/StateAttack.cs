@@ -28,10 +28,9 @@ public class StateAttack : IState
         if (elapsedTime > attRate)
         {
             elapsedTime = 0f;
-            // °ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç Ãâ·Â
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½
 
-            Debug.Log("Unit Attack!!");
-            AudioManager.instance.PlayAudio_Attack(objectType);     // °ø°Ý Audio
+            AudioManager.instance.PlayAudio_Attack(objectType);     // ï¿½ï¿½ï¿½ï¿½ Audio
             
             targetTr.GetComponent<IDamageable>().GetDmg(attDmg);
         }

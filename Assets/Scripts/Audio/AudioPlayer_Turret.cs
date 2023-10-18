@@ -27,9 +27,7 @@ public class AudioPlayer_Turret : AudioPlayerBase
 
             channelIndex = loopIndex;
             audioPlayers[loopIndex].clip = audioClips[(int)_audioType];
-            Debug.Log("Turret AudioPlayers.Play Start");
             audioPlayers[loopIndex].Play();
-            Debug.Log("Turret AudioPlayers.Play Stop");
             break;
         }
     }

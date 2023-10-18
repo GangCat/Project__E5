@@ -27,13 +27,9 @@ public class StructureMainBase : Structure
     {
         if(!isProcessingUpgrade && upgradeLevel < 3)
         {
-            Debug.Log("structure" + upgradeLevel);
-            Debug.Log("Limit" + StructureManager.UpgradeLimit);
             StartCoroutine("UpgradeCoroutine");
             return true;
         }
-        Debug.Log("structure" + upgradeLevel);
-        Debug.Log("Limit" + StructureManager.UpgradeLimit);
         return false;
     }
 
@@ -43,7 +39,6 @@ public class StructureMainBase : Structure
         upgradeHpCmd.Execute(upgradeHpAmount);
         StructureManager.UpgradeLimit = upgradeLevel;
 
-        //Debug.Log("UpgradeCompleteMainBase");
     }
 
     public override void CancleCurAction()
@@ -115,7 +110,7 @@ public class StructureMainBase : Structure
 
             if (myObj.IsSelect)
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
-            // ui ¤ÐÇ¥½Ã
+            // ui ï¿½ï¿½Ç¥ï¿½ï¿½
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
             progressPercent = elapsedTime / upgradePopulationDelay;
@@ -152,7 +147,7 @@ public class StructureMainBase : Structure
 
             if (myObj.IsSelect)
                 ArrayHUDUpgradeCommand.Use(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, progressPercent);
-            // ui ¤ÐÇ¥½Ã
+            // ui ï¿½ï¿½Ç¥ï¿½ï¿½
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
             progressPercent = elapsedTime / upgradeEnergySupplyDelay;

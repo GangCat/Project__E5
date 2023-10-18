@@ -100,20 +100,19 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
 
-        // ¸¶¿ì½º Å¬¸¯ À§Ä¡¸¦ RectTransformÀÇ ·ÎÄÃ ÁÂÇ¥°è·Î º¯È¯ÇÕ´Ï´Ù.
+        // ï¿½ï¿½ï¿½ì½º Å¬ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ RectTransformï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Õ´Ï´ï¿½.
         Vector2 localMousePosition = Vector2.zero;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, null, out localMousePosition);
 
-        // ¹Ì´Ï¸ÊÀÇ Å©±âÀÇ ¹ÝÀ» °è»êÇÕ´Ï´Ù.
+        // ï¿½Ì´Ï¸ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         float halfWidth = rectTransform.rect.width * 0.5f;
         float halfHeight = rectTransform.rect.height * 0.5f;
 
-        // Áß½ÉÀ» (0,0)À¸·Î ÇÏ°í ÃÖÇÏ´Ü(-0.5, -0.5), ÃÖ¿ìÃø(0.5, -0.5), ÃÖ»ó´Ü(0.5, 0.5), ÃÖÁÂÃø(-0.5, 0.5)¿¡ ´ëÇÑ »ó´ëÀûÀÎ ÁÂÇ¥¸¦ °è»êÇÕ´Ï´Ù.
+        // ï¿½ß½ï¿½ï¿½ï¿½ (0,0)ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½(-0.5, -0.5), ï¿½Ö¿ï¿½ï¿½ï¿½(0.5, -0.5), ï¿½Ö»ï¿½ï¿½(0.5, 0.5), ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(-0.5, 0.5)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         float relativeX = (localMousePosition.x + halfWidth) / rectTransform.rect.width - 0.5f;
         float relativeY = (localMousePosition.y + halfHeight) / rectTransform.rect.height - 0.5f;
 
-        // Ãâ·Â ¿¹½Ã (0,0)ÀÌ ÁÂÇÏ´Ü, (1,1)ÀÌ ¿ì»ó´ÜÀÌ¶ó°í °¡Á¤ÇÏ°í Ãâ·ÂÇÕ´Ï´Ù.
-        //Debug.Log("¸¶¿ì½º·Î Å¬¸¯ÇÑ À§Ä¡ (»ó´ëÀûÀÎ ÁÂÇ¥): X=" + relativeX + ", Y=" + relativeY);
+        // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (0,0)ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½, (1,1)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         if (eventData.button.Equals(PointerEventData.InputButton.Left))
         {
             foreach (IMinimapObserver ob in listObserver)
@@ -153,8 +152,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     private List<PF_Node> tempFriendlyNodeList = new List<PF_Node>();
     private List<PF_Node> tempEnemyNodeList = new List<PF_Node>();
 
-    private float worldSizeX = 0f; // ¹Ì´Ï¸Ê¿¡ Ç¥½ÃÇÒ ¿ùµåÀÇ °¡·Î±æÀÌ
-    private float worldSizeY = 0f; // ¹Ì´Ï¸Ê¿¡ Ç¥½ÃÇÒ ¿ùµåÀÇ ¼¼·Î±æÀÌ
+    private float worldSizeX = 0f; // ï¿½Ì´Ï¸Ê¿ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½
+    private float worldSizeY = 0f; // ï¿½Ì´Ï¸Ê¿ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½
 
     private bool isPause = false;
     

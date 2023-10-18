@@ -23,8 +23,6 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
     {
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         StartCoroutine("LaunchCoroutine", _destPos);
-        //Debug.Log(_destPos + "Launch");
-        //SetActive(false);
     }
 
     private IEnumerator LaunchCoroutine(Vector3 _destPos)

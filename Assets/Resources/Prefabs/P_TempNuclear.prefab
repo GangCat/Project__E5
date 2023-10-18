@@ -123,7 +123,6 @@ MonoBehaviour:
   overlapLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  displayCircleObject: {fileID: 0}
   isMovable: 0
   unitType: -1
 --- !u!1001 &109404280035626104
@@ -446,6 +445,26 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -230758222943892604, guid: 64518b2b8f72c8040aeef6c959d80665,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -230758222943892604, guid: 64518b2b8f72c8040aeef6c959d80665,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -230758222943892604, guid: 64518b2b8f72c8040aeef6c959d80665,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -230758222943892604, guid: 64518b2b8f72c8040aeef6c959d80665,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e61ab95fd42257241bc4902dc47b7f1c, type: 2}
     - target: {fileID: 919132149155446097, guid: 64518b2b8f72c8040aeef6c959d80665,
         type: 3}
       propertyPath: m_Name

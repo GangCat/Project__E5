@@ -26,7 +26,6 @@ public class StructureTurret : Structure
         upgradeHpCmd.Execute(upgradeHpAmount);
         upgradeDmgCmd.Execute(upgradeDmgAmount);
         upgradeRangeCmd.Execute(upgradeRangeAmount);
-        Debug.Log("UpgradeCompleteTurret");
     }
 
     [SerializeField]
