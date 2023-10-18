@@ -68,8 +68,14 @@ public class GameManager : MonoBehaviour, IPauseSubject
             enemyMng.StartBigWaveCheat();
     }
 
-    public void UpdateDisplayRatio()
+    public void UpdateDisplayRatio(int _ratioNum)
     {
+        if(_ratioNum.Equals(0))
+            Screen.SetResolution(1920, 1080, isFullScreen);
+        else if(_ratioNum.Equals(1))
+            Screen.SetResolution(1600, 1000, isFullScreen);
+        else if(_ratioNum.Equals(2))
+            Screen.SetResolution(1600, 900, isFullScreen);
 
     }
 

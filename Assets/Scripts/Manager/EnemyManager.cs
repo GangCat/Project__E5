@@ -197,7 +197,6 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private int bigWaveCnt = 0;
     private float bigWaveTimeDelay = 0f;
     private float smallWaveTimeDelay = 0f;
-    
 
     private PF_Grid grid = null;
 }
