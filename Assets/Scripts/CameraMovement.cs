@@ -11,6 +11,22 @@ public class CameraMovement : MonoBehaviour
 
         oriCullingLayer = mainCamera.cullingMask;
         oriQuaternion = transform.rotation;
+
+        curSize = mainCamera.orthographicSize;
+        prevPos = transform.position;
+
+        transform.position = fogCamPos;
+        transform.rotation = fogCamRot;
+        mainCamera.orthographicSize = fogCamSize;
+        mainCamera.targetTexture = mapRenderTexture;
+        mainCamera.cullingMask = mapLayer;
+        mainCamera.Render();
+
+        transform.position = prevPos;
+        transform.rotation = oriQuaternion;
+        mainCamera.targetTexture = null;
+        mainCamera.cullingMask = oriCullingLayer;
+        mainCamera.orthographicSize = curSize;
     }
 
     public void WarpCameraWithPos(Vector3 _pos)
@@ -117,10 +133,6 @@ public class CameraMovement : MonoBehaviour
         mainCamera.orthographicSize = fogCamSize;
         mainCamera.targetTexture = fogRenderTexture;
         mainCamera.cullingMask = visibleLayer;
-        mainCamera.Render();
-
-        mainCamera.targetTexture = mapRenderTexture;
-        mainCamera.cullingMask = mapLayer;
         mainCamera.Render();
 
         transform.position = prevPos;
