@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7330500162855589593}
   - component: {fileID: 7179781643778605711}
   - component: {fileID: 8690997603253739059}
-  m_Layer: 7
+  m_Layer: 19
   m_Name: P_Player
   m_TagString: FriendlyUnit
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -130,7 +130,6 @@ MonoBehaviour:
   overlapLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  displayCircleObject: {fileID: 6574108009707018412}
   isMovable: 1
   unitType: 2
 --- !u!114 &8690997603253739059
@@ -515,18 +514,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d02d8a447130d5d4bbc9d60ffde1d811, type: 3}
---- !u!114 &6574108009707018412 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -7672645734156843424, guid: d02d8a447130d5d4bbc9d60ffde1d811,
-    type: 3}
-  m_PrefabInstance: {fileID: 5674154259420634828}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2355631f66b259549b2bdf974d2ccba9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &7156369986225545941 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3309632986339933209, guid: d02d8a447130d5d4bbc9d60ffde1d811,
