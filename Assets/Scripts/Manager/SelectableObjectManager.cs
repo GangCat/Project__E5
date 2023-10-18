@@ -47,6 +47,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public delegate void VoidSelectObjectTypeDelegate(EObjectType _objectType);
     public bool IsFriendlyUnit => isFriendlyUnitInList;
+    public static bool IsListFull => listSelectedFriendlyObject.Count > 11;
     public static bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
     public static int LevelRangedUnitDmgUpgrade => levelRangedUnitDmgUpgrade;
     public static int LevelRangedUnitHpUpgrade => levelRangedUnitHpUpgrade;

@@ -1338,7 +1338,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7051489796401100161}
   m_Layer: 0
-  m_Name: P_Mainbase
+  m_Name: P_MainbaseModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

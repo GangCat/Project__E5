@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3774082440511637135}
   - component: {fileID: 1015171124448447549}
   m_Layer: 10
-  m_Name: P_TempBarrack
+  m_Name: P_Barrack
   m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

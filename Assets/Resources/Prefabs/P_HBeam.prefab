@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5079310170878546508}
   - component: {fileID: 7276109431146889964}
   m_Layer: 10
-  m_Name: P_TempHBeam
+  m_Name: P_HBeam
   m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

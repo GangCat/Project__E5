@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4335736936896054379}
   - component: {fileID: 8516959564890358104}
   m_Layer: 10
-  m_Name: P_TempBunker
+  m_Name: P_Bunker
   m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

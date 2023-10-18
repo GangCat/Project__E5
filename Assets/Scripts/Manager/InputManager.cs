@@ -530,8 +530,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private void DoubleClickFunc()
     {
-        Debug.Log("doubleClick");
-
         if (SelectableObjectManager.IsListEmpty) return;
 
         EUnitType curUnitType = SelectableObjectManager.GetFirstSelectedObjectInList().GetUnitType;
@@ -543,14 +541,22 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, SelectableObjectManager.GetFirstSelectedObjectInList());
 
         Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000f, floorLayer);
-        Collider[] arrCol = Physics.OverlapBox(hit.point, new Vector3(Camera.main.orthographicSize * Camera.main.aspect, 0f, Camera.main.orthographicSize / Mathf.Cos(20f * Mathf.Deg2Rad)), Quaternion.Euler(new Vector3(0f, 45f, 0f)), friendlyLayer);
+        Collider[] arrCol = Physics.OverlapBox(
+            hit.point, 
+            new Vector3(Camera.main.orthographicSize * Camera.main.aspect, 0f, Camera.main.orthographicSize / Mathf.Cos(90 - rotAngleXForDoubleClick * Mathf.Deg2Rad)), 
+            Quaternion.Euler(new Vector3(0f, 45f, 0f)), 
+            friendlyLayer
+        );
 
         for(int i = 0; i < arrCol.Length; ++i)
         {
             tempFriendlyObj = arrCol[i].GetComponent<FriendlyObject>();
 
             if (tempFriendlyObj.GetUnitType.Equals(curUnitType))
+            {
+                if (SelectableObjectManager.IsListFull) return;
                 ArraySelectCommand.Use(ESelectCommand.ADD_TO_LIST, tempFriendlyObj);
+            }
         }
 
     }
@@ -809,6 +815,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private LayerMask selectableLayer;
     [SerializeField]
     private LayerMask friendlyLayer;
+    [SerializeField]
+    private float rotAngleXForDoubleClick = 0f;
 
     [Header("-Hotkeys")]
     [SerializeField]
