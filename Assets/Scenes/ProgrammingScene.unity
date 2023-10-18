@@ -15526,8 +15526,6 @@ MonoBehaviour:
   customCursor: {fileID: 2800000, guid: c169812d5d34873469949f2e47465473, type: 3}
   isMainMenu: 0
   isInGame: 1
-  HgihDefinitionRP: {fileID: 11400000, guid: 3e5473055ebede54b9e3e99d0728cbb7, type: 2}
-  UniversalRP: {fileID: 11400000, guid: ba0590ba02836a844b657f231e8386b1, type: 2}
 --- !u!1 &936201668
 GameObject:
   m_ObjectHideFlags: 0
@@ -32387,35 +32385,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1164142512}
     m_Modifications:
-    - target: {fileID: 3156965243604678652, guid: 84ef0facb01956b449c682e9f37929e0,
+    - target: {fileID: 1641796272070821453, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
-      propertyPath: m_CastShadows
-      value: 0
+      propertyPath: m_LocalScale.x
+      value: 30
       objectReference: {fileID: 0}
-    - target: {fileID: 3156965243604678652, guid: 84ef0facb01956b449c682e9f37929e0,
+    - target: {fileID: 1641796272070821453, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
+      propertyPath: m_LocalScale.z
+      value: 30
       objectReference: {fileID: 0}
-    - target: {fileID: 3156965243604678652, guid: 84ef0facb01956b449c682e9f37929e0,
+    - target: {fileID: 1641796272070821453, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
-      propertyPath: m_LightProbeUsage
-      value: 0
+      propertyPath: m_LocalPosition.x
+      value: 5.75
       objectReference: {fileID: 0}
-    - target: {fileID: 3156965243604678652, guid: 84ef0facb01956b449c682e9f37929e0,
+    - target: {fileID: 1641796272070821453, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
-      propertyPath: m_RenderingLayerMask
-      value: 1
+      propertyPath: m_LocalPosition.z
+      value: 5.25
       objectReference: {fileID: 0}
-    - target: {fileID: 3156965243604678652, guid: 84ef0facb01956b449c682e9f37929e0,
-        type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 764105d5bf063eb469afada6fb38dc11, type: 2}
     - target: {fileID: 3845910304497348173, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -45.55
+      value: -53.3
       objectReference: {fileID: 0}
     - target: {fileID: 3845910304497348173, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
@@ -32425,7 +32418,7 @@ PrefabInstance:
     - target: {fileID: 3845910304497348173, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -39.25
+      value: -27.7
       objectReference: {fileID: 0}
     - target: {fileID: 3845910304497348173, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
@@ -32462,40 +32455,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4350492468846402617, guid: 84ef0facb01956b449c682e9f37929e0,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350492468846402617, guid: 84ef0facb01956b449c682e9f37929e0,
-        type: 3}
-      propertyPath: m_DynamicOccludee
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350492468846402617, guid: 84ef0facb01956b449c682e9f37929e0,
-        type: 3}
-      propertyPath: m_LightProbeUsage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4350492468846402617, guid: 84ef0facb01956b449c682e9f37929e0,
-        type: 3}
-      propertyPath: m_RenderingLayerMask
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7217537270849698523, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
-      propertyPath: m_Layer
-      value: 23
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8162044424758329862, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
       propertyPath: m_Name
       value: P_TempMainBase
-      objectReference: {fileID: 0}
-    - target: {fileID: 8162044424758329862, guid: 84ef0facb01956b449c682e9f37929e0,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

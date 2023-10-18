@@ -35,10 +35,10 @@ public class CanvasConstructInfo : MonoBehaviour
         imageProgressbar.UpdateLength(_percent);
     }
 
-    public void UpdateUnit(EObjectType _type)
+    public void UpdateUnit(string _objectName, EObjectType _type)
     {
         imageUnit.ChangeSprite(arrSpriteObject[(int)_type - 3]);
-        textInfoStructureName.UpdateText(Enum.GetName(typeof(EObjectType), _type));
+        textInfoStructureName.UpdateText(_objectName);
     }
 
 
