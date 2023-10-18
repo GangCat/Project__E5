@@ -49,6 +49,9 @@ MonoBehaviour:
   gravity: 50
   attackRange: 3
   attackDmg: 10
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 1048576
 --- !u!1001 &6158137773934830535
 PrefabInstance:
   m_ObjectHideFlags: 0

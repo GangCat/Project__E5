@@ -214,3 +214,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 10
   launchSpeed: 10
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 1573888
