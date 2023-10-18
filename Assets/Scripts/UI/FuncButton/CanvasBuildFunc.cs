@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CanvasBuildFunc : CanvasFunc
+public class CanvasBuildFunc : CanvasBase
 {
     public void Init()
     {

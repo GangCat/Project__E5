@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanvasFunc : MonoBehaviour
+public class CanvasBase : MonoBehaviour
 {
     public virtual void DisplayCanvas()
     {

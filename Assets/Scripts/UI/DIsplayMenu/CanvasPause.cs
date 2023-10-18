@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ImagePauseBackground : MonoBehaviour, IPauseObserver
+public class CanvasPause : CanvasBase, IPauseObserver
 {
     public void Init()
     {
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
-        gameObject.SetActive(false);
+        HideCanvas();
     }
+
     public void CheckPause(bool _isPause)
     {
-        gameObject.SetActive(_isPause);
+        SetActive(_isPause);
     }
+
 }
