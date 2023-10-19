@@ -87,8 +87,8 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private void InitManagers()
     {
         cameraMng.Init();
-        uiMng.Init();
         audioMng.Init();
+        uiMng.Init();
 
         if (isInGame)
         {

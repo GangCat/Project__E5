@@ -13,8 +13,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         waveEnemyHolder = GetComponentInChildren<WaveEnemyHolder>().GetTransform();
         mapEnemyHolder = GetComponentInChildren<MapEnemyHolder>().GetTransform();
 
-        memoryPoolWave = new MemoryPool(enemyPrefab, 5, waveEnemyHolder);
-        memoryPoolMap = new MemoryPool(enemyPrefab, 5, mapEnemyHolder);
+        memoryPoolWave = new MemoryPool(enemySmallPrefab, 5, waveEnemyHolder);
+        memoryPoolMap = new MemoryPool(enemySmallPrefab, 5, mapEnemyHolder);
         memoryPoolEnemyDeadEffect = new MemoryPool(enemyDeadEffect, 5, transform);
 
         ArrayHUDCommand.Use(EHUDCommand.INIT_WAVE_TIME, bigWaveDelay_sec);
@@ -68,6 +68,12 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 bigWaveTimeDelay = 0f;
                 smallWaveTimeDelay = 0f;
                 smallWaveCnt = 0;
+
+                GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
+                EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
+                enemyObj.Init();
+                enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+                enemyObj.MoveAttack(mainBasePos);
             }
         }
 
@@ -77,7 +83,15 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     {
         ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, 0f);
         for (int i = 0; i < totalBigWaveCnt; ++i)
+        {
             SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, totalBigWaveCnt * 100);
+
+            GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
+            EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
+            enemyObj.Init();
+            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+            enemyObj.MoveAttack(mainBasePos);
+        }
 
         EnemyObject[] arrAllMapEnemy = mapEnemyHolder.GetComponentsInChildren<EnemyObject>();
         for (int i = 0; i < arrAllMapEnemy.Length; ++i)
@@ -169,7 +183,9 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     }
 
     [SerializeField]
-    private GameObject enemyPrefab = null;
+    private GameObject enemySmallPrefab = null;
+    [SerializeField]
+    private GameObject enemyBigPrefab = null;
     [SerializeField]
     private EnemyMapSpawnPoint[] arrMapSpawnPoint = null;
     [SerializeField]

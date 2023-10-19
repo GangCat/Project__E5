@@ -7,7 +7,7 @@ public class ImageOptionSound : MenuImageBase
 {
     public override void Init()
     {
-
+        btnSFXTestPlay.Init();
     }
 
     [SerializeField]
@@ -16,4 +16,7 @@ public class ImageOptionSound : MenuImageBase
     private Slider sliderBackgroundMusicVolume = null;
     [SerializeField]
     private Slider sliderSoundEffectVolume = null;
+
+    [SerializeField]
+    private ButtonSFXTestPlay btnSFXTestPlay = null;
 }

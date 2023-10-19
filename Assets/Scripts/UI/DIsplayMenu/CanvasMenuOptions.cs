@@ -31,6 +31,10 @@ public class CanvasMenuOptions : CanvasBase
                 ArrayMenuCommand.Use(EMenuCommand.RETURN_MENU);
             });
 
+        imageGraphic.Init();
+        imageSound.Init();
+        imageHotkey.Init();
+
         SetActive(false);
     }
 
