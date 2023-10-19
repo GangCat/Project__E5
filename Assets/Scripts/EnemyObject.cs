@@ -48,6 +48,18 @@ public class EnemyObject : SelectableObject
         PF_PathRequestManager.EnemyRequestPath(_startPos, _endPos, OnPathFound);
     }
 
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public Vector3 GetEffectPosition()
+    {
+        Vector3 offset = new Vector3(0, 1, 0);
+        return transform.position + offset;
+    }
+    
+    
     [SerializeField]
     private GameObject powerCorePrefab = null;
 

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
             fogMng = FindFirstObjectByType<FogManager>();
             debugMng = FindFirstObjectByType<DebugModeManager>();
             audioMng = FindFirstObjectByType<AudioManager>();
+            
 
             mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
         }
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         cameraMng.Init();
         uiMng.Init();
         audioMng.Init();
+        // effectMng.Init();
 
         if (isInGame)
         {
@@ -257,6 +259,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private FogManager fogMng = null;
     private DebugModeManager debugMng = null;
     private AudioManager audioMng = null;
+    private EffectManager effectMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;

@@ -11,6 +11,7 @@ public class StateAttack : IState
         attRate = _structState.attRate;
         attDmg = _structState.attDmg;
         objectType = _structState.objectType;
+        effectController = _structState.effectController;
 
     }
 
@@ -28,9 +29,11 @@ public class StateAttack : IState
         if (elapsedTime > attRate)
         {
             elapsedTime = 0f;
-            // ���� �ִϸ��̼� ���
 
-            AudioManager.instance.PlayAudio_Attack(objectType);     // ���� Audio
+
+            effectController.PlayEffects();
+            AudioManager.instance.PlayAudio_Attack(objectType);     // Attack Audio Play
+            EffectManager.instance.PlayAttackEffect(objectType);
             
             targetTr.GetComponent<IDamageable>().GetDmg(attDmg);
         }
@@ -44,6 +47,8 @@ public class StateAttack : IState
     private float elapsedTime = 0f;
     private float attRate = 0f;
     private EObjectType objectType;
+    private EffectController effectController;
+
 
     private Transform targetTr = null;
     private Transform myTr = null;

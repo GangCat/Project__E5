@@ -33,6 +33,7 @@ public struct SUnitState
     public float attDmg;
 
     public EObjectType objectType;
+    public EffectController effectController;
     
 
     public GameObject TurretMissile;
@@ -96,5 +97,7 @@ public enum EUpgradeType { NONE = -1, ENERGY, POPULATION, STRUCTURE, RANGED_DMG,
 
 public enum EAudioType_Advisor { NONE = -1, ENERGY, CORE, RESEARCH, UPGRADE, CONST_COMPLETE,CONST_CANCEL, PAUSE, RESUME, NUCLEAR_READY, NUCLEAR_LAUNCH, UNDERATTACK, LENGTH }
 public enum EAudioType_Misc { NONE = -1, NUCLEAR_EXPLOSION, LENGTH }
+
+public enum EEffectType_Attack { NONE = -1, HERO, UNIT_01, UNIT_02, ENEMY_01, ENEMY_02, LENGTH }
 
 // public enum EAudioHero1 { NONE = -1, SHOT, MOVE, LENGTH }
