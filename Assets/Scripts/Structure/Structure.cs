@@ -74,13 +74,13 @@ public class Structure : MonoBehaviour, IPauseObserver
 
     public void UpdateConstructInfo()
     {
-        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_STRUCTURE, myObj.GetObjectType());
+        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_STRUCTURE, myObj.GetObjectName, myObj.GetObjectType());
         ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, progressPercent);
     }
 
     public void UpdateDemolishInfo()
     {
-        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_DEMOLISH_STRUCTURE, myObj.GetObjectType());
+        ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_DEMOLISH_STRUCTURE, myObj.GetObjectName, myObj.GetObjectType());
         ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_DEMOLISH_TIME, progressPercent);
     }
 

@@ -12,7 +12,7 @@ public class CommandUpdateConstructStructure : Command
 
     public override void Execute(params object[] _objects)
     {
-        canvasConstruct.UpdateUnit((EObjectType)_objects[0]);
+        canvasConstruct.UpdateUnit((string)_objects[0], (EObjectType)_objects[1]);
     }
 
     private CanvasConstructInfo canvasConstruct = null;

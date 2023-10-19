@@ -55,7 +55,7 @@ public class PF_Grid : MonoBehaviour
 
         for (int i = 0; i < _arrFriendlyObject.Length; ++i)
         {
-            GetBuildableNode(_arrFriendlyObject[i], 18);
+            SetBuildableNode(_arrFriendlyObject[i], 18);
         }
     }
 
@@ -108,7 +108,7 @@ public class PF_Grid : MonoBehaviour
     //    while (i >= 0);
     //}
 
-    private void GetBuildableNode(PF_Node _targetWorldPos, int _radius)
+    private void SetBuildableNode(PF_Node _targetWorldPos, int _radius)
     {
         int centerX = _targetWorldPos.gridX;
         int centerY = _targetWorldPos.gridY;
@@ -128,7 +128,7 @@ public class PF_Grid : MonoBehaviour
             int tempIdxX = Mathf.Clamp(curIdxX, 0, gridSizeX);
             int tempIdxY = Mathf.Clamp(idxY, 0, gridSizeY);
             grid[tempIdxX, tempIdxY].buildable = true;
-            listPrevBuildableNode.Add(grid[tempIdxY, tempIdxY]);
+            listPrevBuildableNode.Add(grid[tempIdxX, tempIdxY]);
             ++curIdxX;
             if(curIdxX.Equals(endIdxX))
             {

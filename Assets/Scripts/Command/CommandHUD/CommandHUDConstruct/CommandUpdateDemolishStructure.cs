@@ -10,7 +10,7 @@ public class CommandUpdateDemolishStructure : Command
     }
     public override void Execute(params object[] _objects)
     {
-        canvasDemolish.UpdateUnit((EObjectType)_objects[0]);
+        canvasDemolish.UpdateUnit((string)_objects[0], (EObjectType)_objects[1]);
     }
 
     private CanvasDemolishInfo canvasDemolish = null;
