@@ -15,6 +15,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
         unitInfoContainer = new UnitInfoContainer();
         listFriendlyUnitInfo = new List<SFriendlyUnitInfo>(12);
+
         deadEffectMemoryPool = new MemoryPool(unitDeadEffect, 5, transform);
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
 

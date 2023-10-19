@@ -11,9 +11,14 @@ public class EffectUnitDead : EffectBase
         DisplayEffect();
     }
 
+    public override void DisplayEffect()
+    {
+        isActive = true;
+        Invoke("DisableObject", activeTime);
+    }
+
     protected override void DisableObject()
     {
-        isActive = false;
         deactivateCallback?.Invoke(transform);
     }
 

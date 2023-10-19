@@ -19,13 +19,25 @@ public class EffectBase : MonoBehaviour
         }
     }
 
+    public virtual void DisplayEffect(Vector3 _pos)
+    {
+        if (!isActive)
+        {
+            isActive = true;
+            transform.position = _pos;
+            gameObject.SetActive(true);
+            Invoke("DisableObject", activeTime);
+        }
+    }
+
     protected virtual void DisableObject()
     {
         isActive = false;
         gameObject.SetActive(false);
     }
 
-    protected bool isActive = false;
     [SerializeField]
     protected float activeTime = 0f;
+
+    protected bool isActive = false;
 }

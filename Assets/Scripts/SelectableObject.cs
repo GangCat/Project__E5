@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPauseObserver
@@ -12,7 +11,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         SelectableObjectManager.InitNodeEnemy(transform.position, out nodeIdx);
 
-        effectCtrl = GetComponent<EffectController>();
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
         // 이거 메모리풀이라서 애들 비활성화될 때 unselect당하고 비활성화해서 다시 활성화할 때 못찾아서 에러나는거임.
@@ -23,6 +21,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
         if (stateMachine)
         {
+            effectCtrl = GetComponent<EffectController>();
+            effectCtrl.Init();
             stateMachine.Init(GetCurState, effectCtrl);
             ResetStateStack();
             StateIdle();

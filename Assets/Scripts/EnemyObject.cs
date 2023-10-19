@@ -39,7 +39,6 @@ public class EnemyObject : SelectableObject
     {
         // Enemy Dead Audio
         AudioManager.instance.PlayAudio_Destroy(objectType);
-        effectCtrl.EffectOn(2);
         SelectableObjectManager.ResetEnemyNodeWalkable(transform.position, nodeIdx);
         ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
 
