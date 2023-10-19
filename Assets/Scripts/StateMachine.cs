@@ -6,9 +6,10 @@ public class StateMachine : MonoBehaviour
 {
     public delegate void CurStateEnumDelegate(EState _curEState);
 
-    public void Init(CurStateEnumDelegate _curStateEnumCallback)
+    public void Init(CurStateEnumDelegate _curStateEnumCallback, EffectController _effectCtrl)
     {
         curStateEnumCallback = _curStateEnumCallback;
+        unitStateInfo.effectCtrl = _effectCtrl;
 
         IState stateIdle = new StateIdle();
         IState stateMove = new StateMove();
@@ -27,58 +28,58 @@ public class StateMachine : MonoBehaviour
         arrState[(int)EState.TURRET_ATTACK] = stateTurretAttack;
         
 
-        unitState.myTr = transform;
-        oriDmg = unitState.attDmg;
+        unitStateInfo.myTr = transform;
+        oriDmg = unitStateInfo.attDmg;
 
         curState = stateIdle;
         curStateEnum = EState.IDLE;
         stackStateEnum.Push(curStateEnum);
     }
 
-    public float AttRate => unitState.attRate;
-    public float AttDmg => unitState.attDmg;
+    public float AttRate => unitStateInfo.attRate;
+    public float AttDmg => unitStateInfo.attDmg;
 
     public void SetIsPause(bool _isPause)
     {
-        unitState.isPause = _isPause;
+        unitStateInfo.isPause = _isPause;
     }
 
     public void SetMyTr(Transform _myTr)
     {
-        unitState.myTr = _myTr;
+        unitStateInfo.myTr = _myTr;
     }
 
     public Vector3 TargetPos
     {
-        get => unitState.targetPos;
-        set => unitState.targetPos = value;
+        get => unitStateInfo.targetPos;
+        set => unitStateInfo.targetPos = value;
     }
 
     public Transform TargetTr
     {
-        get => unitState.targetTr;
-        set => unitState.targetTr = value;
+        get => unitStateInfo.targetTr;
+        set => unitStateInfo.targetTr = value;
     }
 
     public void UpgradeAttDmg(float _increaseDmg)
     {
         oriDmg += _increaseDmg;
-        unitState.attDmg += _increaseDmg;
+        unitStateInfo.attDmg += _increaseDmg;
     }
 
     public void SetAttackDmg(float _ratio)
     {
-        unitState.attDmg += oriDmg * _ratio;
+        unitStateInfo.attDmg += oriDmg * _ratio;
     }
 
     public void ResetAttackDmg()
     {
-        unitState.attDmg = oriDmg;
+        unitStateInfo.attDmg = oriDmg;
     }
 
     public void SetWaitForNewPath(bool _isWaiting)
     {
-        unitState.isWaitForNewPath = _isWaiting;
+        unitStateInfo.isWaitForNewPath = _isWaiting;
     }
     public void ChangeState(EState _newState)
     {
@@ -95,13 +96,13 @@ public class StateMachine : MonoBehaviour
         if (GetComponent<UnitHero>())
             HeroUnitManager.UpdateCurState(_newState);
 #endif
-        curState.End(ref unitState);
+        curState.End(ref unitStateInfo);
 
         //stackStateEnum.Push(curStateEnum);
         curStateEnum = _newState;
         curState = arrState[(int)curStateEnum];
 
-        curState.Start(ref unitState);
+        curState.Start(ref unitStateInfo);
     }
 
     public void FinishState()
@@ -132,11 +133,11 @@ public class StateMachine : MonoBehaviour
     private void Update()
     {
         if (curState != null)
-            curState.Update(ref unitState);
+            curState.Update(ref unitStateInfo);
     }
 
     [SerializeField]
-    private SUnitState unitState;
+    private SUnitState unitStateInfo;
 
     private IState[] arrState = null;
     private IState curState = null;

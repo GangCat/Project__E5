@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 4556634007579230422}
   - component: {fileID: 3774082440511637135}
   - component: {fileID: 1015171124448447549}
+  - component: {fileID: 252296603250712711}
   m_Layer: 10
-  m_Name: P_TempBarrack
+  m_Name: P_Barrack
   m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,6 +137,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.9, y: 4, z: 2.9}
   m_Center: {x: 1.25, y: 2, z: 1.25}
+--- !u!114 &252296603250712711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877717811974592186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a64cf2e7390bd4798e133363b7a0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrEffect: []
 --- !u!1001 &350326331800712326
 PrefabInstance:
   m_ObjectHideFlags: 0

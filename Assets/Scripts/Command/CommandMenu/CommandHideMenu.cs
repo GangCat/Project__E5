@@ -10,7 +10,7 @@ public class CommandHideMenu : Command
     }
     public override void Execute(params object[] _objects)
     {
-        canvasMenuPopup.SetActive(false);
+        canvasMenuPopup.HideCanvas();
     }
 
     private CanvasMenuPopup canvasMenuPopup = null;

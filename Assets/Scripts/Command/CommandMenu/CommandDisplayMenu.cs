@@ -10,7 +10,7 @@ public class CommandDisplayMenu : Command
     }
     public override void Execute(params object[] _objects)
     {
-        canvasMenuPopup.SetActive(true);
+        canvasMenuPopup.DisplayCanvas();
     }
 
     private CanvasMenuPopup canvasMenuPopup = null;

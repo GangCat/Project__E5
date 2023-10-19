@@ -55,7 +55,6 @@ public class PF_PathRequestManager : MonoBehaviour
         TryProcessNext();
     }
 
-    
 
     private void TryProcessNext()
     {
@@ -81,8 +80,8 @@ public class PF_PathRequestManager : MonoBehaviour
     private Queue<SPathRequest> queueEnemyPathRequest = new Queue<SPathRequest>();
     private SPathRequest curPathRequest;
 
-    private static PF_PathRequestManager instance;
-    private PF_PathFinding pathFinding;
+    private static PF_PathRequestManager instance = null;
+    private PF_PathFinding pathFinding = null;
 
-    private bool isProcessingPath;
+    private bool isProcessingPath = false;
 }

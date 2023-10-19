@@ -6,6 +6,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 {
     public override void Init()
     {
+        gridInstance = PF_Grid.instance;
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         SelectableObjectManager.InitNodeFriendly(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
@@ -17,8 +18,9 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
         if (stateMachine != null)
         {
+            effectCtrl = GetComponent<EffectController>();
             oriAttRange = attackRange;
-            stateMachine.Init(GetCurState);
+            stateMachine.Init(GetCurState, effectCtrl);
             ResetStateStack();
             if (objectType.Equals(EObjectType.TURRET))
             {
@@ -43,9 +45,13 @@ public class FriendlyObject : SelectableObject, ISubscriber
         }
         else
         {
+            listEffectCtrl = new List<EffectController>();
             StructureCollider[] arrCollider = GetComponentsInChildren<StructureCollider>();
             for (int i = 0; i < arrCollider.Length; ++i)
+            {
                 arrCollider[i].Init(GetDmg, objectType);
+                listEffectCtrl.Add(arrCollider[i].GetEffectCtrl);
+            }
         }
     }
 
@@ -94,42 +100,73 @@ public class FriendlyObject : SelectableObject, ISubscriber
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
-            
+
             // Unit Dead Audio
             AudioManager.instance.PlayAudio_Destroy(objectType);
 
             if (objectType.Equals(EObjectType.UNIT_01) || objectType.Equals(EObjectType.UNIT_02))
             {
-                if (crowdIdx != -1)
-                    ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.REMOVE_AT_CROWD, crowdIdx, this);
-                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, this);
-                Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
-                SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
+                DeactivateUnit();
+            }
+            else if (objectType.Equals(EObjectType.UNIT_HERO))
+            {
+                DeactivateHero();
+                return;
             }
             else if (objectType.Equals(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE))
             {
+                for (int i = 0; i < listEffectCtrl.Count; ++i)
+                {
+                    listEffectCtrl[i].EffectOn(3);
+                }
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject);
             }
             else if (objectType.Equals(EObjectType.BUNKER))
             {
+                for (int i = 0; i < listEffectCtrl.Count; ++i)
+                {
+                    listEffectCtrl[i].EffectOn(3);
+                }
                 GetComponent<StructureBunker>().OutAllUnit();
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
             }
-            else if (objectType.Equals(EObjectType.UNIT_HERO))
-            {
-                SelectableObjectManager.ResetHeroUnitNode(transform.position);
-                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO, this);
-                return;
-            }
             else
+            {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
+                for (int i = 0; i < listEffectCtrl.Count; ++i)
+                {
+                    listEffectCtrl[i].EffectOn(3);
+                }
+            }
 
             ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
         }
-        else if (isSelect)
+        else
         {
-            SelectableObjectManager.UpdateHp(listIdx);
+            if (isSelect)
+                SelectableObjectManager.UpdateHp(listIdx);
+
+            if (effectCtrl)
+                effectCtrl.EffectOn(0);
         }
+    }
+
+    private void DeactivateUnit()
+    {
+        if (crowdIdx != -1)
+            ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.REMOVE_AT_CROWD, crowdIdx, this);
+
+        effectCtrl.EffectOn(2);
+        SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
+        Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
+        ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, this);
+    }
+
+    private void DeactivateHero()
+    {
+        effectCtrl.EffectOn(2);
+        SelectableObjectManager.ResetHeroUnitNode(transform.position);
+        ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO, this);
     }
 
     public void ResetTargetBunker()
@@ -381,11 +418,27 @@ public class FriendlyObject : SelectableObject, ISubscriber
         RequestPath(transform.position, targetPos);
 
         while (curWayNode == null)
-            yield return null;
+            yield return new WaitForSeconds(0.05f);
 
         stateMachine.SetWaitForNewPath(false);
         while (true)
         {
+            if (!hasTargetNode)
+            {
+                if (IsObjectBlocked())
+                {
+                    stateMachine.SetWaitForNewPath(true);
+                    curWayNode = GetNearWalkableNode(curWayNode);
+                    yield return new WaitForSeconds(0.1f);
+                    hasTargetNode = true;
+                    stateMachine.SetWaitForNewPath(false);
+
+                    //stateMachine.SetWaitForNewPath(true);
+                    //yield return new WaitForSeconds(0.5f);
+                    //stateMachine.SetWaitForNewPath(false);
+                }
+            }
+
             if (!curWayNode.walkable)
             {
                 curWayNode = null;
@@ -393,24 +446,23 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 RequestPath(transform.position, targetPos);
 
                 while (curWayNode == null)
-                    yield return null;
+                    yield return new WaitForSeconds(0.05f);
 
                 stateMachine.SetWaitForNewPath(false);
+
+                //stateMachine.SetWaitForNewPath(true);
+                //curWayNode = GetNearWalkableNode(curWayNode);
+                //yield return new WaitForSeconds(0.1f);
+                //stateMachine.SetWaitForNewPath(false);
             }
 
-            if (IsObjectBlocked())
-            {
-                stateMachine.SetWaitForNewPath(true);
-                yield return new WaitForSeconds(0.5f);
-                stateMachine.SetWaitForNewPath(false);
-            }
 
-            // ��忡 ������ ������ ���ο� ���� �̵� ����
             if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
+                hasTargetNode = false;
                 ++targetIdx;
                 UpdateCurNode();
-                // �������� ������ 
+
                 if (isAttack)
                     CheckIsTargetInAttackRange();
 
@@ -423,7 +475,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                         RequestPath(transform.position, targetPos);
                         stateMachine.SetWaitForNewPath(true);
                         while (curWayNode == null)
-                            yield return null;
+                            yield return new WaitForSeconds(0.05f);
 
                         stateMachine.SetWaitForNewPath(false);
                         continue;
@@ -447,12 +499,28 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
         RequestPath(transform.position, wayPointTo);
         while (curWayNode == null)
-            yield return null;
+            yield return new WaitForSeconds(0.05f);
 
         stateMachine.SetWaitForNewPath(false);
 
         while (true)
         {
+            if (!hasTargetNode)
+            {
+                if (IsObjectBlocked())
+                {
+                    //stateMachine.SetWaitForNewPath(true);
+                    //yield return new WaitForSeconds(0.5f);
+                    //stateMachine.SetWaitForNewPath(false);
+
+                    stateMachine.SetWaitForNewPath(true);
+                    curWayNode = GetNearWalkableNode(curWayNode);
+                    yield return new WaitForSeconds(0.1f);
+                    hasTargetNode = true;
+                    stateMachine.SetWaitForNewPath(false);
+                }
+            }
+
             if (!curWayNode.walkable)
             {
                 curWayNode = null;
@@ -460,21 +528,20 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 RequestPath(transform.position, wayPointTo);
 
                 while (curWayNode == null)
-                    yield return null;
+                    yield return new WaitForSeconds(0.05f);
 
                 stateMachine.SetWaitForNewPath(false);
-            }
 
-            if (IsObjectBlocked())
-            {
-                stateMachine.SetWaitForNewPath(true);
-                yield return new WaitForSeconds(0.5f);
-                stateMachine.SetWaitForNewPath(false);
+                //stateMachine.SetWaitForNewPath(true);
+                //curWayNode = GetNearWalkableNode(curWayNode);
+                //yield return new WaitForSeconds(0.1f);
+                //stateMachine.SetWaitForNewPath(false);
             }
 
             // ��忡 ������ ������ ���ο� ���� �̵� ����
             if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
+                hasTargetNode = false;
                 ++targetIdx;
                 UpdateCurNode();
                 CheckIsTargetInAttackRange();
@@ -486,7 +553,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                         RequestPath(transform.position, wayPointTo);
                         stateMachine.SetWaitForNewPath(true);
                         while (curWayNode == null)
-                            yield return null;
+                            yield return new WaitForSeconds(0.05f);
 
                         stateMachine.SetWaitForNewPath(false);
                         continue;
@@ -500,7 +567,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     stateMachine.SetWaitForNewPath(true);
 
                     while (targetIdx != 0)
-                        yield return null;
+                        yield return new WaitForSeconds(0.05f);
 
                     stateMachine.SetWaitForNewPath(false);
                     continue;
@@ -517,7 +584,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         RequestPath(transform.position, targetTr.position);
 
         while (curWayNode == null)
-            yield return null;
+            yield return new WaitForSeconds(0.05f);
 
         float elapsedTime = 0f;
         stateMachine.SetWaitForNewPath(false);
@@ -550,7 +617,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     RequestPath(transform.position, targetTr.position);
                     stateMachine.SetWaitForNewPath(true);
                     while (curWayNode == null)
-                        yield return null;
+                        yield return new WaitForSeconds(0.05f);
 
                     stateMachine.SetWaitForNewPath(false);
                 }
@@ -559,27 +626,42 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 if (curWayNode != null)
                 {
+                    if (!hasTargetNode)
+                    {
+                        if (IsObjectBlocked())
+                        {
+                            //stateMachine.SetWaitForNewPath(true);
+                            //yield return new WaitForSeconds(0.5f);
+                            //stateMachine.SetWaitForNewPath(false);
+
+                            stateMachine.SetWaitForNewPath(true);
+                            curWayNode = GetNearWalkableNode(curWayNode);
+                            yield return new WaitForSeconds(0.1f);
+                            hasTargetNode = true;
+                            stateMachine.SetWaitForNewPath(false);
+                        }
+                    }
+
                     if (!curWayNode.walkable)
                     {
                         curWayNode = null;
-                        RequestPath(transform.position, targetTr.position);
                         stateMachine.SetWaitForNewPath(true);
 
                         while (curWayNode == null)
-                            yield return null;
+                            yield return new WaitForSeconds(0.05f);
 
                         stateMachine.SetWaitForNewPath(false);
-                    }
 
-                    if (IsObjectBlocked())
-                    {
-                        stateMachine.SetWaitForNewPath(true);
-                        yield return new WaitForSeconds(0.5f);
-                        stateMachine.SetWaitForNewPath(false);
+                        //stateMachine.SetWaitForNewPath(true);
+                        //curWayNode = GetNearWalkableNode(curWayNode);
+                        //yield return new WaitForSeconds(0.1f);
+                        //hasTargetNode = true;
+                        //stateMachine.SetWaitForNewPath(false);
                     }
 
                     if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
+                        hasTargetNode = false;
                         ++targetIdx;
                         UpdateCurNode();
                         if (isAttack)
@@ -736,6 +818,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private float oriAttRange = 0f;
     private bool isAttack = false;
     private bool isSelect = false;
-    
-    
+
+    private List<EffectController> listEffectCtrl = null;
 }

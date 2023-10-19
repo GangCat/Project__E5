@@ -27,14 +27,14 @@ public struct SUnitState
     public bool isWaitForNewPath;
     [HideInInspector]
     public bool isPause;
+    [HideInInspector]
+    public EffectController effectCtrl;
 
     public float moveSpeed;
     public float attRate;
     public float attDmg;
 
     public EObjectType objectType;
-    public EffectController effectController;
-    
 
     public GameObject TurretMissile;
     public Transform missileSpawnTr;
@@ -77,7 +77,7 @@ public enum EUnitActionCommand { NONE = -1, MOVE_WITH_POS, MOVE_ATTACK, FOLLOW_O
 public enum EPauseCommand { NONE = -1, REGIST, REMOVE, TOGGLE_PAUSE, LENGTH }
 public enum ERefuncCurrencyCommand { NONE = -1, BUILD_STRUCTURE, UPGRADE_STRUCTURE, UPGRADE_UNIT, SPAWN_UNIT, UPGRADE_ENERGY, UPGRADE_POPULATION, SPAWN_NUCLEAR, LENGTH }
 public enum EDebugModeCommand { NONE = -1, MOVE_STATE_INDICATOR, LENGTH }
-public enum EMenuCommand { NONE = -1, DISPLAY_MENU, HIDE_MENU, LENGTH }
+public enum EMenuCommand { NONE = -1, DISPLAY_MENU, DISPLAY_OPTION, HIDE_MENU, DISPLAY_OPTION_GRAPHIC, DISPLAY_OPTION_SOUND, DISPLAY_OPTION_HOTKEY, RETURN_MENU, LENGTH }
 public enum EChangeHotkeyCommand { NONE = -1, SELECT_UNIT_FUNC_BUTTON, CONFIRM_UNIT_FUNC_BUTTON, SELECT_STRUCTURE_FUNC_BUTTON, CONFIRM_STRUCTURE_FUNC_BUTTON, SELECT_BUILD_FUNC_BUTTON, CONFIRM_BUILD_FUNC_BUTTON, SELECT_BARRACK_FUNC_BUTTON, CONFIRM_BARRACK_FUNC_BUTTON, LENGTH }
 public enum ECheckNodeBuildable { NONE = -1, CHECK_NODE_BUILDABLE_UNIT, LENGTH }
 
@@ -97,7 +97,5 @@ public enum EUpgradeType { NONE = -1, ENERGY, POPULATION, STRUCTURE, RANGED_DMG,
 
 public enum EAudioType_Advisor { NONE = -1, ENERGY, CORE, RESEARCH, UPGRADE, CONST_COMPLETE,CONST_CANCEL, PAUSE, RESUME, NUCLEAR_READY, NUCLEAR_LAUNCH, UNDERATTACK, LENGTH }
 public enum EAudioType_Misc { NONE = -1, NUCLEAR_EXPLOSION, LENGTH }
-
-public enum EEffectType_Attack { NONE = -1, HERO, UNIT_01, UNIT_02, ENEMY_01, ENEMY_02, LENGTH }
 
 // public enum EAudioHero1 { NONE = -1, SHOT, MOVE, LENGTH }
