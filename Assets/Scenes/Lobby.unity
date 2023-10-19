@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.38358, g: 325.10843, b: 430.30963, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -67,9 +67,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -182,10 +179,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: Project E5
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a3968b793c813d6428a33db91e14fbcf, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -8958952538134363508, guid: a3968b793c813d6428a33db91e14fbcf,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -8958952538134363508, guid: a3968b793c813d6428a33db91e14fbcf, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -685,10 +683,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC811\uC18D \uC815\uBCF4..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8e7bb99cf76bf464b92b3d665ce10320, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -1666949052524095984, guid: 8e7bb99cf76bf464b92b3d665ce10320,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -1666949052524095984, guid: 8e7bb99cf76bf464b92b3d665ce10320, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -820,10 +819,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: JOIN
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a3968b793c813d6428a33db91e14fbcf, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -8958952538134363508, guid: a3968b793c813d6428a33db91e14fbcf,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -8958952538134363508, guid: a3968b793c813d6428a33db91e14fbcf, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:

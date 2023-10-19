@@ -28,9 +28,8 @@ public class StateAttack : IState
         if (elapsedTime > attRate)
         {
             elapsedTime = 0f;
-            // ���� �ִϸ��̼� ���
 
-            AudioManager.instance.PlayAudio_Attack(objectType);     // ���� Audio
+            AudioManager.instance.PlayAudio_Attack(objectType);     // Attack Audio
             effectCtrl.EffectOn(1);
             targetTr.GetComponent<IDamageable>().GetDmg(attDmg);
         }

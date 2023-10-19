@@ -187,19 +187,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfaf88004a2e794783e5bab6eff631b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitState:
+  unitStateInfo:
     myTr: {fileID: 0}
     targetTr: {fileID: 0}
     targetPos: {x: 0, y: 0, z: 0}
     isWaitForNewPath: 0
     isPause: 0
+    effectCtrl: {fileID: 0}
     moveSpeed: 0
-    attRate: 3
-    attDmg: 5
-    objectType: 4
-    TurretMissile: {fileID: 3865807368766108358, guid: 6b29ddb4969f467459c9090eacc547a5,
-      type: 3}
-    missileSpawnTr: {fileID: 8014809672233857094}
+    attRate: 0
+    attDmg: 0
+    objectType: 0
+    TurretMissile: {fileID: 0}
+    missileSpawnTr: {fileID: 0}
 --- !u!114 &6523300460082605746
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -233,6 +233,11 @@ public class AudioManager : MonoBehaviour
     {
         AudioPlayer_UI.instance.PlayAudio(AudioPlayer_UI.EAudioType_UI.CLICK);
     }
+    
+    public void PlayAudio_BGM()
+    {
+        AudioPlayer_BGM.instance.PlayAudio();
+    }
 
     public struct AudioVolumes
     {

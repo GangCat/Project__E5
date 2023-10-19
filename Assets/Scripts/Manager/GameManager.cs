@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         InitManagers();
         RegistObserver();
 
+        AudioManager.instance.PlayAudio_BGM();
     }
 
     void Update()
@@ -272,6 +273,8 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private FogManager fogMng = null;
     private DebugModeManager debugMng = null;
     private AudioManager audioMng = null;
+    private EAudioType_BGM audioType;
+
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
