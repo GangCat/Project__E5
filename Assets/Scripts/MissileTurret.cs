@@ -61,7 +61,7 @@ public class MissileTurret : MonoBehaviour, IPauseObserver
 
     private void MissileAttack()
     {
-        Collider[] arrCol = Physics.OverlapSphere(transform.position, attackRange, targetLayer);
+        Collider[] arrCol = Physics.OverlapSphere(transform.position, attackRange, targetLayerMask);
         
         for(int i = 0; i < arrCol.Length; ++i)
         {
@@ -84,8 +84,8 @@ public class MissileTurret : MonoBehaviour, IPauseObserver
     private float attackRange = 5f;
     [SerializeField]
     private float attackDmg = 10f;
-    [SerializeField]
-    private LayerMask targetLayer;
+    [SerializeField] 
+    private LayerMask targetLayerMask;
 
     private bool isPause = false;
 }

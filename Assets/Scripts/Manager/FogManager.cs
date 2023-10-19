@@ -22,7 +22,8 @@ public class FogManager : MonoBehaviour, IPauseObserver
         fogComputeShader.SetTexture(0, "fogRenderTexture", newFogRenderTexture);
         fogComputeShader.SetTexture(0, "backBuffRenderTexture", newBackBuffRenderTexture);
         
-        UpdateFogTexture();
+        Invoke("UpdateFog", 5f);
+        //UpdateFogTexture();
     }
 
     public void IsDebugMode(bool _isDebugMode)
@@ -30,37 +31,54 @@ public class FogManager : MonoBehaviour, IPauseObserver
         isDebugMode = _isDebugMode;
     }
 
+    private void UpdateFog()
+    {
+        RenderTexture rt = RenderTexture.active;
+        
+        RenderTexture.active = newBackBuffRenderTexture;
+        
+        GL.PushMatrix();
+        GL.Clear(true, true, Color.black);
+        GL.PopMatrix();
+
+        RenderTexture.active = rt;
+        
+        UpdateFogTexture();
+    }
+
+
     private void UpdateFogTexture()
     {
+        testImage.color = Color.red;
         if (isPause)
         {
             Invoke("UpdateFogTexture", updateFogDelay);
             return;
         }
 
-        // fogRenderTexture °»½Å
+        // fogRenderTexture ï¿½ï¿½ï¿½ï¿½
         mainCam.RenderFog();
-        // ½¦ÀÌ´õÀÇ Àü¿ª¹è¿­¿¡ À¯´ÖÀÇ À§Ä¡, °Ç¹°ÀÇ À§Ä¡¸¦ ¹è¿­·Î º¸³¿.
+        // ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡, ï¿½Ç¹ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
 
 
-        // ÇØ´ç ³»¿ë newFogRenderTexture¿¡ º¹»ç
+        // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ newFogRenderTextureï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Graphics.CopyTexture(fogRenderTexture, newFogRenderTexture);
 
-        // newBackBufferRenderTexture¿¡ newFogRenderTextureÀÇ ³»¿ë µ¤¾î¾²±â
+        // newBackBufferRenderTextureï¿½ï¿½ newFogRenderTextureï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î¾²ï¿½ï¿½
         int threadGroupsX = Mathf.CeilToInt(newFogRenderTexture.width / 8f);
         int threadGroupsY = Mathf.CeilToInt(newFogRenderTexture.height / 8f);
         fogComputeShader.Dispatch(0, threadGroupsX, threadGroupsY, 1);
 
-        // °¢°¢ÀÇ ·»´õÅØ½ºÃÄÀÇ ³»¿ë ÅØ½ºÃÄ¿¡ º¹»ç
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½ï¿½Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         Graphics.CopyTexture(newFogRenderTexture, curFogTexture);
         Graphics.CopyTexture(newBackBuffRenderTexture, backBufftexture);
 
-        // °¢ ¿ÀºêÁ§Æ®ÀÇ ¸ÓÅ×¸®¾ó¿¡ ÅØ½ºÃÄ °»½Å
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_FogTexture", curFogTexture);
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_BackBufferTexture", backBufftexture);
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_MapTexture", mapRenderTexture);
 
-        // µð¹ö±ëÀ» À§ÇØ ÀÌ¹ÌÁö·Î º¯È¯ÇØ Ç¥½Ã
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ Ç¥ï¿½ï¿½
         if (isDebugMode)
         {
         Sprite spriteFog = Sprite.Create(curFogTexture, new Rect(0, 0, curFogTexture.width, curFogTexture.height), new Vector2(0.5f, 0.5f));
@@ -71,7 +89,7 @@ public class FogManager : MonoBehaviour, IPauseObserver
         bufferImage.sprite = spriteBuffer;
         }
 
-        // ¹Ýº¹
+        // ï¿½Ýºï¿½
         Invoke("UpdateFogTexture", updateFogDelay);
     }
 
@@ -109,6 +127,8 @@ public class FogManager : MonoBehaviour, IPauseObserver
     private CameraMovement mainCam = null;
     [SerializeField]
     private bool isDebugMode = false;
+
+    [SerializeField] private Image testImage = null;
 
     private Texture2D curFogTexture = null;
     private Texture2D backBufftexture = null;

@@ -47,7 +47,7 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
             yield return null;
         }
 
-        Collider[] arrCol = Physics.OverlapSphere(transform.position, attackRange, targetLayer);
+        Collider[] arrCol = Physics.OverlapSphere(transform.position, attackRange, targetMask);
         for(int i = 0; i < arrCol.Length; ++i)
             arrCol[i].gameObject.GetComponent<SelectableObject>().GetDmg(150);
 
@@ -67,11 +67,11 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
     private float attackRange = 0f;
     [SerializeField]
     private float launchSpeed = 0f;
-    [SerializeField]
-    private LayerMask targetLayer;
 
     private bool isPause = false;
 
     private EObjectType objectType;
     private EAudioType_Misc audioType;
+
+    [SerializeField] private LayerMask targetMask;
 }
