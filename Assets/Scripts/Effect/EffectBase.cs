@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class EffectBase : MonoBehaviour
 {
-    public void DisplayEffect()
+    public virtual void Init()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public virtual void DisplayEffect()
     {
         if (!isActive)
         {
             isActive = true;
             gameObject.SetActive(true);
-            StartCoroutine("AutoDisableCoroutine");
+            Invoke("DisableObject", activeTime);
         }
     }
 
-    private IEnumerator AutoDisableCoroutine()
+    protected virtual void DisableObject()
     {
-        yield return new WaitForSeconds(activeTime);
         isActive = false;
         gameObject.SetActive(false);
     }
 
-    private bool isActive = false;
+    protected bool isActive = false;
     [SerializeField]
-    private float activeTime = 0f;
+    protected float activeTime = 0f;
 }

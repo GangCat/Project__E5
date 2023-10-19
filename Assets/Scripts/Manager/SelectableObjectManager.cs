@@ -15,6 +15,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
         unitInfoContainer = new UnitInfoContainer();
         listFriendlyUnitInfo = new List<SFriendlyUnitInfo>(12);
+        deadEffectMemoryPool = new MemoryPool(unitDeadEffect, 5, transform);
         arrMemoryPool = new MemoryPool[arrUnitPrefab.Length];
 
         for (int i = 0; i < listFriendlyUnitInfo.Capacity; ++i)
@@ -249,8 +250,15 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void DeactivateUnit(GameObject _removeGo, EUnitType _unitType, FriendlyObject _fObj)
     {
+        GameObject deadEffectGo = deadEffectMemoryPool.ActivatePoolItem(5, transform);
+        deadEffectGo.GetComponent<EffectUnitDead>().Init(_removeGo.transform.position, DeactivateEffectDead);
         arrMemoryPool[(int)_unitType].DeactivatePoolItem(_removeGo);
         RemoveUnitAtList(_fObj);
+    }
+
+    public void DeactivateEffectDead(Transform _tr)
+    {
+        deadEffectMemoryPool.DeactivatePoolItem(_tr.gameObject);
     }
 
     public void SetRallyPoint(Vector3 _pos)
@@ -822,6 +830,10 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
+    [SerializeField]
+    private GameObject unitDeadEffect = null;
+
+    private MemoryPool deadEffectMemoryPool = null;
 
     private static int levelRangedUnitDmgUpgrade = 1;
     private static int levelRangedUnitHpUpgrade = 1;

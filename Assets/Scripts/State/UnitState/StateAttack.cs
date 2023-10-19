@@ -28,7 +28,6 @@ public class StateAttack : IState
         if (elapsedTime > attRate)
         {
             elapsedTime = 0f;
-            // ���� �ִϸ��̼� ���
 
             AudioManager.instance.PlayAudio_Attack(objectType);     // ���� Audio
             effectCtrl.EffectOn(1);

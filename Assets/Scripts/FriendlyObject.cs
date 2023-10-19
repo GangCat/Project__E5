@@ -19,6 +19,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         if (stateMachine != null)
         {
             effectCtrl = GetComponent<EffectController>();
+            effectCtrl.Init();
             oriAttRange = attackRange;
             stateMachine.Init(GetCurState, effectCtrl);
             ResetStateStack();
@@ -156,7 +157,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
         if (crowdIdx != -1)
             ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.REMOVE_AT_CROWD, crowdIdx, this);
 
-        effectCtrl.EffectOn(2);
         SelectableObjectManager.ResetFriendlyNodeWalkable(transform.position, nodeIdx);
         Broker.UnSubscribe(this, EPublisherType.SELECTABLE_MANAGER);
         ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD, gameObject, unitType, this);
@@ -164,7 +164,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     private void DeactivateHero()
     {
-        effectCtrl.EffectOn(2);
         SelectableObjectManager.ResetHeroUnitNode(transform.position);
         ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DEAD_HERO, this);
     }

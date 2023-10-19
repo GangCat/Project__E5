@@ -24,11 +24,11 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_EnemyUnitBig
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 8b977f98728392e488fbf586603e26c4,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _RECEIVE_SHADOWS_OFF
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -36,7 +36,6 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap:
     MotionVector: User
-    RenderType: Opaque
   disabledShaderPasses:
   - DistortionVectors
   - MOTIONVECTORS
@@ -49,6 +48,10 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _ANISOTROPY_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Albedo:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -148,7 +151,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Metallic:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -346,6 +357,7 @@ Material:
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _REFLECTIONS_IOR: 1.52
     - _REFLECTIONS_ROUGHNESS: 1
@@ -405,6 +417,7 @@ Material:
     - _ZTestModeDistortion: 4
     - _ZTestTransparent: 4
     - _ZWrite: 1
+    - _isDamaged: 0
     m_Colors:
     - _BASE_COLOR: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 0.509434, g: 0.27813557, b: 0.22828409, a: 1}

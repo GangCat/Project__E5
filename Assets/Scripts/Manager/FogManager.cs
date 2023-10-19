@@ -59,6 +59,7 @@ public class FogManager : MonoBehaviour, IPauseObserver
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_FogTexture", curFogTexture);
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_BackBufferTexture", backBufftexture);
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_MapTexture", mapRenderTexture);
+        ImageMinimap.SetVisibleTexture(curFogTexture);
 
         // 디버깅을 위해 이미지로 변환해 표시
         if (isDebugMode)
