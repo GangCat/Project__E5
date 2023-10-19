@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -4067709134023557582}
   - component: {fileID: 6658795262490872139}
   m_Layer: 10
-  m_Name: P_TempNuclearBlueprint
+  m_Name: P_BlueprintNuclear
   m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEditor.Experimental.GraphView;
 
 public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject, IPauseObserver
 {
@@ -11,6 +12,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         ArrayPauseCommand.Use(EPauseCommand.REGIST,this);
         imageMinimap = GetComponent<Image>();
         tex2d = new Texture2D(256, 256);
+        visibleAreaTexture = new Texture2D(256, 256);
         //tex2d.name = "Set Pixel";
         texW = tex2d.width;
         texH = tex2d.height;
@@ -29,6 +31,20 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         }
 
         StartCoroutine("UpdateMinimap");
+    }
+
+    public static void SetVisibleTexture(Texture2D _tex)
+    {
+        RenderTexture rt = new RenderTexture(256, 256, 0);
+        Graphics.Blit(_tex, rt);
+
+        RenderTexture.active = rt;
+        visibleAreaTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
+        visibleAreaTexture.Apply();
+
+        // 더 이상 RenderTexture를 사용하지 않을 때 메모리에서 해제합니다.
+        RenderTexture.active = null;
+        Destroy(rt);
     }
 
     public void Init(float _worldSizeX, float _worldSizeY)
@@ -74,14 +90,20 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
         foreach (PF_Node node in SelectableObjectManager.DicNodeUnderFriendlyUnit.Values)
         {
-            tempFriendlyNodeList.Add(node);
-            tex2d.SetPixel(node.gridX, node.gridY, Color.green);
+            //if (visibleAreaTexture.GetPixel(node.gridX, node.gridY).Equals(Color.white))
+            //{
+                tempFriendlyNodeList.Add(node);
+                tex2d.SetPixel(node.gridX, node.gridY, Color.green);
+            //}
         }
 
         foreach (PF_Node node in SelectableObjectManager.DicNodeUnderEnemyUnit.Values)
         {
-            tempEnemyNodeList.Add(node);
-            tex2d.SetPixel(node.gridX, node.gridY, Color.red);
+            //if (visibleAreaTexture.GetPixel(node.gridX, node.gridY).Equals(Color.white))
+            //{
+                tempEnemyNodeList.Add(node);
+                tex2d.SetPixel(node.gridX, node.gridY, Color.red);
+            //}
         }
 
         PF_Node tempNode = null;
@@ -140,6 +162,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         isPause = _isPause;
     }
 
+    private static Texture2D visibleAreaTexture = null;
+
     private Image imageMinimap = null;
     private Texture2D tex2d = null;
     private Rect texRect;
@@ -152,8 +176,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     private List<PF_Node> tempFriendlyNodeList = new List<PF_Node>();
     private List<PF_Node> tempEnemyNodeList = new List<PF_Node>();
 
-    private float worldSizeX = 0f; // �̴ϸʿ� ǥ���� ������ ���α���
-    private float worldSizeY = 0f; // �̴ϸʿ� ǥ���� ������ ���α���
+    private float worldSizeX = 0f;
+    private float worldSizeY = 0f;
 
     private bool isPause = false;
     

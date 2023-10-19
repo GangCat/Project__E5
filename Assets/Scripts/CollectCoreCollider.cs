@@ -13,7 +13,7 @@ public class CollectCoreCollider : MonoBehaviour
     {
         if (_other.CompareTag("PowerCore"))
         {
-            effectCtrl.EffectOn(4);
+            effectCtrl.EffectOn(3);
             ArrayCurrencyCommand.Use(ECurrencyCommand.COLLECT_CORE, coreAmount);
             Destroy(_other.gameObject);
         }

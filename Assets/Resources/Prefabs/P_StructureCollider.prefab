@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 5333182755729341428}
   - component: {fileID: 4657191581532989539}
   - component: {fileID: 1466890935462516663}
-  - component: {fileID: 8049170016195668690}
   m_Layer: 14
-  m_Name: P_TempStructureCollider
+  m_Name: P_StructureCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,19 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639b043bada29c443a4f1fee2b61ec47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8049170016195668690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9141583549409404733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3a64cf2e7390bd4798e133363b7a0b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arrEffect: []
 --- !u!1001 &2138310563419081031
 PrefabInstance:
   m_ObjectHideFlags: 0

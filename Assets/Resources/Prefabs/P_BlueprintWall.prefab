@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6126758822872318196}
   - component: {fileID: -6226364378777565952}
   m_Layer: 10
-  m_Name: P_TempWallBlueprint
+  m_Name: P_BlueprintWall
   m_TagString: FriendlyStructure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

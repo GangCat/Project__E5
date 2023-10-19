@@ -15,6 +15,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 
         memoryPoolWave = new MemoryPool(enemyPrefab, 5, waveEnemyHolder);
         memoryPoolMap = new MemoryPool(enemyPrefab, 5, mapEnemyHolder);
+        memoryPoolEnemyDeadEffect = new MemoryPool(enemyDeadEffect, 5, transform);
+
         ArrayHUDCommand.Use(EHUDCommand.INIT_WAVE_TIME, bigWaveDelay_sec);
         SpawnMapEnemy();
         StartCoroutine("WaveControll");
@@ -94,15 +96,25 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 
     public void DeactivateWaveEnemy(GameObject _removeGo, int _waveEnemyIdx)
     {
-        GameObject enemyGo = memoryPoolWave.DeactivatePoolItemWithIdx(_removeGo, _waveEnemyIdx);
-        if (enemyGo == null) return;
-        // ���̾� ����
-        enemyGo.layer = LayerMask.NameToLayer("EnemyDead");
+        DisplayEnemyDeadEffect(_removeGo.transform.position);
+        memoryPoolWave.DeactivatePoolItemWithIdx(_removeGo, _waveEnemyIdx);
     }
 
     public void DeactivateMapEnemy(GameObject _removeGo, int _mapEnemyIdx)
     {
+        DisplayEnemyDeadEffect(_removeGo.transform.position);
         memoryPoolMap.DeactivatePoolItemWithIdx(_removeGo, _mapEnemyIdx);
+    }
+
+    private void DisplayEnemyDeadEffect(Vector3 _enemyPos)
+    {
+        GameObject effectGo = memoryPoolEnemyDeadEffect.ActivatePoolItem(5, transform);
+        effectGo.GetComponent<EffectUnitDead>().Init(new Vector3(_enemyPos.x, _enemyPos.y + 1f, _enemyPos.z), DeactivateEffect);
+    }
+
+    private void DeactivateEffect(Transform _tr)
+    {
+        memoryPoolEnemyDeadEffect.DeactivatePoolItem(_tr.gameObject);
     }
 
     private IEnumerator SpawnWaveEnemyCoroutine(Vector3 _spawnPos, int _count)
@@ -161,6 +173,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private GameObject enemyPrefab = null;
     [SerializeField]
     private EnemyMapSpawnPoint[] arrMapSpawnPoint = null;
+    [SerializeField]
+    private GameObject enemyDeadEffect = null;
 
     [Header("-Enemy Map Random Spawn(outer > inner)")]
     [SerializeField]
@@ -199,4 +213,6 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private float smallWaveTimeDelay = 0f;
 
     private PF_Grid grid = null;
+
+    private MemoryPool memoryPoolEnemyDeadEffect = null;
 }
