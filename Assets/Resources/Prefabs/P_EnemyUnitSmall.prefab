@@ -503,10 +503,25 @@ PrefabInstance:
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
       value: 0.21003002
       objectReference: {fileID: 0}
+    - target: {fileID: 220467442998608300, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8471590968468972389, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471590968468972389, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471590968468972389, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8471590968468972389, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
         type: 3}
@@ -516,12 +531,12 @@ PrefabInstance:
     - target: {fileID: 8471590968468972389, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.122
       objectReference: {fileID: 0}
     - target: {fileID: 8471590968468972389, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 8471590968468972389, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
         type: 3}
@@ -557,6 +572,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471590968468972389, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8705917809139135886, guid: fbf7d9c716e1e5a47982fcfef6ded4b6,
         type: 3}
