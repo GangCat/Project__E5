@@ -622,6 +622,11 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             stateMachine.SetIsPause(_isPause);
     }
 
+    protected void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     [Header("-Unit Attribute")]
     [SerializeField]
     protected EObjectType objectType = EObjectType.NONE;

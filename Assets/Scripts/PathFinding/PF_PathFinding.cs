@@ -13,8 +13,8 @@ public class PF_PathFinding : MonoBehaviour
         grid.Init(_gridWorldSizeX, _gridWorldSizeY);
         finishPathFindCallback = _finishPathFindCallback;
 
-        openSet = new PF_Heap<PF_Node>(searchLimitCnt + 100);
-        closedSet = new HashSet<PF_Node>(searchLimitCnt + 100);
+        openSet = new PF_Heap<PF_Node>(grid.MaxSize);
+        closedSet = new HashSet<PF_Node>(grid.MaxSize);
         listNeighbor = new List<PF_Node>(8);
         listWayNode = new List<PF_Node>();
     }
@@ -70,6 +70,7 @@ public class PF_PathFinding : MonoBehaviour
 
             while (openSet.Count > 0)
                 openSet.RemoveFirstItem();
+
             closedSet.Clear();
             openSet.Add(startNode);
 
@@ -80,7 +81,7 @@ public class PF_PathFinding : MonoBehaviour
 
                 closedSet.Add(curNode);
 
-                if (openSet.Count > 200)
+                if (openSet.Count > searchLimitCnt)
                 {
                     isPathSuccess = true;
                     break;

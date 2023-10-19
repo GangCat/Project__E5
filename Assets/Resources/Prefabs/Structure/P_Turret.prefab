@@ -202,7 +202,7 @@ MonoBehaviour:
     moveSpeed: 0
     attRate: 5
     attDmg: 0
-    objectType: 0
+    objectType: 4
     TurretMissile: {fileID: 3865807368766108358, guid: 6b29ddb4969f467459c9090eacc547a5,
       type: 3}
     missileSpawnTr: {fileID: 8014809672233857094}

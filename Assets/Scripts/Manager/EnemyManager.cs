@@ -122,20 +122,19 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         int unitCnt = 0;
         while (unitCnt < _count)
         {
+            Vector3 spawnPos = _spawnPos + Functions.GetRandomPosition(WaveOuterCircleRad, WaveInnerCircleRad);
+            PF_Node spawnNode = grid.GetNodeFromWorldPoint(spawnPos);
+            if (!spawnNode.walkable)
+                continue;
+
             GameObject enemyGo = memoryPoolWave.ActivatePoolItemWithIdx(waveEnemyIdx, 5, waveEnemyHolder);
             EnemyObject enemyObj = enemyGo.GetComponent<EnemyObject>();
-            enemyObj.Position = _spawnPos;
+            enemyObj.Position = spawnPos;
             enemyObj.Init();
             enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
             enemyObj.MoveAttack(mainBasePos);
             ++waveEnemyIdx;
             ++unitCnt;
-
-            if (_spawnPos.x >= 55f)
-                _spawnPos.x = 45f;
-            else
-                _spawnPos.x += 1f;
-
             yield return null;
         }
     }
@@ -184,7 +183,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     [SerializeField]
     private int mapSpawnCnt = 0;
 
-    [Header("-Wave Attribute")]
+    [Header("-Wave Attribute(outer > inner)")]
     [SerializeField]
     private float smallWaveDelay_sec = 3;
     [SerializeField]
@@ -193,6 +192,11 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private int totalBigWaveCnt = 3;
     [SerializeField]
     private WaveStartPoint[] arrWaveStartPoint = null;
+    [SerializeField]
+    private float WaveOuterCircleRad = 0f;
+    [SerializeField]
+    private float WaveInnerCircleRad = 0f;
+
 
     private MemoryPool memoryPoolWave = null;
     private MemoryPool memoryPoolMap = null;

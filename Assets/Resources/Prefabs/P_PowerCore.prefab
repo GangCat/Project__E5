@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 6148895960970572742}
   - component: {fileID: 384654700944292835}
   m_Layer: 17
-  m_Name: P_TempPowerCore
+  m_Name: P_PowerCore
   m_TagString: PowerCore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
