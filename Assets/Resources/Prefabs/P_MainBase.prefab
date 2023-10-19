@@ -359,6 +359,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_EffectStructureConstructStart_0
       objectReference: {fileID: 0}
+    - target: {fileID: 8867055434725810412, guid: d87e6ec8240779449bd5cdf7292058d5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8867055434725810412, guid: d87e6ec8240779449bd5cdf7292058d5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.054581404
+      objectReference: {fileID: 0}
+    - target: {fileID: 8867055434725810412, guid: d87e6ec8240779449bd5cdf7292058d5,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

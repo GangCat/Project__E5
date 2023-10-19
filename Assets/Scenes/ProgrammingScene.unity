@@ -16501,7 +16501,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.46975163}
+  m_AnchoredPosition: {x: 0, y: 0.00001646648}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &898983054
@@ -29630,11 +29630,76 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2018547504}
     m_Modifications:
+    - target: {fileID: 831959120875799207, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.021962404
+      objectReference: {fileID: 0}
+    - target: {fileID: 831959120875799207, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 831959120875799207, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570143802648616543, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570143802648616543, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.95132554
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570143802648616543, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948589549275729229, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948589549275729229, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.20422697
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948589549275729229, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2133354679186706208, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
       propertyPath: 'arrEffect.Array.data[2]'
       value: 
       objectReference: {fileID: 1545184685}
+    - target: {fileID: 3127913652129645261, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127913652129645261, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3127913652129645261, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182633905611000118, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6917241794151303350, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
       propertyPath: m_Name
@@ -29691,7 +29756,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4182633905611000118, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b, type: 3}
@@ -38481,7 +38547,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1259902685}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9573785
+  m_Size: 0.99919766
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
