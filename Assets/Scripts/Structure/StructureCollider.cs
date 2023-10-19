@@ -8,7 +8,10 @@ public class StructureCollider : MonoBehaviour, IGetObjectType, IDamageable
     {
         getDmgCallback = _getDmgCallback;
         objectType = _objectType;
+        effectCtrl = GetComponent<EffectController>();
     }
+
+    public EffectController GetEffectCtrl => effectCtrl;
 
     public void Init()
     {
@@ -17,6 +20,7 @@ public class StructureCollider : MonoBehaviour, IGetObjectType, IDamageable
 
     public void GetDmg(float _dmg)
     {
+        effectCtrl.EffectOn(2);
         getDmgCallback?.Invoke(_dmg);
     }
 
@@ -38,4 +42,5 @@ public class StructureCollider : MonoBehaviour, IGetObjectType, IDamageable
     private VoidFloatDelegate getDmgCallback = null;
     private EObjectType objectType = EObjectType.NONE;
     private Renderer beamRenderer = null;
+    private EffectController effectCtrl = null;
 }

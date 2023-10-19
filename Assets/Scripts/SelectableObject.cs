@@ -11,6 +11,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         gridInstance = PF_Grid.instance;
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         SelectableObjectManager.InitNodeEnemy(transform.position, out nodeIdx);
+
+        effectCtrl = GetComponent<EffectController>();
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
         // 이거 메모리풀이라서 애들 비활성화될 때 unselect당하고 비활성화해서 다시 활성화할 때 못찾아서 에러나는거임.
@@ -21,7 +23,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
         if (stateMachine)
         {
-            stateMachine.Init(GetCurState);
+            stateMachine.Init(GetCurState, effectCtrl);
             ResetStateStack();
             StateIdle();
             UpdateCurNode();
@@ -667,4 +669,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected PF_Grid gridInstance = null;
 
     protected bool hasTargetNode = false;
+
+    protected EffectController effectCtrl = null;
 }

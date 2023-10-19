@@ -24,17 +24,6 @@ public class MenuImageBase : MonoBehaviour
         gameObject.SetActive(_isActive);
     }
 
-    public void ChangeImageHeight()
-    {
-        myRt.anchorMax = new Vector2(myRt.anchorMax.x, 0.2f);
-        myRt.anchorMin = new Vector2(myRt.anchorMin.x, 0.3f);
-
-        //myRt.offsetMin = Vector2.zero;
-        //myRt.offsetMax = Vector2.zero;
-        //myRt.rect.width = 100;
-        //Screen.width
-    }
-
     protected RectTransform myRt = null;
     [SerializeField, Range(0, 0.5f)]
     protected float topOffset = 0f;

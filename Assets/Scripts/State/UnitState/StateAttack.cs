@@ -11,7 +11,7 @@ public class StateAttack : IState
         attRate = _structState.attRate;
         attDmg = _structState.attDmg;
         objectType = _structState.objectType;
-
+        effectCtrl = _structState.effectCtrl;
     }
 
     public void Update(ref SUnitState _structState)
@@ -31,7 +31,7 @@ public class StateAttack : IState
             // ���� �ִϸ��̼� ���
 
             AudioManager.instance.PlayAudio_Attack(objectType);     // ���� Audio
-            
+            effectCtrl.EffectOn(1);
             targetTr.GetComponent<IDamageable>().GetDmg(attDmg);
         }
     }
@@ -49,4 +49,5 @@ public class StateAttack : IState
     private Transform myTr = null;
 
     private Vector3 dir = Vector3.zero;
+    private EffectController effectCtrl = null;
 }

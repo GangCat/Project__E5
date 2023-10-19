@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7330500162855589593}
   - component: {fileID: 7179781643778605711}
   - component: {fileID: 8690997603253739059}
+  - component: {fileID: 2133354679186706208}
   m_Layer: 19
   m_Name: P_Player
   m_TagString: FriendlyUnit
@@ -89,14 +90,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfaf88004a2e794783e5bab6eff631b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitState:
+  unitStateInfo:
     myTr: {fileID: 0}
     targetTr: {fileID: 0}
     targetPos: {x: 0, y: 0, z: 0}
     isWaitForNewPath: 0
     isPause: 0
+    effectCtrl: {fileID: 2133354679186706208}
     moveSpeed: 5
-    attRate: 0.7
+    attRate: 2
     attDmg: 2
     objectType: 2
     TurretMissile: {fileID: 0}
@@ -144,6 +146,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15c783f5e7cfa04db13b8ed2ca221ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2133354679186706208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6917241794151303350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a64cf2e7390bd4798e133363b7a0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrEffect: []
 --- !u!1 &8045918028269532973
 GameObject:
   m_ObjectHideFlags: 0

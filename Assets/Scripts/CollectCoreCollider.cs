@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class CollectCoreCollider : MonoBehaviour
 {
+    public void Init(EffectController _effectCtrl)
+    {
+        effectCtrl = _effectCtrl;
+    }
+
     private void OnTriggerEnter(Collider _other)
     {
         if (_other.CompareTag("PowerCore"))
         {
-            ArrayCurrencyCommand.Use(ECurrencyCommand.COLLECT_CORE, (uint)20);
+            effectCtrl.EffectOn(4);
+            ArrayCurrencyCommand.Use(ECurrencyCommand.COLLECT_CORE, coreAmount);
             Destroy(_other.gameObject);
         }
     }
+
+    [SerializeField]
+    private uint coreAmount = 20;
+
+    private EffectController effectCtrl = null;
 }

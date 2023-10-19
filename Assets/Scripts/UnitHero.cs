@@ -8,7 +8,10 @@ public class UnitHero : MonoBehaviour
     {
         myObj = GetComponent<FriendlyObject>();
         statusHp = GetComponent<StatusHp>();
+        effectCtrl = GetComponent<EffectController>();
+        col = GetComponentInChildren<CollectCoreCollider>();
         myObj.Init();
+        col.Init(effectCtrl);
     }
 
     public void Dead()
@@ -22,8 +25,11 @@ public class UnitHero : MonoBehaviour
         gameObject.SetActive(true);
         myObj.SetIdleState();
         statusHp.Init();
+        effectCtrl.EffectOn(3);
     }
 
     private FriendlyObject myObj = null;
     private StatusHp statusHp = null;
+    private EffectController effectCtrl = null;
+    private CollectCoreCollider col = null;
 }

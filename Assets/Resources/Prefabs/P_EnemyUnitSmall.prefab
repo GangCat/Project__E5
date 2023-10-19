@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8204235503644602067}
   - component: {fileID: 4815547369824481657}
   - component: {fileID: 4548737042386696750}
+  - component: {fileID: 6352431132764653618}
   m_Layer: 20
   m_Name: P_EnemyUnitSmall
   m_TagString: EnemyUnit
@@ -87,14 +88,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfaf88004a2e794783e5bab6eff631b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitState:
+  unitStateInfo:
     myTr: {fileID: 0}
     targetTr: {fileID: 0}
     targetPos: {x: 0, y: 0, z: 0}
     isWaitForNewPath: 0
     isPause: 0
-    moveSpeed: 3
-    attRate: 0.7
+    effectCtrl: {fileID: 0}
+    moveSpeed: 4
+    attRate: 1
     attDmg: 1
     objectType: 9
     TurretMissile: {fileID: 0}
@@ -128,6 +130,19 @@ MonoBehaviour:
     m_Bits: 540672
   powerCorePrefab: {fileID: 5884904722928855986, guid: 1a643c881652e6d4098d4f2d254e4038,
     type: 3}
+--- !u!114 &6352431132764653618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 186232715040071189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3a64cf2e7390bd4798e133363b7a0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrEffect: []
 --- !u!1001 &144476550787483985
 PrefabInstance:
   m_ObjectHideFlags: 0

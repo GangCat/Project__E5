@@ -27,13 +27,14 @@ public struct SUnitState
     public bool isWaitForNewPath;
     [HideInInspector]
     public bool isPause;
+    [HideInInspector]
+    public EffectController effectCtrl;
 
     public float moveSpeed;
     public float attRate;
     public float attDmg;
 
     public EObjectType objectType;
-    
 
     public GameObject TurretMissile;
     public Transform missileSpawnTr;
