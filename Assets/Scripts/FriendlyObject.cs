@@ -792,6 +792,16 @@ public class FriendlyObject : SelectableObject, ISubscriber
         stateMachine.UpgradeAttDmg((_level - 1) * 2);
     }
 
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public Vector3 GetEffectPosition()
+    {
+        Vector3 offset = new Vector3(0, 1, 0);
+        return transform.position + offset;
+    }
 
 
     [Header("-Friendly Unit Attribute")]

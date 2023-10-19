@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Resources/Audio/BGM/MainBGM.meta
 guid: e9deb91d80cc116459709ee4a8d01c10
 folderAsset: yes
+========
+guid: bc8d951514ae11f499253533a34573bb
+>>>>>>>> b2ef880dd2a440a8a24da4535c64c7b55e0d4574:Assets/3DParticles.unitypackage.gz.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
