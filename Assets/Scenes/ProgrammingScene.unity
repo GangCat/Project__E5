@@ -16242,7 +16242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0001371932}
+  m_AnchoredPosition: {x: 0, y: 0.00010179042}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &898983054
@@ -22278,6 +22278,8 @@ MonoBehaviour:
   - 2
   - 5
   - 3
+  destroyEffect: {fileID: 5807286319859665120, guid: f433d2ad8b6e33c4288768ade771448c,
+    type: 3}
 --- !u!1001 &1172979819
 PrefabInstance:
   m_ObjectHideFlags: 0

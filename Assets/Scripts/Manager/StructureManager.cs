@@ -10,6 +10,7 @@ public class StructureManager : MonoBehaviour
         grid = _grid;
         dicStructure = new Dictionary<int, Structure>();
         listNuclearStructure = new List<StructureNuclear>();
+        memorypoolDestroyEffect = new MemoryPool(destroyEffect, 5, transform);
         dicStructure.Add(0, _mainBase);
         ++structureIdx;
     }
@@ -99,8 +100,15 @@ public class StructureManager : MonoBehaviour
             listNuclearStructure.Remove(_nuclear);
 
         dicStructure.Remove(_structureIdx);
+        GameObject effectGo = memorypoolDestroyEffect.ActivatePoolItem(5, transform);
+        effectGo.GetComponent<EffectStructureDestroy>().Init(structure.transform.position, DeactivateEffectDestroy);
         structure.DestroyStructure();
         InstantiateRuin(structure);
+    }
+
+    public void DeactivateEffectDestroy(Transform _tr)
+    {
+        memorypoolDestroyEffect.DeactivatePoolItem(_tr.gameObject);
     }
 
     private IEnumerator ShowBlueprint()
@@ -293,6 +301,10 @@ public class StructureManager : MonoBehaviour
     [SerializeField]
     private float[] buildDelay = new float[(int)EStructureType.LENGTH];
 
+    [Header("-ETC")]
+    [SerializeField]
+    private GameObject destroyEffect = null;
+
     private Dictionary<int, Structure> dicStructure = null;
     private List<StructureNuclear> listNuclearStructure = null;
     private Structure curStructure = null;
@@ -305,4 +317,7 @@ public class StructureManager : MonoBehaviour
     private int structureIdx = 0;
 
     private static int upgradeLimit = 1;
+
+    private MemoryPool memorypoolDestroyEffect = null;
+
 }

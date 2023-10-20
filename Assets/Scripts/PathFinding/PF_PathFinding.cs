@@ -13,8 +13,8 @@ public class PF_PathFinding : MonoBehaviour
         grid.Init(_gridWorldSizeX, _gridWorldSizeY);
         finishPathFindCallback = _finishPathFindCallback;
 
-        openSet = new PF_Heap<PF_Node>(grid.MaxSize);
-        closedSet = new HashSet<PF_Node>(grid.MaxSize);
+        openSet = new PF_Heap<PF_Node>(searchLimitCnt + 100);
+        closedSet = new HashSet<PF_Node>(searchLimitCnt + 100);
         listNeighbor = new List<PF_Node>(8);
         listWayNode = new List<PF_Node>();
     }
