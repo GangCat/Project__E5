@@ -233,7 +233,42 @@ public class AudioManager : MonoBehaviour
     {
         AudioPlayer_UI.instance.PlayAudio(AudioPlayer_UI.EAudioType_UI.CLICK);
     }
+    
+    public void PlayAudio_BGM()
+    {
+        AudioPlayer_BGM.instance.PlayAudio();
+    }
 
+    public void StopAudio_BGM()
+    {
+        AudioPlayer_BGM.instance.StopAudio();
+    }
+    
+    public void StopAudio_BGM_WithFade(float _fadeDuration = 1.0f)
+    {
+        AudioPlayer_BGM.instance.StopAudioWithFade(_fadeDuration);
+    }
+    
+    public void PlayAudio_WaveBGM()
+    {
+        AudioPlayer_WaveBGM.instance.PlayAudio();
+    }
+
+    public void PlayAudio_WaveBGM_WithDelay(float delay = 1.0f)
+    {
+        AudioPlayer_WaveBGM.instance.PlayAudioWithDelay(delay);
+    }
+    
+    public void StopAudio_WaveBGM()
+    {
+        AudioPlayer_WaveBGM.instance.StopAudio();
+    }
+    
+    public void StopAudio_WaveBGM_WithFade(float _fadeDuration = 1.0f)
+    {
+        AudioPlayer_WaveBGM.instance.StopAudioWithFade(_fadeDuration);
+    }
+    
     public struct AudioVolumes
     {
         public float Main;

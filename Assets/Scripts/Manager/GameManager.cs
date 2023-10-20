@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour, IPauseSubject
         InitCommandList();
         InitManagers();
         RegistObserver();
+        
+        AudioManager.instance.PlayAudio_BGM();
 
     }
 

@@ -122,28 +122,16 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
             else if (objectType.Equals(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE))
             {
-                for (int i = 0; i < listEffectCtrl.Count; ++i)
-                {
-                    listEffectCtrl[i].EffectOn(3);
-                }
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject);
             }
             else if (objectType.Equals(EObjectType.BUNKER))
             {
-                for (int i = 0; i < listEffectCtrl.Count; ++i)
-                {
-                    listEffectCtrl[i].EffectOn(3);
-                }
                 GetComponent<StructureBunker>().OutAllUnit();
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
             }
             else
             {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
-                for (int i = 0; i < listEffectCtrl.Count; ++i)
-                {
-                    listEffectCtrl[i].EffectOn(3);
-                }
             }
 
             ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);

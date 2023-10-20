@@ -20,6 +20,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         ArrayHUDCommand.Use(EHUDCommand.INIT_WAVE_TIME, bigWaveDelay_sec);
         SpawnMapEnemy();
         StartCoroutine("WaveControll");
+        
     }
 
     public void StartBigWaveCheat()
@@ -69,11 +70,11 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 smallWaveTimeDelay = 0f;
                 smallWaveCnt = 0;
 
-                GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
-                EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
-                enemyObj.Init();
-                enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
-                enemyObj.MoveAttack(mainBasePos);
+                //GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
+                //EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
+                //enemyObj.Init();
+                //enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+                //enemyObj.MoveAttack(mainBasePos);
             }
         }
 
@@ -81,16 +82,20 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 
     private void FinalWaveStart()
     {
+        AudioManager.instance.StopAudio_BGM_WithFade(3.0f);
+        
+        AudioManager.instance.PlayAudio_WaveBGM_WithDelay(5.0f);
+        
         ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, 0f);
         for (int i = 0; i < totalBigWaveCnt; ++i)
         {
             SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, totalBigWaveCnt * 100);
 
-            GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
-            EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
-            enemyObj.Init();
-            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
-            enemyObj.MoveAttack(mainBasePos);
+            //GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
+            //EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
+            //enemyObj.Init();
+            //enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+            //enemyObj.MoveAttack(mainBasePos);
         }
 
         EnemyObject[] arrAllMapEnemy = mapEnemyHolder.GetComponentsInChildren<EnemyObject>();
@@ -235,4 +240,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private PF_Grid grid = null;
 
     private MemoryPool memoryPoolEnemyDeadEffect = null;
+
+    private AudioManager audioMng = null;
+    // private AudioPlayer_BGM audioType;
+    
 }
