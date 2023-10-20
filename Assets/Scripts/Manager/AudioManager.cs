@@ -19,38 +19,59 @@ public class AudioManager : MonoBehaviour
         }
 
         foreach (AudioPlayerBase APB in GetComponentsInChildren<AudioPlayerBase>())
-            APB.Init();
-    }
-
-
-    // 오디오 플레이어를 리스트에 추가하는 함수
-    public void RegisterAudioPlayer(AudioPlayerBase player)
-    {
-        if (!audioPlayersList.Contains(player))
         {
-            audioPlayersList.Add(player);
+            APB.Init();
+            if (APB.AudioType.Equals((AudioPlayerBase.EAudioPlayerType.EFFECT)))
+            {
+                listEffectPlayer.Add(APB);
+            }
+            else
+            {
+                listBGMPlayer.Add(APB);
+            }
         }
-    }
 
+        
+        sliderBGM = 1f;
+        sliderEffect = 1f;
+    }
     
     // Master 볼륨 조절 함수
     public void SetMasterVolume(float _volume)
     {
-        audioVolume_Master = Mathf.Clamp01(_volume);
-        audioVolume_BGM *= audioVolume_Master;
-        audioVolume_Effect *= audioVolume_Master;
+        audioVolume_Master = _volume * 0.1f;
+        audioVolume_BGM = sliderBGM * audioVolume_Master;
+        audioVolume_Effect = sliderEffect * audioVolume_Master;
+
+        for(int i =0 ; i < listEffectPlayer.Count; ++i)
+            listEffectPlayer[i].SetVolume(audioVolume_Effect);
+
+        for (int i = 0; i < listBGMPlayer.Count; ++i)
+        {
+            listBGMPlayer[i].SetVolume(audioVolume_BGM);
+        }
     }
 
     // BGM 볼륨 조절 함수
     public void SetBGMVolume(float _volume)
     {
-        audioVolume_BGM = Mathf.Clamp01(_volume);
+        sliderBGM = _volume * 0.1f;
+        audioVolume_BGM = sliderBGM * audioVolume_Master;
+        
+        for (int i = 0; i < listBGMPlayer.Count; ++i)
+            listBGMPlayer[i].SetVolume(audioVolume_BGM);
+        
+        
     }
 
     // Effect 볼륨 조절 함수
     public void SetEffectVolume(float _volume)
     {
-        audioVolume_Effect = Mathf.Clamp01(_volume);
+        sliderEffect = _volume * 0.1f;
+        audioVolume_Effect = sliderEffect * audioVolume_Master;
+        
+        for(int i =0 ; i < listEffectPlayer.Count; ++i)
+            listEffectPlayer[i].SetVolume(audioVolume_Effect);
     }
     
     public void PlayAudio_Attack(EObjectType _objectType)
@@ -337,14 +358,19 @@ public class AudioManager : MonoBehaviour
     
     
     // 모든 오디오 플레이어 인스턴스를 저장할 리스트
-    private List<AudioPlayerBase> audioPlayersList = new List<AudioPlayerBase>();
+    private List<AudioPlayerBase> listBGMPlayer = new List<AudioPlayerBase>();
+    private List<AudioPlayerBase> listEffectPlayer = new List<AudioPlayerBase>();
 
-    
+    private float sliderMaster = 0f;
+    private float sliderBGM = 0f;
+    private float sliderEffect = 0f;
+
+
     /*
     [Header("#BGM")]
     [SerializeField] private AudioClip bgmClip;
     [SerializeField] private float bgmVolume;
     private AudioSource bgmPlayer;
     */
-    
+
 }

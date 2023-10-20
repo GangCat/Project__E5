@@ -19,6 +19,15 @@ public class AudioPlayer_Turret : AudioPlayerBase
 
     }
 
+    public override void SetVolume(float _volume)
+    {
+        base.SetVolume(_volume);
+        for (int i = 0; i < audioPlayers.Length; ++i)
+        {
+            audioPlayers[i].volume = _volume;
+        }
+    }
+    
     public void PlayAudio(EAudioType_Turret _audioType)
     {
         for (int i = 0; i < audioPlayers.Length; ++i)

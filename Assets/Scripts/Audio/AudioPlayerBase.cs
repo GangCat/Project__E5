@@ -4,29 +4,26 @@ using UnityEngine;
 
 public abstract class AudioPlayerBase : MonoBehaviour
 {
+    public enum EAudioPlayerType{NONE = -1, BGM, EFFECT }
     public abstract void Init();
+
+    public EAudioPlayerType AudioType => audioType;
     
     // audioPlayers 필드를 protected로 선언하여 파생 클래스에서 접근할 수 있게 합니다.
-    protected AudioSource[] audioPlayers;
+    protected AudioSource[] audioPlayersbase;
 
-    public virtual void SetVolume(float volume)
+    public virtual void SetVolume(float _volume)
     {
-        if (audioPlayers == null)
-            return;
-
-        foreach (var audioPlayer in audioPlayers)
-        {
-            audioPlayer.volume = volume;
-        }
+        audioPlayerVolume = _volume;
     }
     
     // 현재 오디오가 재생 중인지 확인하는 메서드를 추가합니다.
     public bool IsPlaying()
     {
-        if (audioPlayers == null)
+        if (audioPlayersbase == null)
             return false;
 
-        foreach (var audioPlayer in audioPlayers)
+        foreach (var audioPlayer in audioPlayersbase)
         {
             if (audioPlayer.isPlaying)
                 return true;
@@ -34,4 +31,8 @@ public abstract class AudioPlayerBase : MonoBehaviour
         return false;
     }
 
+    protected float audioPlayerVolume;
+    
+    [SerializeField]
+    private EAudioPlayerType audioType = EAudioPlayerType.NONE;
 }

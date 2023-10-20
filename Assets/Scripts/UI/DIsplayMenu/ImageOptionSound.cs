@@ -10,12 +10,20 @@ public class ImageOptionSound : MenuImageBase
         btnSFXTestPlay.Init();
     }
 
-    [SerializeField]
-    private Slider sliderMasterVolume = null;
-    [SerializeField]
-    private Slider sliderBackgroundMusicVolume = null;
-    [SerializeField]
-    private Slider sliderSoundEffectVolume = null;
+    public void ChangeMasterVolume(float _volume)
+    {
+        AudioManager.instance.SetMasterVolume(_volume);
+    }
+    
+    public void ChangeEffectVolume(float _volume)
+    {
+        AudioManager.instance.SetEffectVolume(_volume);
+    }
+    
+    public void ChangeBGMVolume(float _volume)
+    {
+        AudioManager.instance.SetBGMVolume(_volume);
+    }
 
     [SerializeField]
     private ButtonSFXTestPlay btnSFXTestPlay = null;

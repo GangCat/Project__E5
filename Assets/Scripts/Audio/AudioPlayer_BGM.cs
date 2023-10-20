@@ -18,6 +18,15 @@ public class AudioPlayer_BGM : AudioPlayerBase
             audioPlayers[i].loop = false;
         }
     }
+
+    public override void SetVolume(float _volume)
+    {
+        base.SetVolume(_volume);
+        for (int i = 0; i < audioPlayers.Length; ++i)
+        {
+            audioPlayers[i].volume = _volume;
+        }
+    }
     
     public void PlayAudio(EAudioType_BGM _audioType = EAudioType_BGM.NONE)
     {
