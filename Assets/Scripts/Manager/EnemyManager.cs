@@ -13,8 +13,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         waveEnemyHolder = GetComponentInChildren<WaveEnemyHolder>().GetTransform();
         mapEnemyHolder = GetComponentInChildren<MapEnemyHolder>().GetTransform();
 
-        memoryPoolWave = new MemoryPool(enemyPrefab, 5, waveEnemyHolder);
-        memoryPoolMap = new MemoryPool(enemyPrefab, 5, mapEnemyHolder);
+        memoryPoolWave = new MemoryPool(enemySmallPrefab, 5, waveEnemyHolder);
+        memoryPoolMap = new MemoryPool(enemySmallPrefab, 5, mapEnemyHolder);
         memoryPoolEnemyDeadEffect = new MemoryPool(enemyDeadEffect, 5, transform);
 
         ArrayHUDCommand.Use(EHUDCommand.INIT_WAVE_TIME, bigWaveDelay_sec);
@@ -68,6 +68,12 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 bigWaveTimeDelay = 0f;
                 smallWaveTimeDelay = 0f;
                 smallWaveCnt = 0;
+
+                GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
+                EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
+                enemyObj.Init();
+                enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+                enemyObj.MoveAttack(mainBasePos);
             }
         }
 
@@ -77,7 +83,15 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     {
         ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, 0f);
         for (int i = 0; i < totalBigWaveCnt; ++i)
+        {
             SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, totalBigWaveCnt * 100);
+
+            GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
+            EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
+            enemyObj.Init();
+            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+            enemyObj.MoveAttack(mainBasePos);
+        }
 
         EnemyObject[] arrAllMapEnemy = mapEnemyHolder.GetComponentsInChildren<EnemyObject>();
         for (int i = 0; i < arrAllMapEnemy.Length; ++i)
@@ -122,20 +136,19 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         int unitCnt = 0;
         while (unitCnt < _count)
         {
+            Vector3 spawnPos = _spawnPos + Functions.GetRandomPosition(WaveOuterCircleRad, WaveInnerCircleRad);
+            PF_Node spawnNode = grid.GetNodeFromWorldPoint(spawnPos);
+            if (!spawnNode.walkable)
+                continue;
+
             GameObject enemyGo = memoryPoolWave.ActivatePoolItemWithIdx(waveEnemyIdx, 5, waveEnemyHolder);
             EnemyObject enemyObj = enemyGo.GetComponent<EnemyObject>();
-            enemyObj.Position = _spawnPos;
+            enemyObj.Position = spawnPos;
             enemyObj.Init();
             enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
             enemyObj.MoveAttack(mainBasePos);
             ++waveEnemyIdx;
             ++unitCnt;
-
-            if (_spawnPos.x >= 55f)
-                _spawnPos.x = 45f;
-            else
-                _spawnPos.x += 1f;
-
             yield return null;
         }
     }
@@ -170,7 +183,9 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     }
 
     [SerializeField]
-    private GameObject enemyPrefab = null;
+    private GameObject enemySmallPrefab = null;
+    [SerializeField]
+    private GameObject enemyBigPrefab = null;
     [SerializeField]
     private EnemyMapSpawnPoint[] arrMapSpawnPoint = null;
     [SerializeField]
@@ -184,7 +199,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     [SerializeField]
     private int mapSpawnCnt = 0;
 
-    [Header("-Wave Attribute")]
+    [Header("-Wave Attribute(outer > inner)")]
     [SerializeField]
     private float smallWaveDelay_sec = 3;
     [SerializeField]
@@ -193,6 +208,11 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private int totalBigWaveCnt = 3;
     [SerializeField]
     private WaveStartPoint[] arrWaveStartPoint = null;
+    [SerializeField]
+    private float WaveOuterCircleRad = 0f;
+    [SerializeField]
+    private float WaveInnerCircleRad = 0f;
+
 
     private MemoryPool memoryPoolWave = null;
     private MemoryPool memoryPoolMap = null;

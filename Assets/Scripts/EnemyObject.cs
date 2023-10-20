@@ -42,9 +42,19 @@ public class EnemyObject : SelectableObject
         SelectableObjectManager.ResetEnemyNodeWalkable(transform.position, nodeIdx);
         ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
 
-        ArrayEnemyObjectCommand.Use((EEnemyObjectCommand)spawnType, gameObject, myIdx);
-        if (Random.Range(0.0f, 100.0f) < 30f)
-            Instantiate(powerCorePrefab, transform.position, Quaternion.identity);
+        if (spawnType.Equals(EEnemySpawnType.NONE))
+        {
+            for (int i = 0; i < 15; ++i)
+            {
+                Instantiate(powerCorePrefab, transform.position + Functions.GetRandomPosition(3, 0), Quaternion.identity);
+            }
+        }
+        else
+        {
+            ArrayEnemyObjectCommand.Use((EEnemyObjectCommand)spawnType, gameObject, myIdx);
+            if (Random.Range(0.0f, 100.0f) < 30f)
+                Instantiate(powerCorePrefab, transform.position, Quaternion.identity);
+        }
     }
 
     protected override void RequestPath(Vector3 _startPos, Vector3 _endPos)
