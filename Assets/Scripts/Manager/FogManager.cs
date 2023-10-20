@@ -49,7 +49,7 @@ public class FogManager : MonoBehaviour, IPauseObserver
 
     private void UpdateFogTexture()
     {
-        testImage.color = Color.red;
+        // testImage.color = Color.red;
         if (isPause)
         {
             Invoke("UpdateFogTexture", updateFogDelay);
