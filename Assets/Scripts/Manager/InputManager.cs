@@ -133,13 +133,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
         if (isDetectingChangeKey)
         {
-            if (isMainMenu)
-                DetectChangeKey();
-            else
-            {
-                isDetectingChangeKey = false;
-                return;
-            }
+            DetectChangeKey();
         }
 
         elapsedTime += Time.deltaTime;
@@ -686,6 +680,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         curChangeKeyIdx = Convert.ToInt32(_unitHotkeyIdx);
     }
 
+    // 실제로 키를 바꿀 때
+    // 바꾸는 준비는 버튼 눌리면
     private void DetectChangeKey()
     {
         if (Input.anyKey)

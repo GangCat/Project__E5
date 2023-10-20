@@ -16,11 +16,11 @@ public class UIManager : MonoBehaviour
         displayMenuMng.Init();
         displayCurMng.Init();
 
-        tempChangeHotkeyBtn.onClick.AddListener(
-            () =>
-            {
-                ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.SELECT_UNIT_FUNC_BUTTON, EUnitFuncKey.MOVE);
-            });
+        //tempChangeHotkeyBtn.onClick.AddListener(
+        //    () =>
+        //    {
+        //        ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.SELECT_UNIT_FUNC_BUTTON, EUnitFuncKey.MOVE);
+        //    });
     }
 
     public void HeroDead()

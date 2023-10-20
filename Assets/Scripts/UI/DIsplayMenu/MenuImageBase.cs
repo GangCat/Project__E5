@@ -6,7 +6,7 @@ public class MenuImageBase : MonoBehaviour
 {
     public virtual void Init()
     {
-        myRt = GetComponent<RectTransform>();
+        
     }
 
     public void DisplayImage()
@@ -23,10 +23,4 @@ public class MenuImageBase : MonoBehaviour
     {
         gameObject.SetActive(_isActive);
     }
-
-    protected RectTransform myRt = null;
-    [SerializeField, Range(0, 0.5f)]
-    protected float topOffset = 0f;
-    [SerializeField, Range(0, 0.5f)]
-    protected float bottomOffset = 0f;
 }

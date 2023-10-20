@@ -19,11 +19,11 @@ public class CanvasMenuOptions : CanvasBase
                 ArrayMenuCommand.Use(EMenuCommand.DISPLAY_OPTION_SOUND);
             });
 
-        buttonHotkey.onClick.AddListener(
-            () =>
-            {
-                ArrayMenuCommand.Use(EMenuCommand.DISPLAY_OPTION_HOTKEY);
-            });
+        //buttonHotkey.onClick.AddListener(
+        //    () =>
+        //    {
+        //        ArrayMenuCommand.Use(EMenuCommand.DISPLAY_OPTION_HOTKEY);
+        //    });
 
         buttonReturnMenu.onClick.AddListener(
             () =>
@@ -33,7 +33,7 @@ public class CanvasMenuOptions : CanvasBase
 
         imageGraphic.Init();
         imageSound.Init();
-        imageHotkey.Init();
+        //imageHotkey.Init();
 
         SetActive(false);
     }
@@ -57,14 +57,14 @@ public class CanvasMenuOptions : CanvasBase
 
     public void DisplayHotkeyOption()
     {
-        imageHotkey.DisplayImage();
+        //imageHotkey.DisplayImage();
     }
 
     public void HideAllOption()
     {
         imageGraphic.HideImage();
         imageSound.HideImage();
-        imageHotkey.HideImage();
+        //imageHotkey.HideImage();
     }
 
 

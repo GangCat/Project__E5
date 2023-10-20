@@ -68,20 +68,23 @@ public class GameManager : MonoBehaviour, IPauseSubject
             enemyMng.StartBigWaveCheat();
     }
 
-    public void UpdateDisplayRatio(int _ratioNum)
+    public void ChangeDisplayFullHD(bool _isFullHD)
     {
-        if(_ratioNum.Equals(0)) // 16:9
+        isFullHD = _isFullHD;
+        if(isFullHD)
             Screen.SetResolution(1920, 1080, isFullScreen);
-        else if(_ratioNum.Equals(1)) // 16:10
+        else
             Screen.SetResolution(1600, 1000, isFullScreen);
-        else if(_ratioNum.Equals(2)) // 21:9
-            Screen.SetResolution(2560, 1080, isFullScreen);
     }
 
-    public void ToggleFullscreen()
+    public void ToggleFullscreen(bool _isFullScreen)
     {
-        isFullScreen = !isFullScreen;
-        Screen.SetResolution(1920, 1080, isFullScreen);
+        isFullScreen = _isFullScreen;
+        if(isFullHD)
+            Screen.SetResolution(1920, 1080, isFullScreen);
+        else
+            Screen.SetResolution(1600, 1000, isFullScreen);
+
     }
 
     private void InitManagers()
@@ -286,4 +289,5 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private bool isInGame = false;
 
     private bool isFullScreen = false;
+    private bool isFullHD = false;
 }

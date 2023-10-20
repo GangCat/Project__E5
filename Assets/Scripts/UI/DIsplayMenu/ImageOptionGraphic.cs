@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImageOptionGraphic : MenuImageBase
 {
@@ -8,4 +9,7 @@ public class ImageOptionGraphic : MenuImageBase
     {
         
     }
+
+    [SerializeField]
+    private Toggle fullHdToggle = null;
 }
