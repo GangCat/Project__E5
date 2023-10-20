@@ -11,11 +11,10 @@ public class FriendlyObject : SelectableObject, ISubscriber
         SelectableObjectManager.InitNodeFriendly(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
-        if (!displayCircleObject)
+        if(!displayCircleObject)
             displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
         displayCircleObject.Init();
         statusHp.Init();
-
         effectCtrl = GetComponent<EffectController>();
         effectCtrl.Init();
 
@@ -47,9 +46,13 @@ public class FriendlyObject : SelectableObject, ISubscriber
         }
         else
         {
+            listEffectCtrl = new List<EffectController>();
             StructureCollider[] arrCollider = GetComponentsInChildren<StructureCollider>();
             for (int i = 0; i < arrCollider.Length; ++i)
+            {
                 arrCollider[i].Init(GetDmg, objectType);
+                listEffectCtrl.Add(arrCollider[i].GetEffectCtrl);
+            }
         }
     }
 
@@ -95,8 +98,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     public void GetDmg(float _dmg, Vector3 _pos)
     {
-        GetDmg(_dmg);
         effectCtrl.EffectOn(2, _pos);
+        GetDmg(_dmg);
     }
 
     public override void GetDmg(float _dmg)
@@ -119,28 +122,28 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
             else if (objectType.Equals(EObjectType.PROCESSING_CONSTRUCT_STRUCTURE))
             {
-                //for (int i = 0; i < listEffectCtrl.Count; ++i)
-                //{
-                //    listEffectCtrl[i].EffectOn(3);
-                //}
+                for (int i = 0; i < listEffectCtrl.Count; ++i)
+                {
+                    listEffectCtrl[i].EffectOn(3);
+                }
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY_HBEAM, gameObject);
             }
             else if (objectType.Equals(EObjectType.BUNKER))
             {
-                //for (int i = 0; i < listEffectCtrl.Count; ++i)
-                //{
-                //    listEffectCtrl[i].EffectOn(3);
-                //}
+                for (int i = 0; i < listEffectCtrl.Count; ++i)
+                {
+                    listEffectCtrl[i].EffectOn(3);
+                }
                 GetComponent<StructureBunker>().OutAllUnit();
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
             }
             else
             {
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
-                //for (int i = 0; i < listEffectCtrl.Count; ++i)
-                //{
-                //    listEffectCtrl[i].EffectOn(3);
-                //}
+                for (int i = 0; i < listEffectCtrl.Count; ++i)
+                {
+                    listEffectCtrl[i].EffectOn(3);
+                }
             }
 
             ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
@@ -150,7 +153,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             if (isSelect)
                 SelectableObjectManager.UpdateHp(listIdx);
 
-            if (!unitType.Equals(EUnitType.NONE))
+            if (effectCtrl)
                 effectCtrl.EffectOn(0);
         }
     }
@@ -810,4 +813,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private float oriAttRange = 0f;
     private bool isAttack = false;
     private bool isSelect = false;
+
+    private List<EffectController> listEffectCtrl = null;
 }

@@ -9406,6 +9406,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Stage
       objectReference: {fileID: 0}
+    - target: {fileID: 7907674701916607100, guid: 38a2d0eef785224408c963daaaeab647,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 210678cf591785b45a668b28f4be7170, type: 2}
     - target: {fileID: 9112022241154537201, guid: 38a2d0eef785224408c963daaaeab647,
         type: 3}
       propertyPath: m_Name
@@ -16237,7 +16242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 7.083317}
+  m_AnchoredPosition: {x: 0, y: 0.000018953446}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &898983054
@@ -39106,7 +39111,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1259902685}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9389881
+  m_Size: 0.9998629
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

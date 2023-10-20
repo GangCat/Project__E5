@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 897d0b4f20ca3fb4192e94e0ace82c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialSpeed: 20
-  gravity: 50
+  initialSpeed: 10
+  gravity: 20
   attackRange: 3
   attackDmg: 10
   targetLayer:
