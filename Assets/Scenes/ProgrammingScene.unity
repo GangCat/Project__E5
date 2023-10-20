@@ -8077,7 +8077,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 210678cf591785b45a668b28f4be7170, type: 2}
+      objectReference: {fileID: 2100000, guid: 4cf3213efdec4a041a7cbcfd06e729f6, type: 2}
     - target: {fileID: 9112022241154537201, guid: 38a2d0eef785224408c963daaaeab647,
         type: 3}
       propertyPath: m_Name
@@ -35837,6 +35837,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f222c14814e6b2847b2052011b1d2019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fogTexture: {fileID: 0}
+  mapTexture: {fileID: 0}
 --- !u!1 &2136204421
 GameObject:
   m_ObjectHideFlags: 0
