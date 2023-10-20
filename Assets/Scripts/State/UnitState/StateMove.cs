@@ -8,6 +8,8 @@ public class StateMove : IState
     {
         myTr = _structState.myTr;
         moveSpeed = _structState.moveSpeed;
+        if (_structState.heroAnimator)
+            _structState.heroAnimator.SetBool("isMove", true);
     }
 
     public void Update(ref SUnitState _structState)
@@ -24,6 +26,8 @@ public class StateMove : IState
 
     public void End(ref SUnitState _structState)
     {
+        if (_structState.heroAnimator)
+            _structState.heroAnimator.SetBool("isMove", false);
     }
 
     private Transform myTr = null;

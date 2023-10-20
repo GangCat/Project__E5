@@ -39,6 +39,7 @@ public struct SUnitState
     public GameObject ProjectileGo;
     public Transform projectileSpawnTr;
     public Transform[] heroProjectileSpawnTr;
+    public Animator heroAnimator;
 }
 
 public struct SFriendlyUnitInfo

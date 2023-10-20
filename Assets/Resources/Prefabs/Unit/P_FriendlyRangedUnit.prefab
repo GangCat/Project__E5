@@ -109,6 +109,7 @@ MonoBehaviour:
     heroProjectileSpawnTr:
     - {fileID: 1644216315059856756}
     - {fileID: 1129910846523290889}
+    heroAnimator: {fileID: 0}
 --- !u!114 &2341253079211249543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4080462427621677074}
+  - component: {fileID: 1841480848016199787}
   m_Layer: 19
   m_Name: Model
   m_TagString: Untagged
@@ -247,6 +249,28 @@ Transform:
   - {fileID: 7571927647777997248}
   m_Father: {fileID: 6892984012615317130}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1841480848016199787
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865784174907296898}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fa6f49b95a3726244840eac113541c3b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &2642276488513867011
 PrefabInstance:
   m_ObjectHideFlags: 0
