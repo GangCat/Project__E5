@@ -6,12 +6,6 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 {
-    public void MainInit()
-    {
-        DontDestroyOnLoad(gameObject);
-        isMainMenu = true;
-    }
-
     public void Init(SelectableObject _mainbaseObj, VoidVoidDelegate _onDebugModeCallback)
     {
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
@@ -19,7 +13,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         selectArea.Init();
         mainbaseObejct = _mainbaseObj;
         onDebugModeCallback = _onDebugModeCallback;
-        isMainMenu = false;
+        isInGame = true;
     }
     public bool IsBuildOperation
     {
@@ -235,8 +229,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private void LateUpdate()
     {
-        ZoomCamera();
-        MoveCamera();
+        if (isInGame)
+        {
+            ZoomCamera();
+            MoveCamera();
+        }
     }
 
     private void CheckIsHotkey()
@@ -860,10 +857,10 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private VoidVoidDelegate onDebugModeCallback = null;
 
     [SerializeField]
-    private bool isMainMenu = false;
-    [SerializeField]
     private bool isDetectingChangeKey = false;
 
     private KeyCode[] curChangeKeyCode = null;
     private int curChangeKeyIdx = -1;
+
+    private bool isInGame = false;
 }

@@ -21,6 +21,12 @@ public class CanvasMenuPopup : CanvasBase
                 ArrayMenuCommand.Use(EMenuCommand.DISPLAY_OPTION);
             });
 
+        btnGameExit.onClick.AddListener(
+            () =>
+            {
+                AudioManager.instance.PlayAudio_UI(objectType);
+                reCheckGo.SetActive(true);
+            });
 
         btnGameReturn.onClick.AddListener(
             () =>
@@ -29,6 +35,19 @@ public class CanvasMenuPopup : CanvasBase
                 ArrayMenuCommand.Use(EMenuCommand.HIDE_MENU);
             });
 
+        btnGameExitConfirm.onClick.AddListener(
+            () =>
+            {
+                LoadSceneManager.ChangeScene("ProgrammingSceneMainMenu");
+            });
+
+        btnGameExitCancle.onClick.AddListener(
+            () =>
+            {
+                reCheckGo.SetActive(false);
+            });
+
+        reCheckGo.SetActive(false);
         SetActive(false);
     }
 
@@ -40,6 +59,12 @@ public class CanvasMenuPopup : CanvasBase
     private Button btnGameExit = null;
     [SerializeField]
     private Button btnGameReturn = null;
+    [SerializeField]
+    private GameObject reCheckGo = null;
+    [SerializeField]
+    private Button btnGameExitConfirm = null;
+    [SerializeField]
+    private Button btnGameExitCancle = null;
     
     private EObjectType objectType;
 }

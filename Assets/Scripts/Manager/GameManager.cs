@@ -1,35 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour, IPauseSubject
 {
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-
-        if (isInGame)
+        if (FindObjectsByType<GameManager>(FindObjectsSortMode.None).Length > 1)
         {
-            selectMng = FindFirstObjectByType<SelectableObjectManager>();
-            structureMng = FindFirstObjectByType<StructureManager>();
-            pathMng = FindFirstObjectByType<PF_PathRequestManager>();
-            enemyMng = FindFirstObjectByType<EnemyManager>();
-            currencyMng = FindFirstObjectByType<CurrencyManager>();
-            populationMng = FindFirstObjectByType<PopulationManager>();
-            heroMng = FindFirstObjectByType<HeroUnitManager>();
-            fogMng = FindFirstObjectByType<FogManager>();
-            debugMng = FindFirstObjectByType<DebugModeManager>();
-            audioMng = FindFirstObjectByType<AudioManager>();
-
-            mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
+            GameManager existingGameManager = FindAnyObjectByType<GameManager>();
+            if (existingGameManager != null)
+                Destroy(existingGameManager.gameObject);
         }
-
-        inputMng = FindFirstObjectByType<InputManager>();
-        cameraMng = FindFirstObjectByType<CameraManager>();
-        uiMng = FindFirstObjectByType<UIManager>();
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -55,23 +39,64 @@ public class GameManager : MonoBehaviour, IPauseSubject
                 // 검은 여백 채우기
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
 #endif
-
-        InitCommandList();
-        InitManagers();
-        RegistObserver();
-
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        InitMenu();
     }
 
-    void Update()
+    private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Home))
+        if (Input.GetKeyDown(KeyCode.Home))
             enemyMng.StartBigWaveCheat();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene _scene, LoadSceneMode _mode)
+    {
+        if (_scene.name.Equals("ProgrammingScene"))
+        {
+            isMainMenu = false;
+            isInGame = true;
+            InitInGame();
+        }
+    }
+
+    private void InitMenu()
+    {
+        audioMng = FindFirstObjectByType<AudioManager>();
+        mainMenuMng = FindAnyObjectByType<MainMenuManager>();
+        loadSceneMng = FindAnyObjectByType<LoadSceneManager>();
+        InitMenuManager();
+    }
+
+    private void InitInGame()
+    {
+        selectMng = FindFirstObjectByType<SelectableObjectManager>();
+        structureMng = FindFirstObjectByType<StructureManager>();
+        pathMng = FindFirstObjectByType<PF_PathRequestManager>();
+        enemyMng = FindFirstObjectByType<EnemyManager>();
+        currencyMng = FindFirstObjectByType<CurrencyManager>();
+        populationMng = FindFirstObjectByType<PopulationManager>();
+        heroMng = FindFirstObjectByType<HeroUnitManager>();
+        fogMng = FindFirstObjectByType<FogManager>();
+        debugMng = FindFirstObjectByType<DebugModeManager>();
+        cameraMng = FindFirstObjectByType<CameraManager>();
+        uiMng = FindFirstObjectByType<UIManager>();
+        mainBaseTr = FindFirstObjectByType<StructureMainBase>().transform;
+        inputMng = FindFirstObjectByType<InputManager>();
+
+        InitCommandList();
+        RegistObserver();
+        InitInGameManager();
     }
 
     public void ChangeDisplayFullHD(bool _isFullHD)
     {
         isFullHD = _isFullHD;
-        if(isFullHD)
+        if (isFullHD)
             Screen.SetResolution(1920, 1080, isFullScreen);
         else
             Screen.SetResolution(1600, 1000, isFullScreen);
@@ -80,42 +105,41 @@ public class GameManager : MonoBehaviour, IPauseSubject
     public void ToggleFullscreen(bool _isFullScreen)
     {
         isFullScreen = _isFullScreen;
-        if(isFullHD)
+        if (isFullHD)
             Screen.SetResolution(1920, 1080, isFullScreen);
         else
             Screen.SetResolution(1600, 1000, isFullScreen);
 
     }
 
-    private void InitManagers()
+    private void InitMenuManager()
+    {
+        loadSceneMng.Init();
+        mainMenuMng.Init();
+        audioMng.Init();
+
+    }
+    private void InitInGameManager()
     {
         cameraMng.Init();
-        audioMng.Init();
         uiMng.Init();
+        inputMng.Init(mainBaseTr.GetComponent<SelectableObject>(), TriggerDebugMode);
 
-        if (isInGame)
-        {
-            inputMng.Init(mainBaseTr.GetComponent<SelectableObject>(), TriggerDebugMode);
+        pathMng.Init(worldSizeX, worldSizeY);
+        grid = pathMng.GetComponent<PF_Grid>();
+        structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
 
-            pathMng.Init(worldSizeX, worldSizeY);
-            grid = pathMng.GetComponent<PF_Grid>();
-            structureMng.Init(grid, FindFirstObjectByType<StructureMainBase>());
+        selectMng.Init(UnitSelect, grid);
+        enemyMng.Init(grid, mainBaseTr.position);
+        currencyMng.Init();
+        populationMng.Init();
 
-            selectMng.Init(UnitSelect, grid);
-            enemyMng.Init(grid, mainBaseTr.position);
-            currencyMng.Init();
-            populationMng.Init();
+        fogMng.Init();
+        debugMng.Init();
+        heroMng.Init(FindFirstObjectByType<UnitHero>());
 
-            fogMng.Init();
-            debugMng.Init();
-            heroMng.Init(FindFirstObjectByType<UnitHero>());
-            InitMainBase();
-        }
+        InitMainBase();
 
-        if (isMainMenu)
-        {
-            inputMng.MainInit();
-        }
     }
 
     private void InitCommandList()
@@ -275,6 +299,8 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private FogManager fogMng = null;
     private DebugModeManager debugMng = null;
     private AudioManager audioMng = null;
+    private MainMenuManager mainMenuMng = null;
+    private LoadSceneManager loadSceneMng = null;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;

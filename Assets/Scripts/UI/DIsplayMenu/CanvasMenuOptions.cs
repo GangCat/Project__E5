@@ -5,18 +5,22 @@ using UnityEngine.UI;
 
 public class CanvasMenuOptions : CanvasBase
 {
-    public void Init()
+    public virtual void Init()
     {
         buttonGraphic.onClick.AddListener(
             () =>
             {
-                ArrayMenuCommand.Use(EMenuCommand.DISPLAY_OPTION_GRAPHIC);
+                AudioManager.instance.PlayAudio_UI(objectType);
+                HideAllOption();
+                DisplayGraphicOption();
             });
 
         buttonSound.onClick.AddListener(
             () =>
             {
-                ArrayMenuCommand.Use(EMenuCommand.DISPLAY_OPTION_SOUND);
+                AudioManager.instance.PlayAudio_UI(objectType);
+                HideAllOption();
+                DisplaySoundOption();
             });
 
         //buttonHotkey.onClick.AddListener(
@@ -28,11 +32,10 @@ public class CanvasMenuOptions : CanvasBase
         buttonReturnMenu.onClick.AddListener(
             () =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
                 ArrayMenuCommand.Use(EMenuCommand.RETURN_MENU);
             });
 
-        imageGraphic.Init();
-        imageSound.Init();
         //imageHotkey.Init();
 
         SetActive(false);
@@ -69,17 +72,19 @@ public class CanvasMenuOptions : CanvasBase
 
 
     [SerializeField]
-    private Button buttonGraphic = null;
+    protected Button buttonGraphic = null;
     [SerializeField]
-    private Button buttonSound = null;
+    protected Button buttonSound = null;
+    //[SerializeField]
+    //private Button buttonHotkey = null;
     [SerializeField]
-    private Button buttonHotkey = null;
+    protected Button buttonReturnMenu = null;
     [SerializeField]
-    private Button buttonReturnMenu = null;
+    protected MenuImageBase imageGraphic = null;
     [SerializeField]
-    private MenuImageBase imageGraphic = null;
-    [SerializeField]
-    private MenuImageBase imageSound = null;
-    [SerializeField]
-    private MenuImageBase imageHotkey = null;
+    protected MenuImageBase imageSound = null;
+    //[SerializeField]
+    //private MenuImageBase imageHotkey = null;
+
+    protected EObjectType objectType;
 }
