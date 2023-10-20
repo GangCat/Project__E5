@@ -36,8 +36,9 @@ public struct SUnitState
 
     public EObjectType objectType;
 
-    public GameObject TurretMissile;
-    public Transform missileSpawnTr;
+    public GameObject ProjectileGo;
+    public Transform projectileSpawnTr;
+    public Transform[] heroProjectileSpawnTr;
 }
 
 public struct SFriendlyUnitInfo
@@ -47,7 +48,7 @@ public struct SFriendlyUnitInfo
 }
 
 [System.Serializable]
-public enum EObjectType { NONE = -1, UNIT_01, UNIT_02, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, PROCESSING_CONSTRUCT_STRUCTURE, LENGTH }
+public enum EObjectType { NONE = -1, UNIT_01, UNIT_02, UNIT_HERO, MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR, ENEMY_UNIT, ENEMY_STRUCTURE, PROCESSING_CONSTRUCT_STRUCTURE, ENEMY_BIG, LENGTH }
 public enum EState { NONE = -1, IDLE, MOVE, STOP, HOLD, ATTACK, TURRET_ATTACK, LENGTH }
 public enum EUnitType { NONE = -1, MELEE, RANGED, HERO, LENGTH }
 public enum ECurrencyType { NONE = -1, ENERGY, CORE, LENGTH }

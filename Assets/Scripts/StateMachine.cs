@@ -142,7 +142,6 @@ public class StateMachine : MonoBehaviour
     private IState[] arrState = null;
     private IState curState = null;
 
-    private Queue<EState> queueStateEnum = new Queue<EState>();
     private Stack<EState> stackStateEnum = new Stack<EState>();
     private EState curStateEnum = EState.NONE;
 
