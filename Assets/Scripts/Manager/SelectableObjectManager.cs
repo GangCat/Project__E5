@@ -39,8 +39,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     {
         while (true)
         {
-            //if(listSelectedFriendlyObject.Count > 0)
-            //    ArrayCheckNodeBuildableCommand.Use(ECheckNodeBuildable.CHECK_NODE_BUILDABLE_UNIT, listSelectedFriendlyObject.ToArray());
             ArrayCheckNodeBuildableCommand.Use(ECheckNodeBuildable.CHECK_NODE_BUILDABLE_UNIT, dicNodeUnderFriendlyUnit.Values.ToArray<PF_Node>());
 
             yield return new WaitForSeconds(0.5f);
@@ -297,8 +295,15 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             return;
         }
 
-        foreach (FriendlyObject obj in listSelectedFriendlyObject)
+        foreach (SelectableObject obj in listSelectedFriendlyObject)
             obj.unSelect();
+
+        if (enemyCurSelected)
+        {
+            enemyCurSelected.unSelect();
+            enemyCurSelected = null;
+        }
+
 
         for (int i = 0; i < tempListSelectableObject.Count; ++i)
         {
@@ -376,6 +381,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             selectObjectCallback?.Invoke(tempObj.GetObjectType());
             InputOtherUnitInfo(tempObj);
             enemyCurSelected = tempObj;
+            enemyCurSelected.Select();
             DisplaySingleUnitInfo();
         }
         // 임시 리스트에 아군 건물만 있을 경우

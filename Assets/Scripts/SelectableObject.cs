@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPauseObserver
@@ -57,6 +58,18 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             else
                 return 0;
         }
+    }
+
+    public virtual void Select(int _listIdx = 0)
+    {
+        isSelect = true;
+        ActivateCircle();
+    }
+
+    public virtual void unSelect()
+    {
+        isSelect = false;
+        DeActivateCircle();
     }
 
     public void ActivateCircle()
@@ -676,4 +689,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected bool hasTargetNode = false;
 
     protected EffectController effectCtrl = null;
+
+    protected bool isSelect = false;
 }

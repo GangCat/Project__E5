@@ -70,18 +70,16 @@ public class FriendlyObject : SelectableObject, ISubscriber
         crowdIdx = -1;
     }
 
-    public void Select(int _listIdx = 0)
+    public override void Select(int _listIdx = 0)
     {
-        isSelect = true;
         listIdx = _listIdx;
-        ActivateCircle();
+        base.Select(_listIdx);
     }
 
-    public void unSelect()
+    public override void unSelect()
     {
-        isSelect = false;
         listIdx = -1;
-        DeActivateCircle();
+        base.unSelect();
     }
 
     public void UpdatelistIdx(int _listidx)
@@ -797,10 +795,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private Transform targetBunker = null;
 
     private int listIdx = -1;
+
     private int crowdIdx = -1;
     private float oriAttRange = 0f;
     private bool isAttack = false;
-    private bool isSelect = false;
+
 
     private List<EffectController> listEffectCtrl = null;
 }
