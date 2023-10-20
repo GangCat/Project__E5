@@ -254,21 +254,33 @@ public class PF_Grid : MonoBehaviour
     public List<PF_Node> GetNeighbors(PF_Node _curNode)
     {
         List<PF_Node> neighbours = new List<PF_Node>();
+        //int checkX = 0;
+        //int checkY = 0;
 
         // _curNode기준으로 3by3위치의 노드들을 반환하기 위한 반복문
-        for (int x = -1; x <= 1; ++x)
+
+        for (int i = 0; i < 9; ++i)
         {
-            for (int y = -1; y <= 1; ++y)
-            {
-                if (x == 0 && y == 0) continue;
+            if (i.Equals(4)) continue;
+            //checkX = Mathf.Clamp(_curNode.gridX + (i / 3) - 1, 0, gridSizeX);
+            //checkY = Mathf.Clamp(_curNode.gridY + (i % 3) - 1, 0, gridSizeY);
 
-                int checkX = _curNode.gridX + x;
-                int checkY = _curNode.gridY + y;
-
-                if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
-                    neighbours.Add(grid[checkX, checkY]);
-            }
+            neighbours.Add(grid[_curNode.gridX + (i / 3) - 1, _curNode.gridY + (i % 3) - 1]);
         }
+
+        //for (int x = -1; x <= 1; ++x)
+        //{
+        //    for (int y = -1; y <= 1; ++y)
+        //    {
+        //        if (x == 0 && y == 0) continue;
+
+        //        int checkX = _curNode.gridX + x;
+        //        int checkY = _curNode.gridY + y;
+
+        //        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+        //            neighbours.Add(grid[checkX, checkY]);
+        //    }
+        //}
         return neighbours;
     }
 

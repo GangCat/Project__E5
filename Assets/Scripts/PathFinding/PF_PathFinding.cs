@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Cysharp.Threading.Tasks;
 
 public class PF_PathFinding : MonoBehaviour
 {
@@ -35,7 +36,98 @@ public class PF_PathFinding : MonoBehaviour
             return;
         }
 
-        StartCoroutine(FindPath(startNode, targetNode));
+        UpdateUniTask(startNode, targetNode).Forget();
+        //UpdateUniTask();
+        //StartCoroutine(FindPath(startNode, targetNode));
+    }
+
+    private async UniTaskVoid UpdateUniTask(PF_Node startNode, PF_Node targetNode)
+    {
+        bool isPathSuccess = false;
+
+        if (!targetNode.walkable)
+        {
+            targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
+        }
+
+        if (targetNode != null)
+        {
+            listWayNode.Clear();
+            listNeighbor.Clear();
+            curNode = null;
+            neighbor = null;
+
+            listNeighbor = grid.GetNeighbors(targetNode);
+
+            bool isTargetAccessible = false;
+            for (int i = 0; i < listNeighbor.Count; ++i)
+            {
+                if (listNeighbor[i].walkable)
+                {
+                    isTargetAccessible = true;
+                    break;
+                }
+            }
+            if (!isTargetAccessible)
+                targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
+
+            while (openSet.Count > 0)
+                openSet.RemoveFirstItem();
+
+            closedSet.Clear();
+            openSet.Add(startNode);
+
+            while (openSet.Count > 0)
+            {
+                listNeighbor.Clear();
+                curNode = openSet.RemoveFirstItem();
+
+                closedSet.Add(curNode);
+
+                if (openSet.Count > searchLimitCnt)
+                {
+                    isPathSuccess = true;
+                    break;
+                }
+
+                if (curNode.Equals(targetNode))
+                {
+                    isPathSuccess = true;
+                    break;
+                }
+
+                listNeighbor = grid.GetNeighbors(curNode);
+
+                for (int i = 0; i < listNeighbor.Count; ++i)
+                {
+                    neighbor = listNeighbor[i];
+                    if (!neighbor.walkable || closedSet.Contains(neighbor)) continue;
+
+                    int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighbor);
+
+                    if (newGCostToNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
+                    {
+                        neighbor.gCost = newGCostToNeighbor;
+                        neighbor.hCost = CalcLowestCostWithNode(neighbor, targetNode);
+                        neighbor.parentNode = curNode;
+
+                        if (!openSet.Contains(neighbor))
+                            openSet.Add(neighbor);
+                        else
+                            openSet.UpdateItem(neighbor);
+                    }
+                }
+            }
+        }
+
+        await UniTask.Yield(PlayerLoopTiming.Update);
+
+        if (isPathSuccess)
+        {
+            listWayNode = RetracePath(startNode, curNode);
+        }
+
+        finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess);
     }
 
     private IEnumerator FindPath(PF_Node startNode, PF_Node targetNode)
@@ -155,9 +247,11 @@ public class PF_PathFinding : MonoBehaviour
     //    {
     //        Vector2 directionNew = new Vector2(_path[i - 1].gridX - _path[i].gridX, _path[i - 1].gridY - _path[i].gridY);
     //        if (directionNew != directionOld)
+    //        {
     //            waypoints.Add(_path[i].worldPos);
+    //            directionOld = directionNew;
+    //        }
 
-    //        directionOld = directionNew;
     //    }
     //    return waypoints.ToArray();
     //}

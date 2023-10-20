@@ -38,21 +38,24 @@ public class EnemyObject : SelectableObject
     {
         // Enemy Dead Audio
         AudioManager.instance.PlayAudio_Destroy(objectType);
-        SelectableObjectManager.ResetEnemyNodeWalkable(transform.position, nodeIdx);
         ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
 
-        if (spawnType.Equals(EEnemySpawnType.NONE))
+        if (objectType.Equals(EObjectType.ENEMY_BIG))
         {
             for (int i = 0; i < 15; ++i)
             {
                 Instantiate(powerCorePrefab, transform.position + Functions.GetRandomPosition(3, 0), Quaternion.identity);
+                Destroy(gameObject);
             }
         }
         else
         {
+            SelectableObjectManager.ResetEnemyNodeWalkable(transform.position, nodeIdx);
+
             ArrayEnemyObjectCommand.Use((EEnemyObjectCommand)spawnType, gameObject, myIdx);
             if (Random.Range(0.0f, 100.0f) < 30f)
                 Instantiate(powerCorePrefab, transform.position, Quaternion.identity);
+
         }
     }
 

@@ -8,27 +8,27 @@ public class ProjectileEnemyBig : ProjectileBase
     {
         moveDir = (_targetPos - transform.position).normalized;
         transform.rotation = Quaternion.LookRotation(moveDir);
-        StartCoroutine("ChargeToAttackCoroutine");
     }
 
-    private IEnumerator ChargeToAttackCoroutine()
+    private void Update()
     {
-        while(transform.position.y >= 0)
+        transform.position += moveDir * moveSpeed * Time.deltaTime;
+        moveSpeed += Time.deltaTime;
+
+        if (transform.position.y <= 0)
         {
-            transform.position += moveDir * moveSpeed * Time.deltaTime;
-            yield return null;
-            moveSpeed += Time.deltaTime;
+            moveSpeed = 0f;
+
+            Collider[] arrCol = Physics.OverlapSphere(transform.position, overlapRadius, targetMask);
+
+            for (int i = 0; i < arrCol.Length; ++i)
+            {
+                arrCol[i].GetComponent<FriendlyObject>().GetDmg(attDmg);
+            }
+
+            Instantiate(impactGo, transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
+            Destroy(gameObject);
         }
-
-        Collider[] arrCol = Physics.OverlapSphere(transform.position, overlapRadius, targetMask);
-
-        for(int i = 0; i < arrCol.Length; ++i)
-        {
-            arrCol[i].GetComponent<FriendlyObject>().GetDmg(attDmg);
-        }
-
-        Instantiate(impactGo, transform.position, Quaternion.Euler(new Vector3(-90f, 0f, 0f)));
-        Destroy(gameObject);
     }
 
     [SerializeField]

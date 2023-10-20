@@ -329,7 +329,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 {
                     EObjectType targetType = arrCollider[i].GetComponent<IGetObjectType>().GetObjectType();
 
-                    if (targetType.Equals(EObjectType.ENEMY_UNIT))
+                    if (targetType.Equals(EObjectType.ENEMY_UNIT) || targetType.Equals(EObjectType.ENEMY_BIG))
                     {
                         // �ش� ���� ����ִٸ�
                         if (arrCollider[i].gameObject.activeSelf)
