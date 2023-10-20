@@ -23,6 +23,36 @@ public class AudioManager : MonoBehaviour
     }
 
 
+    // 오디오 플레이어를 리스트에 추가하는 함수
+    public void RegisterAudioPlayer(AudioPlayerBase player)
+    {
+        if (!audioPlayersList.Contains(player))
+        {
+            audioPlayersList.Add(player);
+        }
+    }
+
+    
+    // Master 볼륨 조절 함수
+    public void SetMasterVolume(float _volume)
+    {
+        audioVolume_Master = Mathf.Clamp01(_volume);
+        audioVolume_BGM *= audioVolume_Master;
+        audioVolume_Effect *= audioVolume_Master;
+    }
+
+    // BGM 볼륨 조절 함수
+    public void SetBGMVolume(float _volume)
+    {
+        audioVolume_BGM = Mathf.Clamp01(_volume);
+    }
+
+    // Effect 볼륨 조절 함수
+    public void SetEffectVolume(float _volume)
+    {
+        audioVolume_Effect = Mathf.Clamp01(_volume);
+    }
+    
     public void PlayAudio_Attack(EObjectType _objectType)
     {
         switch (_objectType)
@@ -54,19 +84,28 @@ public class AudioManager : MonoBehaviour
         switch (_objectType)
         {
             case EObjectType.UNIT_HERO:
-                AudioPlayer_Hero.EAudioType_Hero audioTypeHero = 
-                    (AudioPlayer_Hero.EAudioType_Hero)((int)AudioPlayer_Hero.EAudioType_Hero.ORDER_01 + Idx);
-                AudioPlayer_Hero.instance.PlayAudio(audioTypeHero);
+                if (!AudioPlayer_Hero.instance.IsPlaying()) // 오디오가 재생 중이지 않은 경우에만 재생
+                {
+                    AudioPlayer_Hero.EAudioType_Hero audioTypeHero =
+                        (AudioPlayer_Hero.EAudioType_Hero)((int)AudioPlayer_Hero.EAudioType_Hero.ORDER_01 + Idx);
+                    AudioPlayer_Hero.instance.PlayAudio(audioTypeHero);
+                }
                 break;
             case EObjectType.UNIT_01:
-                AudioPlayer_Friendly_U01.EAudioType_Friendly_U01 audioTypeU01 = 
-                    (AudioPlayer_Friendly_U01.EAudioType_Friendly_U01)((int)AudioPlayer_Friendly_U01.EAudioType_Friendly_U01.ORDER_01 + Idx);
-                AudioPlayer_Friendly_U01.instance.PlayAudio(audioTypeU01);
+                if (!AudioPlayer_Hero.instance.IsPlaying()) // 오디오가 재생 중이지 않은 경우에만 재생
+                {
+                    AudioPlayer_Friendly_U01.EAudioType_Friendly_U01 audioTypeU01 =
+                        (AudioPlayer_Friendly_U01.EAudioType_Friendly_U01)((int)AudioPlayer_Friendly_U01.EAudioType_Friendly_U01.ORDER_01 + Idx);
+                    AudioPlayer_Friendly_U01.instance.PlayAudio(audioTypeU01);
+                }
                 break;
             case EObjectType.UNIT_02:
-                AudioPlayer_Friendly_U02.EAudioType_Friendly_U02 audioTypeU02 = 
-                    (AudioPlayer_Friendly_U02.EAudioType_Friendly_U02)((int)AudioPlayer_Friendly_U02.EAudioType_Friendly_U02.ORDER_01 + Idx);
-                AudioPlayer_Friendly_U02.instance.PlayAudio(audioTypeU02);
+                if (!AudioPlayer_Hero.instance.IsPlaying()) // 오디오가 재생 중이지 않은 경우에만 재생
+                {
+                    AudioPlayer_Friendly_U02.EAudioType_Friendly_U02 audioTypeU02 =
+                        (AudioPlayer_Friendly_U02.EAudioType_Friendly_U02)((int)AudioPlayer_Friendly_U02.EAudioType_Friendly_U02.ORDER_01 + Idx);
+                    AudioPlayer_Friendly_U02.instance.PlayAudio(audioTypeU02);
+                }
                 break;
             default:
                 break;
@@ -295,6 +334,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private float audioVolume_Master;
     [SerializeField] private float audioVolume_BGM;
     [SerializeField] private float audioVolume_Effect;
+    
+    
+    // 모든 오디오 플레이어 인스턴스를 저장할 리스트
+    private List<AudioPlayerBase> audioPlayersList = new List<AudioPlayerBase>();
+
     
     /*
     [Header("#BGM")]
