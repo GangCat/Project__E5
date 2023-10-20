@@ -73,6 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3077076975496337010}
+  - component: {fileID: 5319380890952176740}
   m_Layer: 9
   m_Name: Head
   m_TagString: FriendlyStructure
@@ -97,6 +98,28 @@ Transform:
   - {fileID: 8014809672233857094}
   m_Father: {fileID: 8276258356380479687}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &5319380890952176740
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8217998683240014559}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eef32a33d4d86d241ab06f6af7e9d2f3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8421938389435490942
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +229,8 @@ MonoBehaviour:
     ProjectileGo: {fileID: 3865807368766108358, guid: 6b29ddb4969f467459c9090eacc547a5,
       type: 3}
     projectileSpawnTr: {fileID: 8014809672233857094}
+    heroProjectileSpawnTr: []
+    animator: {fileID: 5319380890952176740}
 --- !u!114 &6523300460082605746
 MonoBehaviour:
   m_ObjectHideFlags: 0

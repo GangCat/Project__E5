@@ -12,6 +12,7 @@ public class StateTurretAttack : IState
         spawnTr = _structState.projectileSpawnTr;
         objectType = _structState.objectType;
         projectileGo = _structState.ProjectileGo;
+        _structState.animator.SetBool("isAttack", true);
     }
 
     public void Update(ref SUnitState _structState)
@@ -38,7 +39,7 @@ public class StateTurretAttack : IState
     }
     public void End(ref SUnitState _structState)
     {
-        
+        _structState.animator.SetBool("isAttack", false);
     }
 
     private float elapsedTime = 0f;
