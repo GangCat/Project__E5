@@ -9,8 +9,9 @@ public class StateTurretAttack : IState
         myTr = _structState.myTr;
         targetTr = _structState.targetTr;
         attRate = _structState.attRate;
-        spawnTr = _structState.missileSpawnTr;
+        spawnTr = _structState.projectileSpawnTr;
         objectType = _structState.objectType;
+        projectileGo = _structState.ProjectileGo;
     }
 
     public void Update(ref SUnitState _structState)
@@ -27,10 +28,8 @@ public class StateTurretAttack : IState
         if (elapsedTime > attRate)
         {
             elapsedTime = 0f;
-            // ���� �ִϸ��̼� ���
-            
 
-            GameObject missile = GameObject.Instantiate(_structState.TurretMissile, spawnTr.position, spawnTr.rotation);
+            GameObject missile = GameObject.Instantiate(projectileGo, spawnTr.position, spawnTr.rotation);
             missile.GetComponent<MissileTurret>().Init(spawnTr.position);
 
             // �̻��� �߻�
@@ -48,8 +47,8 @@ public class StateTurretAttack : IState
     private Transform targetTr = null;
     private Transform myTr = null;
     private Transform spawnTr = null;
-    private EObjectType objectType;
-    
+    private EObjectType objectType = EObjectType.NONE;
+    private GameObject projectileGo = null;
     
     private Vector3 dir = Vector3.zero;
 }

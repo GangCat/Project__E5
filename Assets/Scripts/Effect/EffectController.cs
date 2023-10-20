@@ -12,13 +12,11 @@ public class EffectController : MonoBehaviour
 
     public virtual void EffectOn(int _idx)
     {
-        Debug.Log(_idx);
         arrEffect[_idx].DisplayEffect();
     }
 
     public virtual void EffectOn(int _idx, Vector3 _pos)
     {
-        Debug.Log(_idx);
         arrEffect[_idx].DisplayEffect(_pos);
     }
 

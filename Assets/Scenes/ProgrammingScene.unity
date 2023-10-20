@@ -22329,6 +22329,8 @@ MonoBehaviour:
   - 2
   - 5
   - 3
+  destroyEffect: {fileID: 5807286319859665120, guid: f433d2ad8b6e33c4288768ade771448c,
+    type: 3}
 --- !u!1001 &1172979819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39162,6 +39164,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1259902685}
   m_Direction: 2
   m_Value: 0
+  m_Size: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
