@@ -258,12 +258,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updateFogDelay: 0.1
   fogRenderTexture: {fileID: 8400000, guid: d88331e32e36f53499ae655d4655cc7b, type: 2}
+  mapRenderTexture: {fileID: 0}
   fogImage: {fileID: 598490127}
   bufferImage: {fileID: 1948573224}
   fogComputeShader: {fileID: 7200000, guid: aad4de65650e43446b38106a596cfc80, type: 3}
-  fogGo: {fileID: 278597030}
-  mapGo: {fileID: 1717315729}
+  combineGo: {fileID: 0}
   mainCam: {fileID: 0}
+  isDebugMode: 0
 --- !u!4 &39533314
 Transform:
   m_ObjectHideFlags: 0

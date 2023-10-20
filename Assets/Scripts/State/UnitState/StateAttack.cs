@@ -29,7 +29,7 @@ public class StateAttack : IState
         {
             elapsedTime = 0f;
 
-            AudioManager.instance.PlayAudio_Attack(objectType);     // ���� Audio
+            AudioManager.instance.PlayAudio_Attack(objectType);     // Attack Audio
             effectCtrl.EffectOn(1);
             targetTr.GetComponent<IDamageable>().GetDmg(attDmg);
         }

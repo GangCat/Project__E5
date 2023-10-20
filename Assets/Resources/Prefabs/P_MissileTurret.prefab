@@ -51,7 +51,7 @@ MonoBehaviour:
   gravity: 20
   attackRange: 3
   attackDmg: 10
-  targetLayer:
+  targetLayerMask:
     serializedVersion: 2
     m_Bits: 1048576
 --- !u!114 &6366788588753998409
