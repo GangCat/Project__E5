@@ -45,6 +45,15 @@ public class AudioPlayer_BGM : AudioPlayerBase
             break;
         }
     }
+
+    public void PlayAudio_MainMenu(EAudioType_BGM _audioType = EAudioType_BGM.BGM_MAINMENU)
+    {
+        // _audioType = EAudioType_BGM.BGM_MAINMENU;
+        audioPlayers[5].clip = audioClips[(int)_audioType];
+        audioPlayers[5].Play();
+    }
+
+
     
     private IEnumerator PlayNextWhenFinished(AudioSource source)
     {
@@ -100,5 +109,5 @@ public class AudioPlayer_BGM : AudioPlayerBase
     private int channelIndex;
     
     public static AudioPlayer_BGM instance;
-    public enum EAudioType_BGM { NONE = -1, BGM_01, BGM_02, BGM_03, BGM_04, BGM_05, LENGTH }
+    public enum EAudioType_BGM { NONE = -1, BGM_01, BGM_02, BGM_03, BGM_04, BGM_05, BGM_MAINMENU, LENGTH }
 }

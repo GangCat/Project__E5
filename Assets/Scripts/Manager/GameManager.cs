@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitMenu();
         
-        AudioManager.instance.PlayAudio_BGM();
+        AudioManager.instance.PlayAudio_BGM_MainMenu();
     }
 
     private void Update()

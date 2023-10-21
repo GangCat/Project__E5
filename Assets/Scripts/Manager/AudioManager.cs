@@ -32,15 +32,15 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-        
+        SceneManager.sceneLoaded += OnSceneLoaded;
         sliderBGM = 1f;
         sliderEffect = 1f;
     }
 
-    private void Awake()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+    //private void Awake()
+    //{
+    //    SceneManager.sceneLoaded += OnSceneLoaded;
+    //}
     
     
     // Master 볼륨 조절 함수
@@ -309,6 +309,11 @@ public class AudioManager : MonoBehaviour
         AudioPlayer_BGM.instance.PlayAudio();
     }
 
+    public void PlayAudio_BGM_WithFade(float _fadeDuration = 1.0f)
+    {
+        AudioPlayer_BGM.instance.PlayAudio();
+    }
+    
     public void StopAudio_BGM()
     {
         AudioPlayer_BGM.instance.StopAudio();
@@ -338,21 +343,46 @@ public class AudioManager : MonoBehaviour
     {
         AudioPlayer_WaveBGM.instance.StopAudioWithFade(_fadeDuration);
     }
-    
+
+    public void PlayAudio_BGM_MainMenu()
+    {
+        AudioPlayer_BGM.instance.PlayAudio_MainMenu();
+    }
     
     private void OnSceneLoaded(Scene _scene, LoadSceneMode _mode)
     {
-        if (_scene.name.Equals("ProgrammingScene"))
-        {
-            instance.PlayAudio_BGM();
-            // 메인메뉴 BGM 끄는 기능
-        }
-        
         if (_scene.name.Equals("ProgrammingSceneMainMenu"))
         {
-            // 게임화면 BGM 끄고
-            // 메인메뉴 BGM ON
+            AudioPlayer_BGM.instance.StopAudio();
+
+            AudioPlayer_BGM.instance.PlayAudio_MainMenu();
+
+            // instance.PlayAudio_BGM_MainMenu();
+
+
+            //if (instance != null)
+            //{
+            //    // 게임화면 BGM 끄고
+            //    AudioManager.instance.StopAudio_BGM();
+            //}
+
+            //if (instance != null) return;
+            //// 메인메뉴 BGM ON
+            //Debug.Log("11");
+            //// AudioManager.instance.PlayAudio_BGM();
+
         }
+
+        if (_scene.name.Equals("ProgrammingScene"))
+        {
+            // 메인메뉴 BGM STOP
+            AudioPlayer_BGM.instance.StopAudio();
+
+            // 게임 BGM ON
+            AudioPlayer_BGM.instance.PlayAudio();
+        }
+        
+ 
         
     }
     
