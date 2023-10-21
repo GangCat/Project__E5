@@ -70,11 +70,11 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 smallWaveTimeDelay = 0f;
                 smallWaveCnt = 0;
 
-                //GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
-                //EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
-                //enemyObj.Init();
-                //enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
-                //enemyObj.MoveAttack(mainBasePos);
+                GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
+                EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
+                enemyObj.Init();
+                enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+                enemyObj.MoveAttack(mainBasePos);
             }
         }
 
@@ -91,11 +91,11 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         {
             SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, totalBigWaveCnt * 100);
 
-            //GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
-            //EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
-            //enemyObj.Init();
-            //enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
-            //enemyObj.MoveAttack(mainBasePos);
+            GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
+            EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
+            enemyObj.Init();
+            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+            enemyObj.MoveAttack(mainBasePos);
         }
 
         EnemyObject[] arrAllMapEnemy = mapEnemyHolder.GetComponentsInChildren<EnemyObject>();

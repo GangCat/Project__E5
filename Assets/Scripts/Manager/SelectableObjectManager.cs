@@ -353,6 +353,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                     break;
                 case EObjectType.ENEMY_UNIT:
                 case EObjectType.ENEMY_STRUCTURE:
+                case EObjectType.ENEMY_BIG:
                     if (isFriendlyUnitInList) break;
                     if (isFriendlyStructureInList) break;
                     isEnemyObjectInList = true;
@@ -635,7 +636,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         unitInfoContainer.attRange = _obj.AttRange;
         unitInfoContainer.attRate = _obj.AttRate;
 
-        if (_obj.GetObjectType().Equals(EObjectType.ENEMY_UNIT))
+        if (_obj.GetObjectType().Equals(EObjectType.ENEMY_UNIT) || _obj.GetObjectType().Equals(EObjectType.ENEMY_BIG))
         {
             _obj.ActivateCircle();
         }

@@ -366,10 +366,10 @@ public class AudioManager : MonoBehaviour
             //    AudioManager.instance.StopAudio_BGM();
             //}
 
-            //if (instance != null) return;
-            //// 메인메뉴 BGM ON
-            //Debug.Log("11");
-            //// AudioManager.instance.PlayAudio_BGM();
+            // if (instance == null) return;
+            // 메인메뉴 BGM ON
+            // Debug.Log("11");
+            // AudioManager.instance.PlayAudio_BGM();
 
         }
 
@@ -381,8 +381,6 @@ public class AudioManager : MonoBehaviour
             // 게임 BGM ON
             AudioPlayer_BGM.instance.PlayAudio();
         }
-        
- 
         
     }
     

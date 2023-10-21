@@ -16,7 +16,7 @@ public class StateAttack : IState
         spawnTr = _structState.projectileSpawnTr;
         heroSpawnTr = _structState.heroProjectileSpawnTr;
         if(_structState.animator)
-        _structState.animator.SetBool("isAttack", true);
+            _structState.animator.SetBool("isAttack", true);
     }
 
     public void Update(ref SUnitState _structState)
