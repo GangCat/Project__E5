@@ -351,13 +351,22 @@ public class AudioManager : MonoBehaviour
     
     private void OnSceneLoaded(Scene _scene, LoadSceneMode _mode)
     {
+
+
+        if (_scene.name.Equals("ProgrammingScene"))
+        {
+            // 메인메뉴 BGM STOP
+            AudioPlayer_BGM.instance.StopAudio();
+
+            // 게임 BGM ON
+            AudioPlayer_BGM.instance.PlayAudio();
+        }
+
         if (_scene.name.Equals("ProgrammingSceneMainMenu"))
         {
             AudioPlayer_BGM.instance.StopAudio();
 
             AudioPlayer_BGM.instance.PlayAudio_MainMenu();
-
-            // instance.PlayAudio_BGM_MainMenu();
 
 
             //if (instance != null)
@@ -373,15 +382,6 @@ public class AudioManager : MonoBehaviour
 
         }
 
-        if (_scene.name.Equals("ProgrammingScene"))
-        {
-            // 메인메뉴 BGM STOP
-            AudioPlayer_BGM.instance.StopAudio();
-
-            // 게임 BGM ON
-            AudioPlayer_BGM.instance.PlayAudio();
-        }
-        
     }
     
     public struct AudioVolumes

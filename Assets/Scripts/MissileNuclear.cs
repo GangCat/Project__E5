@@ -53,7 +53,9 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
 
         // Nuclear Explosion Audio
         AudioManager.instance.PlayAudio_Misc(EAudioType_Misc.NUCLEAR_EXPLOSION);
-        
+
+        // nuclearMissileEffect.EffectOn(0, true);
+
         ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
         SetActive(false);
     }
@@ -74,4 +76,6 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
     private EAudioType_Misc audioType;
 
     [SerializeField] private LayerMask targetMask;
+
+    // private NuclearMissileEffectController nuclearMissileEffect;
 }

@@ -223,7 +223,7 @@ MonoBehaviour:
     isPause: 0
     effectCtrl: {fileID: 0}
     moveSpeed: 0
-    attRate: 5
+    attRate: 1.5
     attDmg: 0
     objectType: 4
     ProjectileGo: {fileID: 3865807368766108358, guid: 6b29ddb4969f467459c9090eacc547a5,
