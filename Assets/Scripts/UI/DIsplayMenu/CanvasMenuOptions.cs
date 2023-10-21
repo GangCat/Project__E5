@@ -38,6 +38,9 @@ public class CanvasMenuOptions : CanvasBase
 
         //imageHotkey.Init();
 
+        imageGraphic.Init();
+        imageSound.Init();
+
         SetActive(false);
     }
 
@@ -80,9 +83,9 @@ public class CanvasMenuOptions : CanvasBase
     [SerializeField]
     protected Button buttonReturnMenu = null;
     [SerializeField]
-    protected MenuImageBase imageGraphic = null;
+    protected ImageOptionGraphic imageGraphic = null;
     [SerializeField]
-    protected MenuImageBase imageSound = null;
+    protected ImageOptionSound imageSound = null;
     //[SerializeField]
     //private MenuImageBase imageHotkey = null;
 

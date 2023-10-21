@@ -25,19 +25,25 @@ public class CanvasMainMenu : MonoBehaviour
                 DisplayExitRecheckButton();
             });
 
-        buttonExitReCheck.onClick.AddListener(
+        buttonExitConfrim.onClick.AddListener(
             () =>
             {
                 Application.Quit();
-                buttonExitReCheck.gameObject.SetActive(false);
             });
 
-        buttonExitReCheck.gameObject.SetActive(false);
+        buttonExitCancle.onClick.AddListener(
+            () =>
+            {
+                exitReCheckGo.SetActive(false);
+            });
+
+
+        exitReCheckGo.gameObject.SetActive(false);
     }
 
     private void DisplayExitRecheckButton()
     {
-        buttonExitReCheck.gameObject.SetActive(true);
+        exitReCheckGo.gameObject.SetActive(true);
     }
 
 
@@ -48,5 +54,9 @@ public class CanvasMainMenu : MonoBehaviour
     [SerializeField]
     private Button buttonExit = null;
     [SerializeField]
-    private Button buttonExitReCheck = null;
+    private GameObject exitReCheckGo = null;
+    [SerializeField]
+    private Button buttonExitConfrim = null;
+    [SerializeField]
+    private Button buttonExitCancle = null;
 }

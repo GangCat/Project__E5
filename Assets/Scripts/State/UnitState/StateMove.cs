@@ -8,14 +8,25 @@ public class StateMove : IState
     {
         myTr = _structState.myTr;
         moveSpeed = _structState.moveSpeed;
-        if (_structState.animator)
-            _structState.animator.SetBool("isMove", true);
+        anim = _structState.animator;
+        if (anim)
+            anim.SetBool("isMove", true);
     }
 
     public void Update(ref SUnitState _structState)
     {
         if (_structState.isWaitForNewPath) return;
-        if (_structState.isPause) return;
+        if (_structState.isPause)
+        {
+            if (anim)
+                anim.StartPlayback();
+            return;
+        }
+        else
+        {
+            if (anim)
+                anim.StopPlayback();
+        }
 
 
         myTr.rotation = Quaternion.LookRotation(_structState.targetPos - myTr.position);
@@ -26,10 +37,11 @@ public class StateMove : IState
 
     public void End(ref SUnitState _structState)
     {
-        if (_structState.animator)
-            _structState.animator.SetBool("isMove", false);
+        if (anim)
+            anim.SetBool("isMove", false);
     }
 
     private Transform myTr = null;
     private float moveSpeed = 0f;
+    private Animator anim = null;
 }

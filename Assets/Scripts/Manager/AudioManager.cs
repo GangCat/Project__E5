@@ -35,10 +35,15 @@ public class AudioManager : MonoBehaviour
         sliderBGM = 1f;
         sliderEffect = 1f;
     }
-    
+
+    public float CurMasterVolume => curMasterValue;
+    public float CurEffectVolume => curEffectValue;
+    public float CurBGMVolume => curBGMValue;
+
     // Master 볼륨 조절 함수
     public void SetMasterVolume(float _volume)
     {
+        curMasterValue = _volume;
         audioVolume_Master = _volume * 0.1f;
         audioVolume_BGM = sliderBGM * audioVolume_Master;
         audioVolume_Effect = sliderEffect * audioVolume_Master;
@@ -55,6 +60,7 @@ public class AudioManager : MonoBehaviour
     // BGM 볼륨 조절 함수
     public void SetBGMVolume(float _volume)
     {
+        curBGMValue = _volume;
         sliderBGM = _volume * 0.1f;
         audioVolume_BGM = sliderBGM * audioVolume_Master;
         
@@ -67,6 +73,7 @@ public class AudioManager : MonoBehaviour
     // Effect 볼륨 조절 함수
     public void SetEffectVolume(float _volume)
     {
+        curEffectValue = _volume;
         sliderEffect = _volume * 0.1f;
         audioVolume_Effect = sliderEffect * audioVolume_Master;
         
@@ -367,6 +374,10 @@ public class AudioManager : MonoBehaviour
     private float sliderMaster = 0f;
     private float sliderBGM = 0f;
     private float sliderEffect = 0f;
+
+    private float curMasterValue = 10;
+    private float curEffectValue = 10;
+    private float curBGMValue = 10;
 
 
     /*

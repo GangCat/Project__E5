@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Structure : MonoBehaviour, IPauseObserver
@@ -204,6 +205,8 @@ public class Structure : MonoBehaviour, IPauseObserver
 
             if (myObj.IsSelect)
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, progressPercent);
+
+            if (elapsedTime > _buildDelay / 3)
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
             progressPercent = elapsedTime / _buildDelay;
@@ -337,6 +340,17 @@ public class Structure : MonoBehaviour, IPauseObserver
     public void CheckPause(bool _isPause)
     {
         isPause = _isPause;
+        if (isPause)
+        {
+            if (anim)
+                anim.StartPlayback();
+        }
+        else
+        {
+            if (anim)
+                anim.StopPlayback();
+        }
+
     }
 
     [SerializeField]
@@ -349,6 +363,8 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected float demolishDelay = 4f;
     [SerializeField]
     protected GameObject modelGo = null;
+    [SerializeField]
+    protected Animator anim = null;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;

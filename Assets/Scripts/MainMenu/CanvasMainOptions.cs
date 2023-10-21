@@ -29,6 +29,9 @@ public class CanvasMainOptions : CanvasMenuOptions
                 SetActive(false);
             });
 
+        imageGraphic.Init();
+        imageSound.Init();
+
         SetActive(false);
     }
 }

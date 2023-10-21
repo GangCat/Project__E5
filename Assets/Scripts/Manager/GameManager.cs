@@ -115,10 +115,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     private void InitMenuManager()
     {
+        audioMng.Init();
         loadSceneMng.Init();
         mainMenuMng.Init();
-        audioMng.Init();
-
     }
     private void InitInGameManager()
     {
