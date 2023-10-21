@@ -19,10 +19,61 @@ public class AudioManager : MonoBehaviour
         }
 
         foreach (AudioPlayerBase APB in GetComponentsInChildren<AudioPlayerBase>())
+        {
             APB.Init();
+            if (APB.AudioType.Equals((AudioPlayerBase.EAudioPlayerType.EFFECT)))
+            {
+                listEffectPlayer.Add(APB);
+            }
+            else
+            {
+                listBGMPlayer.Add(APB);
+            }
+        }
+
+        
+        sliderBGM = 1f;
+        sliderEffect = 1f;
+    }
+    
+    // Master 볼륨 조절 함수
+    public void SetMasterVolume(float _volume)
+    {
+        audioVolume_Master = _volume * 0.1f;
+        audioVolume_BGM = sliderBGM * audioVolume_Master;
+        audioVolume_Effect = sliderEffect * audioVolume_Master;
+
+        for(int i =0 ; i < listEffectPlayer.Count; ++i)
+            listEffectPlayer[i].SetVolume(audioVolume_Effect);
+
+        for (int i = 0; i < listBGMPlayer.Count; ++i)
+        {
+            listBGMPlayer[i].SetVolume(audioVolume_BGM);
+        }
     }
 
+    // BGM 볼륨 조절 함수
+    public void SetBGMVolume(float _volume)
+    {
+        sliderBGM = _volume * 0.1f;
+        audioVolume_BGM = sliderBGM * audioVolume_Master;
+        
+        for (int i = 0; i < listBGMPlayer.Count; ++i)
+            listBGMPlayer[i].SetVolume(audioVolume_BGM);
+        
+        
+    }
 
+    // Effect 볼륨 조절 함수
+    public void SetEffectVolume(float _volume)
+    {
+        sliderEffect = _volume * 0.1f;
+        audioVolume_Effect = sliderEffect * audioVolume_Master;
+        
+        for(int i =0 ; i < listEffectPlayer.Count; ++i)
+            listEffectPlayer[i].SetVolume(audioVolume_Effect);
+    }
+    
     public void PlayAudio_Attack(EObjectType _objectType)
     {
         switch (_objectType)
@@ -54,19 +105,28 @@ public class AudioManager : MonoBehaviour
         switch (_objectType)
         {
             case EObjectType.UNIT_HERO:
-                AudioPlayer_Hero.EAudioType_Hero audioTypeHero = 
-                    (AudioPlayer_Hero.EAudioType_Hero)((int)AudioPlayer_Hero.EAudioType_Hero.ORDER_01 + Idx);
-                AudioPlayer_Hero.instance.PlayAudio(audioTypeHero);
+                if (!AudioPlayer_Hero.instance.IsPlaying()) // 오디오가 재생 중이지 않은 경우에만 재생
+                {
+                    AudioPlayer_Hero.EAudioType_Hero audioTypeHero =
+                        (AudioPlayer_Hero.EAudioType_Hero)((int)AudioPlayer_Hero.EAudioType_Hero.ORDER_01 + Idx);
+                    AudioPlayer_Hero.instance.PlayAudio(audioTypeHero);
+                }
                 break;
             case EObjectType.UNIT_01:
-                AudioPlayer_Friendly_U01.EAudioType_Friendly_U01 audioTypeU01 = 
-                    (AudioPlayer_Friendly_U01.EAudioType_Friendly_U01)((int)AudioPlayer_Friendly_U01.EAudioType_Friendly_U01.ORDER_01 + Idx);
-                AudioPlayer_Friendly_U01.instance.PlayAudio(audioTypeU01);
+                if (!AudioPlayer_Hero.instance.IsPlaying()) // 오디오가 재생 중이지 않은 경우에만 재생
+                {
+                    AudioPlayer_Friendly_U01.EAudioType_Friendly_U01 audioTypeU01 =
+                        (AudioPlayer_Friendly_U01.EAudioType_Friendly_U01)((int)AudioPlayer_Friendly_U01.EAudioType_Friendly_U01.ORDER_01 + Idx);
+                    AudioPlayer_Friendly_U01.instance.PlayAudio(audioTypeU01);
+                }
                 break;
             case EObjectType.UNIT_02:
-                AudioPlayer_Friendly_U02.EAudioType_Friendly_U02 audioTypeU02 = 
-                    (AudioPlayer_Friendly_U02.EAudioType_Friendly_U02)((int)AudioPlayer_Friendly_U02.EAudioType_Friendly_U02.ORDER_01 + Idx);
-                AudioPlayer_Friendly_U02.instance.PlayAudio(audioTypeU02);
+                if (!AudioPlayer_Hero.instance.IsPlaying()) // 오디오가 재생 중이지 않은 경우에만 재생
+                {
+                    AudioPlayer_Friendly_U02.EAudioType_Friendly_U02 audioTypeU02 =
+                        (AudioPlayer_Friendly_U02.EAudioType_Friendly_U02)((int)AudioPlayer_Friendly_U02.EAudioType_Friendly_U02.ORDER_01 + Idx);
+                    AudioPlayer_Friendly_U02.instance.PlayAudio(audioTypeU02);
+                }
                 break;
             default:
                 break;
@@ -223,6 +283,9 @@ public class AudioManager : MonoBehaviour
             case EAudioType_Misc.NUCLEAR_EXPLOSION:
                 AudioPlayer_Misc.instance.PlayAudio(AudioPlayer_Misc.EAudioType_Misc.NUCLEAR_EXPLOSION);
                 break;
+            case EAudioType_Misc.PICKUP:
+                AudioPlayer_Misc.instance.PlayAudio(AudioPlayer_Misc.EAudioType_Misc.PICKUP);
+                break;
             default:
                 break;
         }
@@ -233,7 +296,42 @@ public class AudioManager : MonoBehaviour
     {
         AudioPlayer_UI.instance.PlayAudio(AudioPlayer_UI.EAudioType_UI.CLICK);
     }
+    
+    public void PlayAudio_BGM()
+    {
+        AudioPlayer_BGM.instance.PlayAudio();
+    }
 
+    public void StopAudio_BGM()
+    {
+        AudioPlayer_BGM.instance.StopAudio();
+    }
+    
+    public void StopAudio_BGM_WithFade(float _fadeDuration = 1.0f)
+    {
+        AudioPlayer_BGM.instance.StopAudioWithFade(_fadeDuration);
+    }
+    
+    public void PlayAudio_WaveBGM()
+    {
+        AudioPlayer_WaveBGM.instance.PlayAudio();
+    }
+
+    public void PlayAudio_WaveBGM_WithDelay(float delay = 1.0f)
+    {
+        AudioPlayer_WaveBGM.instance.PlayAudioWithDelay(delay);
+    }
+    
+    public void StopAudio_WaveBGM()
+    {
+        AudioPlayer_WaveBGM.instance.StopAudio();
+    }
+    
+    public void StopAudio_WaveBGM_WithFade(float _fadeDuration = 1.0f)
+    {
+        AudioPlayer_WaveBGM.instance.StopAudioWithFade(_fadeDuration);
+    }
+    
     public struct AudioVolumes
     {
         public float Main;
@@ -261,11 +359,21 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private float audioVolume_BGM;
     [SerializeField] private float audioVolume_Effect;
     
+    
+    // 모든 오디오 플레이어 인스턴스를 저장할 리스트
+    private List<AudioPlayerBase> listBGMPlayer = new List<AudioPlayerBase>();
+    private List<AudioPlayerBase> listEffectPlayer = new List<AudioPlayerBase>();
+
+    private float sliderMaster = 0f;
+    private float sliderBGM = 0f;
+    private float sliderEffect = 0f;
+
+
     /*
     [Header("#BGM")]
     [SerializeField] private AudioClip bgmClip;
     [SerializeField] private float bgmVolume;
     private AudioSource bgmPlayer;
     */
-    
+
 }

@@ -18,29 +18,32 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     private void Start()
     {
-        // 마우스 가두기
+        // 마우가�기
         Cursor.lockState = CursorLockMode.Confined;
-        // 마우스 모양 바꾸기
+        // 마우모양 바꾸�
         //Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.ForceSoftware);
-        // 유니티 에디터에서 실행할 때 창 모드로 실행
+        // �니�디�에�행�모드롤행
         //#if UNITY_EDITOR
         //        Screen.SetResolution(Screen.width, Screen.height, false);
         //#endif
 
-        // 빌드된 게임에서 실행할 때 창 모드로 실행
+        // 빌드게임�서 �행�모드롤행
         //#if !UNITY_EDITOR
         //        Screen.SetResolution(1920, 1080, false);
         //#endif
 
-        //빌드된 게임에서 실행할 때 전체 화면 모드로 실행
+        //빌드게임�서 �행�체 �면 모드롤행
 #if !UNITY_EDITOR
                 Screen.SetResolution(1920, 1080, true);
 
-                // 검은 여백 채우기
+                // 검� �백 채우�
                 Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
 #endif
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitMenu();
+        AudioManager.instance.PlayAudio_BGM();
+
+        AudioManager.instance.PlayAudio_BGM();
     }
 
     private void Update()
@@ -280,9 +283,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
     }
 
     [SerializeField]
-    private float worldSizeX = 100f; // 미니맵에 표시할 월드의 가로길이
+    private float worldSizeX = 100f; // 미니맵에 �시�드가로길
     [SerializeField]
-    private float worldSizeY = 100f; // 미니맵에 표시할 월드의 세로길이
+    private float worldSizeY = 100f; // 미니맵에 �시�드�로길이
     [SerializeField]
     private Texture2D customCursor = null;
 
@@ -301,6 +304,8 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private AudioManager audioMng = null;
     private MainMenuManager mainMenuMng = null;
     private LoadSceneManager loadSceneMng = null;
+    private EAudioType_BGM audioType;
+
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;

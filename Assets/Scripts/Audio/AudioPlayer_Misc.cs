@@ -19,6 +19,15 @@ public class AudioPlayer_Misc : AudioPlayerBase
 
     }
 
+    public override void SetVolume(float _volume)
+    {
+        base.SetVolume(_volume);
+        for (int i = 0; i < audioPlayers.Length; ++i)
+        {
+            audioPlayers[i].volume = _volume;
+        }
+    }
+    
     public void PlayAudio(EAudioType_Misc _audioType)
     {
         for (int i = 0; i < audioPlayers.Length; ++i)
@@ -42,5 +51,5 @@ public class AudioPlayer_Misc : AudioPlayerBase
     private int channelIndex;
     
     public static AudioPlayer_Misc instance;
-    public enum EAudioType_Misc { NONE = -1, NUCLEAR_EXPLOSION,  LENGTH } 
+    public enum EAudioType_Misc { NONE = -1, NUCLEAR_EXPLOSION, PICKUP, LENGTH } 
 }
