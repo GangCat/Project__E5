@@ -15,6 +15,7 @@ public class StateAttack : IState
         projectileGo = _structState.ProjectileGo;
         spawnTr = _structState.projectileSpawnTr;
         heroSpawnTr = _structState.heroProjectileSpawnTr;
+        if(_structState.animator)
         _structState.animator.SetBool("isAttack", true);
     }
 
@@ -57,6 +58,8 @@ public class StateAttack : IState
 
     public void End(ref SUnitState _structState)
     {
+        if(_structState.animator)
+            _structState.animator.SetBool("isAttack", false);
     }
 
     private float attDmg = 0;

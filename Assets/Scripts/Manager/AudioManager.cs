@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -35,6 +36,12 @@ public class AudioManager : MonoBehaviour
         sliderBGM = 1f;
         sliderEffect = 1f;
     }
+
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
     
     // Master 볼륨 조절 함수
     public void SetMasterVolume(float _volume)
@@ -330,6 +337,23 @@ public class AudioManager : MonoBehaviour
     public void StopAudio_WaveBGM_WithFade(float _fadeDuration = 1.0f)
     {
         AudioPlayer_WaveBGM.instance.StopAudioWithFade(_fadeDuration);
+    }
+    
+    
+    private void OnSceneLoaded(Scene _scene, LoadSceneMode _mode)
+    {
+        if (_scene.name.Equals("ProgrammingScene"))
+        {
+            instance.PlayAudio_BGM();
+            // 메인메뉴 BGM 끄는 기능
+        }
+        
+        if (_scene.name.Equals("ProgrammingSceneMainMenu"))
+        {
+            // 게임화면 BGM 끄고
+            // 메인메뉴 BGM ON
+        }
+        
     }
     
     public struct AudioVolumes
