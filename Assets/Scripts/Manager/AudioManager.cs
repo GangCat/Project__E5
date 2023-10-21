@@ -13,9 +13,9 @@ public class AudioManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if (instance != this)
+        else 
         {
-            Destroy(gameObject);
+            Destroy(FindFirstObjectByType<AudioManager>().gameObject);
         }
 
         foreach (AudioPlayerBase APB in GetComponentsInChildren<AudioPlayerBase>())

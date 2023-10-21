@@ -944,11 +944,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 6ed5dee0-642f-4d40-ab70-42aef33aa1ad
+  cloudProjectId: 00711527-5e5e-43e5-92cb-d2fba473a0c3
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 1st Project (3)
-  organizationId: okguni
+  projectName: 1st Project (1)
+  organizationId: windy9300
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

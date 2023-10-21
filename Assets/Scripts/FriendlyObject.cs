@@ -421,21 +421,21 @@ public class FriendlyObject : SelectableObject, ISubscriber
         stateMachine.SetWaitForNewPath(false);
         while (true)
         {
-            if (!hasTargetNode)
-            {
-                if (IsObjectBlocked())
-                {
-                    stateMachine.SetWaitForNewPath(true);
-                    curWayNode = GetNearWalkableNode(curWayNode);
-                    yield return new WaitForSeconds(0.1f);
-                    hasTargetNode = true;
-                    stateMachine.SetWaitForNewPath(false);
+            //if (!hasTargetNode)
+            //{
+            //    if (IsObjectBlocked())
+            //    {
+            //        stateMachine.SetWaitForNewPath(true);
+            //        curWayNode = GetNearWalkableNode(curWayNode);
+            //        yield return new WaitForSeconds(0.1f);
+            //        hasTargetNode = true;
+            //        stateMachine.SetWaitForNewPath(false);
 
-                    //stateMachine.SetWaitForNewPath(true);
-                    //yield return new WaitForSeconds(0.5f);
-                    //stateMachine.SetWaitForNewPath(false);
-                }
-            }
+            //        //stateMachine.SetWaitForNewPath(true);
+            //        //yield return new WaitForSeconds(0.5f);
+            //        //stateMachine.SetWaitForNewPath(false);
+            //    }
+            //}
 
             if (!curWayNode.walkable)
             {
@@ -680,6 +680,16 @@ public class FriendlyObject : SelectableObject, ISubscriber
             yield return null;
         }
     }
+
+    protected override bool IsObjectBlocked()
+    {
+        curPos = transform.position;
+        //if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("EnemySelectableObject")))
+        if (Physics.Linecast(curPos, curWayNode.worldPos, friendlyLayerMask))
+            return true;
+
+        return false;
+    }
     #endregion
 
     #region StateHoldCondition
@@ -807,6 +817,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private bool isMovable = false;
     [SerializeField]
     private EUnitType unitType = EUnitType.NONE;
+    [SerializeField]
+    private LayerMask friendlyLayerMask;
 
     private Vector3 wayPointStart = Vector3.zero;
     private Transform targetBunker = null;

@@ -127,8 +127,8 @@ MonoBehaviour:
     \uD3C9\uBC94\uD55C \uAE30\uACC4\uCC98\uB7FC \uBCF4\uC778\uB2E4."
   isDrawRange: 0
   isDrawPath: 0
-  chaseStartRange: 10
-  chaseEndRange: 14
+  chaseStartRange: 20
+  chaseEndRange: 25
   attackRange: 8
   stopDelay: 1
   followOffset: 1

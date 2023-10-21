@@ -15,6 +15,11 @@ public class StructureBarrack : Structure, ISubscriber
         Subscribe();
     }
 
+    public override void SetUnitSpawnDelay(float[] _arrSpawnDelay)
+    {
+        arrSpawnUnitDelay = _arrSpawnDelay;
+    }
+
     public bool IsProcessingSpawnUnit => isProcessingSpawnUnit;
 
     public override void CancleCurAction()
@@ -279,8 +284,7 @@ public class StructureBarrack : Structure, ISubscriber
     }
 
     [Header("-Melee, Range, Rocket(temp)")]
-    [SerializeField]
-    private float[] arrSpawnUnitDelay = null;
+
     [SerializeField]
     private GameObject[] arrUnitPrefab = null;
 
@@ -301,4 +305,5 @@ public class StructureBarrack : Structure, ISubscriber
     private EUnitUpgradeType unitUpgradeType = EUnitUpgradeType.NONE;
 
     private float SpawnUnitProgressPercent = 0f;
+    private float[] arrSpawnUnitDelay = null;
 }

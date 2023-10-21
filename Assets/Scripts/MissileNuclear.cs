@@ -38,6 +38,8 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
 
         transform.position = new Vector3(_destPos.x, 30f, _destPos.z);
         transform.rotation = Quaternion.Euler(new Vector3(180f, 0f, 0f));
+        GameObject visibleGo  = Instantiate(visibleAreaGo, _destPos, Quaternion.identity);
+        visibleGo.transform.localScale = new Vector3(30, 1, 30);
         while(transform.position.y > 0)
         {
             while (isPause)
@@ -55,6 +57,7 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
         AudioManager.instance.PlayAudio_Misc(EAudioType_Misc.NUCLEAR_EXPLOSION);
         
         ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
+        Destroy(visibleGo, 3f);
         SetActive(false);
     }
 
@@ -67,6 +70,8 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
     private float attackRange = 0f;
     [SerializeField]
     private float launchSpeed = 0f;
+    [SerializeField]
+    private GameObject visibleAreaGo = null;
 
     private bool isPause = false;
 

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Structure : MonoBehaviour, IPauseObserver
@@ -31,6 +30,12 @@ public class Structure : MonoBehaviour, IPauseObserver
     }
 
     public virtual void Init() { }
+    public virtual void SetUnitSpawnDelay(float[] _arrSpawnDelay) { }
+    public virtual void SetNuclearSpawnDelay(float _SpawnNuclearDelay) { }
+    public void SetUpgradeDelay(float _upgradeDelay)
+    {
+        upgradeDelay = upgradeLevel * _upgradeDelay;
+    }
 
     public EUpgradeType CurUpgradeType => curUpgradeType;
     public int UpgradeLevel => upgradeLevel;
@@ -358,8 +363,6 @@ public class Structure : MonoBehaviour, IPauseObserver
     [SerializeField]
     protected int myGridY = 1;
     [SerializeField]
-    protected float upgradeDelay = 0f;
-    [SerializeField]
     protected float demolishDelay = 4f;
     [SerializeField]
     protected GameObject modelGo = null;
@@ -378,6 +381,7 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected int upgradeLevel = 0;
 
     protected float progressPercent = 0f;
+    protected float upgradeDelay = 0f;
 
     protected bool isBuildable = false;
     protected bool isProcessingUpgrade = false;

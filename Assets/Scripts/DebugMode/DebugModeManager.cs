@@ -24,11 +24,6 @@ public class DebugModeManager : MonoBehaviour
         canvasDebug.DisplayCurState(_screenPos, _curState);
     }
 
-    public void BuildDelayFastChect()
-    {
-        structureMng.SetBuildDelayFast();
-    }
-
     private CanvasDebugMode canvasDebug = null;
     private StructureManager structureMng = null;
 }

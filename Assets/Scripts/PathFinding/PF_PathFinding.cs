@@ -6,18 +6,19 @@ using Cysharp.Threading.Tasks;
 
 public class PF_PathFinding : MonoBehaviour
 {
-    public delegate void FinishPathFindDelegate(PF_Node[] _waypoints, bool _isPathSuccess);
+    public delegate void FinishPathFindDelegate(PF_Node[] _waypoints, bool _isPathSuccess, int _myIdx);
 
-    public void Init(FinishPathFindDelegate _finishPathFindCallback, float _gridWorldSizeX, float _gridWorldSizeY)
+    public void Init(FinishPathFindDelegate _finishPathFindCallback, float _gridWorldSizeX, float _gridWorldSizeY, PF_Grid _grid, int _idx)
     {
-        grid = GetComponent<PF_Grid>();
+        grid = _grid;
         grid.Init(_gridWorldSizeX, _gridWorldSizeY);
         finishPathFindCallback = _finishPathFindCallback;
+        myIdx = _idx;
 
-        openSet = new PF_Heap<PF_Node>(searchLimitCnt + 100);
-        closedSet = new HashSet<PF_Node>(searchLimitCnt + 100);
+        openSet = new PF_Heap<PF_Node>(searchLimitCnt + 50);
+        closedSet = new HashSet<PF_Node>(searchLimitCnt + 50);
         listNeighbor = new List<PF_Node>(8);
-        listWayNode = new List<PF_Node>();
+        listWayNode = new List<PF_Node>(searchLimitCnt / 2);
     }
 
     public void CheckNodeBuildable(PF_Node[] _arrFriendlyObject)
@@ -27,17 +28,16 @@ public class PF_PathFinding : MonoBehaviour
 
     public void StartFindPath(Vector3 _startPos, Vector3 _targetPos)
     {
-        PF_Node startNode = grid.GetNodeFromWorldPoint(_startPos);
-        PF_Node targetNode = grid.GetNodeFromWorldPoint(_targetPos);
+        startNode = grid.GetNodeFromWorldPoint(_startPos);
+        targetNode = grid.GetNodeFromWorldPoint(_targetPos);
 
         if (startNode.Equals(targetNode))
         {
-            finishPathFindCallback?.Invoke(new PF_Node[1] { targetNode }, true);
+            finishPathFindCallback?.Invoke(new PF_Node[1] { targetNode }, true, myIdx);
             return;
         }
 
         UpdateUniTask(startNode, targetNode).Forget();
-        //UpdateUniTask();
         //StartCoroutine(FindPath(startNode, targetNode));
     }
 
@@ -79,6 +79,7 @@ public class PF_PathFinding : MonoBehaviour
 
             while (openSet.Count > 0)
             {
+
                 listNeighbor.Clear();
                 curNode = openSet.RemoveFirstItem();
 
@@ -103,7 +104,7 @@ public class PF_PathFinding : MonoBehaviour
                     neighbor = listNeighbor[i];
                     if (!neighbor.walkable || closedSet.Contains(neighbor)) continue;
 
-                    int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighbor);
+                    newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighbor);
 
                     if (newGCostToNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
                     {
@@ -127,107 +128,105 @@ public class PF_PathFinding : MonoBehaviour
             listWayNode = RetracePath(startNode, curNode);
         }
 
-        finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess);
+        finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess, myIdx);
     }
 
-    private IEnumerator FindPath(PF_Node startNode, PF_Node targetNode)
-    {
-        bool isPathSuccess = false;
+    //private IEnumerator FindPath(PF_Node startNode, PF_Node targetNode)
+    //{
+    //    bool isPathSuccess = false;
 
-        if (!targetNode.walkable)
-        {
-            targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
-        }
+    //    if (!targetNode.walkable)
+    //    {
+    //        targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
+    //    }
         
-        if (targetNode != null)
-        {
-            listWayNode.Clear();
-            listNeighbor.Clear();
-            curNode = null;
-            neighbor = null;
+    //    if (targetNode != null)
+    //    {
+    //        listWayNode.Clear();
+    //        listNeighbor.Clear();
+    //        curNode = null;
+    //        neighbor = null;
 
-            listNeighbor = grid.GetNeighbors(targetNode);
+    //        listNeighbor = grid.GetNeighbors(targetNode);
 
-            bool isTargetAccessible = false;
-            for (int i = 0; i < listNeighbor.Count; ++i)
-            {
-                if (listNeighbor[i].walkable)
-                {
-                    isTargetAccessible = true;
-                    break;
-                }
-            }
-            if (!isTargetAccessible)
-                targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
+    //        bool isTargetAccessible = false;
+    //        for (int i = 0; i < listNeighbor.Count; ++i)
+    //        {
+    //            if (listNeighbor[i].walkable)
+    //            {
+    //                isTargetAccessible = true;
+    //                break;
+    //            }
+    //        }
+    //        if (!isTargetAccessible)
+    //            targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
 
-            while (openSet.Count > 0)
-                openSet.RemoveFirstItem();
+    //        while (openSet.Count > 0)
+    //            openSet.RemoveFirstItem();
 
-            closedSet.Clear();
-            openSet.Add(startNode);
+    //        closedSet.Clear();
+    //        openSet.Add(startNode);
 
-            while (openSet.Count > 0)
-            {
-                listNeighbor.Clear();
-                curNode = openSet.RemoveFirstItem();
+    //        while (openSet.Count > 0)
+    //        {
+    //            listNeighbor.Clear();
+    //            curNode = openSet.RemoveFirstItem();
 
-                closedSet.Add(curNode);
+    //            closedSet.Add(curNode);
 
-                if (openSet.Count > searchLimitCnt)
-                {
-                    isPathSuccess = true;
-                    break;
-                }
+    //            if (openSet.Count > searchLimitCnt)
+    //            {
+    //                isPathSuccess = true;
+    //                break;
+    //            }
 
-                if (curNode.Equals(targetNode))
-                {
-                    isPathSuccess = true;
-                    break;
-                }
+    //            if (curNode.Equals(targetNode))
+    //            {
+    //                isPathSuccess = true;
+    //                break;
+    //            }
 
-                listNeighbor = grid.GetNeighbors(curNode);
+    //            listNeighbor = grid.GetNeighbors(curNode);
 
-                for (int i = 0; i < listNeighbor.Count; ++i)
-                {
-                    neighbor = listNeighbor[i];
-                    if (!neighbor.walkable || closedSet.Contains(neighbor)) continue;
+    //            for (int i = 0; i < listNeighbor.Count; ++i)
+    //            {
+    //                neighbor = listNeighbor[i];
+    //                if (!neighbor.walkable || closedSet.Contains(neighbor)) continue;
 
-                    int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighbor);
+    //                int newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighbor);
 
-                    if (newGCostToNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
-                    {
-                        neighbor.gCost = newGCostToNeighbor;
-                        neighbor.hCost = CalcLowestCostWithNode(neighbor, targetNode);
-                        neighbor.parentNode = curNode;
+    //                if (newGCostToNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
+    //                {
+    //                    neighbor.gCost = newGCostToNeighbor;
+    //                    neighbor.hCost = CalcLowestCostWithNode(neighbor, targetNode);
+    //                    neighbor.parentNode = curNode;
 
-                        if (!openSet.Contains(neighbor))
-                            openSet.Add(neighbor);
-                        else
-                            openSet.UpdateItem(neighbor);
-                    }
-                }
-            }
-        }
+    //                    if (!openSet.Contains(neighbor))
+    //                        openSet.Add(neighbor);
+    //                    else
+    //                        openSet.UpdateItem(neighbor);
+    //                }
+    //            }
+    //        }
+    //    }
 
-        yield return null;
+    //    yield return null;
 
-        if (isPathSuccess)
-        {
-            listWayNode = RetracePath(startNode, curNode);
-        }
+    //    if (isPathSuccess)
+    //    {
+    //        listWayNode = RetracePath(startNode, curNode);
+    //    }
 
-        finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess);
-    }
-
-    private PF_Node curNode = null;
-    private PF_Node neighbor = null;
+    //    finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess);
+    //}
 
     private List<PF_Node> RetracePath(PF_Node _startNode, PF_Node _endNode)
     {
-        List<PF_Node> path = new List<PF_Node>();
-        PF_Node curNode = _endNode;
+        path.Clear();
 
-        while (!curNode.Equals(_startNode))
+        retraceNode = _endNode;
+
+        while (curNode != null && !curNode.Equals(_startNode))
         {
             path.Add(curNode);
             curNode = curNode.parentNode;
@@ -258,18 +257,23 @@ public class PF_PathFinding : MonoBehaviour
 
     private int CalcLowestCostWithNode(PF_Node _nodeA, PF_Node _nodeB)
     {
-        int distX = Mathf.Abs(_nodeA.gridX - _nodeB.gridX);
-        int distY = Mathf.Abs(_nodeA.gridY - _nodeB.gridY);
+        distX = Mathf.Abs(_nodeA.gridX - _nodeB.gridX);
+        distY = Mathf.Abs(_nodeA.gridY - _nodeB.gridY);
 
         if (distX > distY)
             return 14 * distY + 10 * (distX - distY);
         return 14 * distX + 10 * (distY - distX);
     }
 
+    private int distX = 0;
+    private int distY = 0;
+
     [SerializeField]
     private int searchLimitCnt = 200;
 
     private PF_Grid grid;
+    private PF_Node curNode = null;
+    private PF_Node neighbor = null;
 
     private FinishPathFindDelegate finishPathFindCallback = null;
 
@@ -277,6 +281,14 @@ public class PF_PathFinding : MonoBehaviour
     private HashSet<PF_Node> closedSet = new HashSet<PF_Node>();
     private List<PF_Node> listNeighbor = new List<PF_Node>();
     private List<PF_Node> listWayNode = new List<PF_Node>();
+    List<PF_Node> path = new List<PF_Node>();
 
     private Dictionary<Tuple<PF_Node, PF_Node>, int> distanceCache = new Dictionary<Tuple<PF_Node, PF_Node>, int>();
+
+    private int newGCostToNeighbor = 0;
+    private int myIdx = -1;
+
+    private PF_Node startNode = null;
+    private PF_Node targetNode = null;
+    private PF_Node retraceNode = null;
 }

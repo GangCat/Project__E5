@@ -27,12 +27,25 @@ public class StructureManager : MonoBehaviour
         }
     }
 
-    public void SetBuildDelayFast()
+    public void SetDelayFast()
     {
-        for(int i = 0; i < buildDelay.Length; ++i)
+        for (int i = 0; i < buildDelay.Length; ++i)
             buildDelay[i] = 1f;
-    }
 
+        for (int i = 0; i < arrSpawnUnitDelay.Length; ++i)
+            arrSpawnUnitDelay[i] = 1f;
+
+        nuclearSpawnDelay = 1f;
+        upgradeDelay = 1f;
+
+        foreach (Structure structure in dicStructure.Values)
+        {
+            structure.SetNuclearSpawnDelay(nuclearSpawnDelay);
+            structure.SetUnitSpawnDelay(arrSpawnUnitDelay);
+            structure.SetUpgradeDelay(upgradeDelay);
+        }
+        
+    }
     public EObjectType CurStructureType()
     {
         return curStructureObjType;
@@ -218,13 +231,25 @@ public class StructureManager : MonoBehaviour
             Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, curStructure.transform.rotation).GetComponent<Structure>();
             newStructure.Init(grid);
             newStructure.Init(structureIdx);
+            newStructure.SetUpgradeDelay(upgradeDelay);
             dicStructure.Add(structureIdx, newStructure);
             ++structureIdx;
-            if (curStructureType.Equals(EStructureType.WALL))
+            switch (curStructureType)
             {
-                newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
-                newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
+                case EStructureType.BARRACK:
+                    newStructure.SetUnitSpawnDelay(arrSpawnUnitDelay);
+                    break;
+                case EStructureType.NUCLEAR:
+                    newStructure.SetNuclearSpawnDelay(nuclearSpawnDelay);
+                    break;
+                case EStructureType.WALL:
+                    newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
+                    newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
+                    break;
+                default:
+                    break;
             }
+
             Destroy(curStructure.gameObject);
             newStructure.transform.parent = transform;
             newStructure.BuildStart(buildDelay[(int)curStructureType]);
@@ -306,6 +331,18 @@ public class StructureManager : MonoBehaviour
     [Header("-Build Delay(TURRET, BUNKER, BARRACK, NUCLEAR, WALL)")]
     [SerializeField]
     private float[] buildDelay = new float[(int)EStructureType.LENGTH];
+
+    [Header("-Unit Spawn Delay(MELEE, RANGED)")]
+    [SerializeField]
+    private float[] arrSpawnUnitDelay = null;
+
+    [Header("-Nuclear Spawn Delay")]
+    [SerializeField]
+    private float nuclearSpawnDelay = 0f;
+
+    [Header("-Upgrade Delay")]
+    [SerializeField]
+    private float upgradeDelay = 0f;
 
     [Header("-ETC")]
     [SerializeField]

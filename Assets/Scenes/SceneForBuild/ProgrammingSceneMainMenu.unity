@@ -6713,9 +6713,9 @@ MonoBehaviour:
   buttonStartGame: {fileID: 1246350289}
   buttonOption: {fileID: 1479616271}
   buttonExit: {fileID: 894514901}
-  exitReCheckGo: {fileID: 0}
-  buttonExitConfrim: {fileID: 0}
-  buttonExitCancle: {fileID: 0}
+  exitReCheckGo: {fileID: 154773020}
+  buttonExitConfrim: {fileID: 31401585}
+  buttonExitCancle: {fileID: 288047957}
 --- !u!1 &1879121722
 GameObject:
   m_ObjectHideFlags: 0

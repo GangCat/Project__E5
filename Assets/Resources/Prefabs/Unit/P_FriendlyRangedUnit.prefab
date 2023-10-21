@@ -141,6 +141,9 @@ MonoBehaviour:
     m_Bits: 1048576
   isMovable: 1
   unitType: 1
+  friendlyLayerMask:
+    serializedVersion: 2
+    m_Bits: 525312
 --- !u!114 &622217713063324570
 MonoBehaviour:
   m_ObjectHideFlags: 0

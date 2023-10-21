@@ -11,7 +11,7 @@ public class CommandChangeBuildDelayFast : Command
 
     public override void Execute(params object[] _objects)
     {
-        structureMng.SetBuildDelayFast();
+        structureMng.SetDelayFast();
     }
 
     private StructureManager structureMng = null;

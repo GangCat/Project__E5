@@ -8,12 +8,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private void Awake()
     {
         if (FindObjectsByType<GameManager>(FindObjectsSortMode.None).Length > 1)
-        {
-            GameManager existingGameManager = FindAnyObjectByType<GameManager>();
-            if (existingGameManager != null)
-                Destroy(existingGameManager.gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
+        else
+            DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -42,8 +39,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitMenu();
         AudioManager.instance.PlayAudio_BGM();
-
-        AudioManager.instance.PlayAudio_BGM();
     }
 
     private void Update()
@@ -62,6 +57,11 @@ public class GameManager : MonoBehaviour, IPauseSubject
         if (_scene.name.Equals("ProgrammingScene"))
         {
             InitInGame();
+        }
+        else if(_scene.name.Equals("ProgrammingSceneMainMenu"))
+        {
+            mainMenuMng = FindAnyObjectByType<MainMenuManager>();
+            mainMenuMng.Init();
         }
     }
 
@@ -90,8 +90,8 @@ public class GameManager : MonoBehaviour, IPauseSubject
         inputMng = FindFirstObjectByType<InputManager>();
 
         InitCommandList();
-        RegistObserver();
         InitInGameManager();
+        RegistObserver();
     }
 
     public static void ChangeDisplayFullHD(bool _isFullHD)
@@ -229,7 +229,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.SPAWN_NUCLEAR, new CommandRefundSpawnNuclear(currencyMng));
 
         ArrayDebugModeCommand.Add(EDebugModeCommand.MOVE_STATE_INDICATOR, new CommandMoveCurStateIndicator(debugMng));
-        ArrayDebugModeCommand.Add(EDebugModeCommand.FAST_BUILD, new CommandChangeBuildDelayFast(structureMng));
+        ArrayDebugModeCommand.Add(EDebugModeCommand.DELAY_FAST, new CommandChangeBuildDelayFast(structureMng));
         ArrayDebugModeCommand.Add(EDebugModeCommand.TOGGLE_FOG, new CommandToggleDisplayFog(fogMng));
         ArrayDebugModeCommand.Add(EDebugModeCommand.MONEY_INFLATION, new CommandMoneyInflation(currencyMng));
 

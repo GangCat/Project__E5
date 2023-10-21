@@ -332,7 +332,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         else if (Input.GetKeyDown(arrDebugModeHotkey[(int)EDeveloperMenuKey.TOGGLE_FOG]))
             ArrayDebugModeCommand.Use(EDebugModeCommand.TOGGLE_FOG);
         else if (Input.GetKeyDown(arrDebugModeHotkey[(int)EDeveloperMenuKey.FAST_BUILD]))
-            ArrayDebugModeCommand.Use(EDebugModeCommand.FAST_BUILD);
+            ArrayDebugModeCommand.Use(EDebugModeCommand.DELAY_FAST);
         else if (Input.GetKeyDown(arrDebugModeHotkey[(int)EDeveloperMenuKey.MONEY_INFLATION]))
             ArrayDebugModeCommand.Use(EDebugModeCommand.MONEY_INFLATION);
         else

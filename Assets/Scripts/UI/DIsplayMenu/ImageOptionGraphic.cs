@@ -10,12 +10,14 @@ public class ImageOptionGraphic : MenuImageBase
         toggleFullHD.onValueChanged.AddListener(
             (bool _value) =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
                 GameManager.ChangeDisplayFullHD(_value);
             });
 
         toggleFullScreen.onValueChanged.AddListener(
             (bool _value) =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
                 GameManager.ToggleFullscreen(_value);
             });
     }

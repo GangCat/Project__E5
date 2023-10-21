@@ -127,7 +127,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ca2ff5281770f11409a1faa309db83d9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
@@ -143,7 +143,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: fe0935452e9d56b488ac7305361d9616, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
@@ -199,7 +199,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _normalMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a32a93ba562202744ac6db0859a591de, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -355,7 +355,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     - _isDamaged: 0
-    - _metallicRatio: 0.7
+    - _metallicRatio: 1
     m_Colors:
     - _BaseColor: {r: 0.9194824, g: 0.652, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}

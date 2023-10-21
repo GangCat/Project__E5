@@ -7,12 +7,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 {
     public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
     {
-        listSelectedFriendlyObject.Clear();
-        tempListSelectableObject.Clear();
         selectObjectCallback = _selectObjectCallback;
         grid = _grid;
         RegisterBroker();
 
+        dicNodeUnderFriendlyUnit = new Dictionary<int, PF_Node>();
+        dicNodeUnderEnemyUnit = new Dictionary<int, PF_Node>();
+        tempListSelectableObject = new List<SelectableObject>();
+        listSelectedFriendlyObject = new List<FriendlyObject>();
         unitInfoContainer = new UnitInfoContainer();
         listFriendlyUnitInfo = new List<SFriendlyUnitInfo>(12);
 
@@ -647,8 +649,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             
     }
 
-
-
     public void ResetTargetBunker()
     {
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
@@ -684,6 +684,13 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             foreach (FriendlyObject obj in listSelectedFriendlyObject)
                 obj.MoveByPos(_targetPos + CalcPosInFormation(obj.Position, centerPos));
         }
+    }
+
+    public static void MoveWaveEnemy(Vector3 _targetPos, SelectableObject[] _arrEnemy)
+    {
+        Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
+        foreach (SelectableObject obj in _arrEnemy)
+            obj.MoveAttack(_targetPos + CalcPosInFormation(obj.Position, centerPos));
     }
 
     public void Stop()
@@ -730,7 +737,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
     }
 
-    private Vector3 CalcFormationCenterPos(float _targetPosY)
+    private static Vector3 CalcFormationCenterPos(float _targetPosY)
     {
         Vector3 centerPos = Vector3.zero;
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
@@ -745,7 +752,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         return centerPos;
     }
 
-    private Vector3 CalcPosInFormation(Vector3 _myPos, Vector3 _centerPos)
+    private static Vector3 CalcPosInFormation(Vector3 _myPos, Vector3 _centerPos)
     {
         return _myPos - _centerPos;
     }
@@ -852,16 +859,16 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private bool isFriendlyStructureInList = false;
     private bool isEnemyObjectInList = false;
 
-    private List<SelectableObject> tempListSelectableObject = new List<SelectableObject>();
-    private static List<FriendlyObject> listSelectedFriendlyObject = new List<FriendlyObject>();
+    private List<SelectableObject> tempListSelectableObject = null;
+    private static List<FriendlyObject> listSelectedFriendlyObject = null;
 
     private VoidSelectObjectTypeDelegate selectObjectCallback = null;
 
     private StructureBunker curBunker = null;
 
     private static PF_Grid grid = null;
-    private static Dictionary<int, PF_Node> dicNodeUnderFriendlyUnit = new Dictionary<int, PF_Node>();
-    private static Dictionary<int, PF_Node> dicNodeUnderEnemyUnit = new Dictionary<int, PF_Node>();
+    private static Dictionary<int, PF_Node> dicNodeUnderFriendlyUnit = null;
+    private static Dictionary<int, PF_Node> dicNodeUnderEnemyUnit = null;
     private static int dicFriendlyIdx = 0;
     private static int dicEnemyIdx = 0;
 

@@ -123,7 +123,7 @@ public class PF_Heap<T> where T : IHeapItem<T>
     }
 
     private T[] items;
-    private int curItemCount;
+    private int curItemCount = 0;
 }
 
 public interface IHeapItem<T> : IComparable<T>
