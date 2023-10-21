@@ -15,7 +15,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void DisplayOption()
     {
-        canvasMainOption.DisplayGraphicOption();
+        canvasMainOption.DisplayCanvas();
     }
 
     public void HideOption()

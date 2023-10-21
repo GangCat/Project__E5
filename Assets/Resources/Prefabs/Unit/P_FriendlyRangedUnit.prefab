@@ -109,7 +109,7 @@ MonoBehaviour:
     heroProjectileSpawnTr:
     - {fileID: 1644216315059856756}
     - {fileID: 1129910846523290889}
-    heroAnimator: {fileID: 0}
+    animator: {fileID: 1841480848016199787}
 --- !u!114 &2341253079211249543
 MonoBehaviour:
   m_ObjectHideFlags: 0
