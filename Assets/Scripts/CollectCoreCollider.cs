@@ -13,6 +13,8 @@ public class CollectCoreCollider : MonoBehaviour
     {
         if (_other.CompareTag("PowerCore"))
         {
+            AudioManager.instance.PlayAudio_Misc(EAudioType_Misc.PICKUP);
+            
             effectCtrl.EffectOn(3, _other.transform.position);
             ArrayCurrencyCommand.Use(ECurrencyCommand.COLLECT_CORE, coreAmount);
             Destroy(_other.gameObject);
@@ -23,4 +25,5 @@ public class CollectCoreCollider : MonoBehaviour
     private uint coreAmount = 20;
 
     private EffectController effectCtrl = null;
+    
 }

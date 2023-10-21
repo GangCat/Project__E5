@@ -283,6 +283,9 @@ public class AudioManager : MonoBehaviour
             case EAudioType_Misc.NUCLEAR_EXPLOSION:
                 AudioPlayer_Misc.instance.PlayAudio(AudioPlayer_Misc.EAudioType_Misc.NUCLEAR_EXPLOSION);
                 break;
+            case EAudioType_Misc.PICKUP:
+                AudioPlayer_Misc.instance.PlayAudio(AudioPlayer_Misc.EAudioType_Misc.PICKUP);
+                break;
             default:
                 break;
         }

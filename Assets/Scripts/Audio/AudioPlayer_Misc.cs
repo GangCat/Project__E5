@@ -51,5 +51,5 @@ public class AudioPlayer_Misc : AudioPlayerBase
     private int channelIndex;
     
     public static AudioPlayer_Misc instance;
-    public enum EAudioType_Misc { NONE = -1, NUCLEAR_EXPLOSION,  LENGTH } 
+    public enum EAudioType_Misc { NONE = -1, NUCLEAR_EXPLOSION, PICKUP, LENGTH } 
 }

@@ -39514,6 +39514,7 @@ MonoBehaviour:
   audioType: 1
   audioClips:
   - {fileID: 8300000, guid: e2705faa9ce581a4da8d9baca8ea6dce, type: 3}
+  - {fileID: 8300000, guid: 331dfe9590b31f64195f3ed61596b24b, type: 3}
   audioChannels: 2
 --- !u!1 &2068575810
 GameObject:
