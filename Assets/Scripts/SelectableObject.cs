@@ -198,7 +198,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 //StateMove();
                 yield break;
             }
-            else if (!isTargetInRangeFromMyPos(targetTr.position, chaseFinishRange))
+            else if (!isTargetInRangeFromMyPos(targetTr.position, chaseEndRange))
             {
                 stateMachine.TargetTr = null;
                 targetTr = null;
@@ -241,37 +241,41 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         UpdateCurNode();
         ChangeState(EState.MOVE);
 
-        switch (curMoveCondition)
-        {
-            case EMoveState.ATTACK:
-                StartCoroutine("CheckNormalMoveCoroutine");
+        if (gameObject.activeSelf)
 
-                break;
-            case EMoveState.CHASE:
-                if (!targetTr || targetTr.gameObject.activeSelf.Equals(false))
-                {
-                    if (prevMoveCondition != EMoveState.NONE)
+        {
+            switch (curMoveCondition)
+            {
+                case EMoveState.ATTACK:
+                    StartCoroutine("CheckNormalMoveCoroutine");
+
+                    break;
+                case EMoveState.CHASE:
+                    if (!targetTr || targetTr.gameObject.activeSelf.Equals(false))
                     {
-                        curMoveCondition = prevMoveCondition;
-                        prevMoveCondition = EMoveState.NONE;
-                        StateMove();
+                        if (prevMoveCondition != EMoveState.NONE)
+                        {
+                            curMoveCondition = prevMoveCondition;
+                            prevMoveCondition = EMoveState.NONE;
+                            StateMove();
+                        }
+                        else
+                        {
+                            ResetStateStack();
+                            PushState();
+                            StateStop();
+                        }
                     }
                     else
                     {
-                        ResetStateStack();
-                        PushState();
-                        StateStop();
+                        StartCoroutine("CheckFollowMoveCoroutine");
+                        StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
+                        //StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
                     }
-                }
-                else
-                {
-                    StartCoroutine("CheckFollowMoveCoroutine");
-                    StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
-                    //StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -609,7 +613,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     public void OnDrawGizmos()
     {
-        if (arrPath != null)
+        if (arrPath != null && isDrawPath)
         {
             for (int i = targetIdx; i < arrPath.Length; ++i)
             {
@@ -621,6 +625,20 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 else
                     Gizmos.DrawLine(arrPath[i - 1].worldPos, arrPath[i].worldPos);
             }
+        }
+
+        if (isDrawRange)
+        {// 공격 범위를 그리는 기즈모 (빨간색 원)
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
+
+            // 추적 시작 범위를 그리는 기즈모 (노란색 원)
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, chaseStartRange);
+
+            // 추적 종료 범위를 그리는 기즈모 (초록색 원)
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, chaseEndRange);
         }
     }
 
@@ -650,13 +668,17 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     [TextArea]
     [SerializeField]
     protected string objectDisplayDescription = null;
+    [SerializeField]
+    protected bool isDrawRange = false;
+    [SerializeField]
+    protected bool isDrawPath = false;
 
 
     [Header("-Unit Control Values")]
     [SerializeField]
     protected float chaseStartRange = 0f;
     [SerializeField]
-    protected float chaseFinishRange = 0f;
+    protected float chaseEndRange = 0f;
     [SerializeField]
     protected float attackRange = 0f;
     [SerializeField]

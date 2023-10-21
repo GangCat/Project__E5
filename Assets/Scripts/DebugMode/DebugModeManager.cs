@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class DebugModeManager : MonoBehaviour
 {
-    public void Init()
+    public void Init(StructureManager _structureMng)
     {
         canvasDebug = GetComponentInChildren<CanvasDebugMode>();
         canvasDebug.Init();
+        structureMng = _structureMng;
         SetActive(false);
     }
 
@@ -23,5 +24,11 @@ public class DebugModeManager : MonoBehaviour
         canvasDebug.DisplayCurState(_screenPos, _curState);
     }
 
+    public void BuildDelayFastChect()
+    {
+        structureMng.SetBuildDelayFast();
+    }
+
     private CanvasDebugMode canvasDebug = null;
+    private StructureManager structureMng = null;
 }

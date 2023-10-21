@@ -22,8 +22,14 @@ public class FogManager : MonoBehaviour, IPauseObserver
         fogComputeShader.SetTexture(0, "fogRenderTexture", newFogRenderTexture);
         fogComputeShader.SetTexture(0, "backBuffRenderTexture", newBackBuffRenderTexture);
         
-        Invoke("UpdateFog", 5f);
-        //UpdateFogTexture();
+        //Invoke("UpdateFog", 5f);
+        UpdateFogTexture();
+    }
+
+    public void ToggleFogCombineVisible()
+    {
+        isFogVisible = !isFogVisible;
+        combineGo.SetActive(isFogVisible);
     }
 
     public void IsDebugMode(bool _isDebugMode)
@@ -137,4 +143,5 @@ public class FogManager : MonoBehaviour, IPauseObserver
     private RenderTexture newFogRenderTexture = null;
     private RenderTexture newBackBuffRenderTexture = null;
     private bool isPause = false;
+    private bool isFogVisible = true;
 }

@@ -306,43 +306,50 @@ public class FriendlyObject : SelectableObject, ISubscriber
             Collider[] arrCollider = null;
             arrCollider = overlapSphere(chaseStartRange);
 
-            if (targetTr != null)
+            if (arrCollider.Length > 0)
             {
-                for (int i = 0; i < arrCollider.Length; ++i)
-                {
-                    if (arrCollider[i].transform.Equals(targetTr))
+                //if (targetTr != null)
+                //{
+                //    Debug.Log("1");
+                //    for (int i = arrCollider.Length - 1; i > -1; --i)
+                //    {
+                //        if (arrCollider[i].transform.Equals(targetTr))
+                //        {
+                //            prevMoveCondition = curMoveCondition;
+                //            curMoveCondition = EMoveState.CHASE;
+                //            PushState();
+                //            StateMove();
+                //            yield break;
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                    float closeDistance = 999f;
+                    Collider tempCol = null;
+
+                    for (int i = 0; i < arrCollider.Length; ++i)
                     {
-                        // ���� �̵� ������ prev�� �����ϰ� �̵� ������ �������� ������ �� ����.
+                        float curDistance = Vector3.Distance(arrCollider[i].transform.position, transform.position);
+                        if (curDistance < closeDistance)
+                        {
+                            closeDistance = curDistance;
+                            tempCol = arrCollider[i];
+                        }
+                    }
+
+                    if (tempCol.gameObject.activeSelf)
+                    {
+                        targetTr = tempCol.transform;
+                        stateMachine.TargetTr = targetTr;
+                        isAttack = true;
                         prevMoveCondition = curMoveCondition;
                         curMoveCondition = EMoveState.CHASE;
                         PushState();
                         StateMove();
                         yield break;
                     }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < arrCollider.Length; ++i)
-                {
-                    EObjectType targetType = arrCollider[i].GetComponent<IGetObjectType>().GetObjectType();
-
-                    if (targetType.Equals(EObjectType.ENEMY_UNIT) || targetType.Equals(EObjectType.ENEMY_BIG))
-                    {
-                        // �ش� ���� ����ִٸ�
-                        if (arrCollider[i].gameObject.activeSelf)
-                        {
-                            targetTr = arrCollider[i].transform;
-                            stateMachine.TargetTr = targetTr;
-                            isAttack = true;
-                            prevMoveCondition = curMoveCondition;
-                            curMoveCondition = EMoveState.CHASE;
-                            PushState();
-                            StateMove();
-                            yield break;
-                        }
-                    }
-                }
+                //}
             }
             yield return new WaitForSeconds(0.05f);
         }

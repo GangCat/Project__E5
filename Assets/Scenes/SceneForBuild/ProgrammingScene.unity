@@ -19130,11 +19130,11 @@ MonoBehaviour:
   ruinPrefab: {fileID: 553641470947927007, guid: a9f2468b6f6365b4ea7db8918c523bf2,
     type: 3}
   buildDelay:
-  - 3
-  - 3
-  - 2
-  - 5
-  - 3
+  - 20
+  - 10
+  - 15
+  - 60
+  - 10
   destroyEffect: {fileID: 5807286319859665120, guid: 2c7a5586e6c3bba40944ae00f9cf8d9f,
     type: 3}
 --- !u!1 &1179648701
@@ -21896,18 +21896,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1329109953 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9175625201080638768, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1510320194}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8be527286e21e48a0599660f743c89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1331048158
 GameObject:
   m_ObjectHideFlags: 0
@@ -25498,7 +25486,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'arrEffect.Array.data[3]'
       value: 
-      objectReference: {fileID: 1329109953}
+      objectReference: {fileID: 0}
     - target: {fileID: 6917241794151303350, guid: b1841c0cd9c4e6d439fd42a2caeb4d6b,
         type: 3}
       propertyPath: m_Name
@@ -26245,7 +26233,7 @@ MonoBehaviour:
   arrOtherFuncHotkey: 60000000
   cancleKey: 27
   UnitSelectComandKey: 304
-  arrDeveloperMenuHotkey: 1801000025010000240100002301000022010000
+  arrDebugModeHotkey: 1801000025010000240100002301000022010000
   isDetectingChangeKey: 0
 --- !u!4 &1606740354
 Transform:
@@ -29922,6 +29910,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833748490}
   m_CullTransparentMesh: 1
+--- !u!1 &1839218107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 677459083767315628, guid: 84ef0facb01956b449c682e9f37929e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1988736976}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1843719207
 GameObject:
   m_ObjectHideFlags: 0
@@ -30353,11 +30347,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1e6cedf8382d7478941fe8b83b5658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energySupplyAmount: 200
-  curEnergy: 100000
+  energySupplyAmount: 50
+  curEnergy: 300
   maxEnergy: 100000
   energySupplyRate: 5
-  curCore: 10000
+  curCore: 0
   maxCore: 100000
   buildBarrack: 150
   buildBunker: 100
@@ -32582,6 +32576,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7237821482028986691, guid: 84ef0facb01956b449c682e9f37929e0,
+        type: 3}
+      propertyPath: modelGo
+      value: 
+      objectReference: {fileID: 1839218107}
     - target: {fileID: 8162044424758329862, guid: 84ef0facb01956b449c682e9f37929e0,
         type: 3}
       propertyPath: m_Name

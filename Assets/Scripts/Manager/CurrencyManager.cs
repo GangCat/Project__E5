@@ -12,6 +12,15 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         StartCoroutine("SupplyEnergyCoroutine");
     }
 
+    public void MoneyInflation()
+    {
+        curCore = maxCore;
+        curEnergy = maxEnergy;
+
+        UpdateCore();
+        UpdateEnergy();
+    }
+
     public static uint UpgradeCost(EObjectType _type)
     {
         switch (_type)

@@ -61,8 +61,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
     {
         if (_scene.name.Equals("ProgrammingScene"))
         {
-            isMainMenu = false;
-            isInGame = true;
             InitInGame();
         }
     }
@@ -96,7 +94,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         InitInGameManager();
     }
 
-    public void ChangeDisplayFullHD(bool _isFullHD)
+    public static void ChangeDisplayFullHD(bool _isFullHD)
     {
         isFullHD = _isFullHD;
         if (isFullHD)
@@ -105,7 +103,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
             Screen.SetResolution(1600, 1000, isFullScreen);
     }
 
-    public void ToggleFullscreen(bool _isFullScreen)
+    public static void ToggleFullscreen(bool _isFullScreen)
     {
         isFullScreen = _isFullScreen;
         if (isFullHD)
@@ -138,7 +136,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         populationMng.Init();
 
         fogMng.Init();
-        debugMng.Init();
+        debugMng.Init(structureMng);
         heroMng.Init(FindFirstObjectByType<UnitHero>());
 
         InitMainBase();
@@ -232,6 +230,10 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.SPAWN_NUCLEAR, new CommandRefundSpawnNuclear(currencyMng));
 
         ArrayDebugModeCommand.Add(EDebugModeCommand.MOVE_STATE_INDICATOR, new CommandMoveCurStateIndicator(debugMng));
+        ArrayDebugModeCommand.Add(EDebugModeCommand.FAST_BUILD, new CommandChangeBuildDelayFast(structureMng));
+        ArrayDebugModeCommand.Add(EDebugModeCommand.TOGGLE_FOG, new CommandToggleDisplayFog(fogMng));
+        ArrayDebugModeCommand.Add(EDebugModeCommand.MONEY_INFLATION, new CommandMoneyInflation(currencyMng));
+
 
         ArrayChangeHotkeyCommand.Add(EChangeHotkeyCommand.SELECT_UNIT_FUNC_BUTTON, new CommandChangeUnitFuncHotkey(inputMng));
 
@@ -306,7 +308,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private LoadSceneManager loadSceneMng = null;
     private EAudioType_BGM audioType;
 
-
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
 
@@ -314,11 +315,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private bool isPause = false;
     private bool isDebugMode = false;
 
-    [SerializeField]
-    private bool isMainMenu = false;
-    [SerializeField]
-    private bool isInGame = false;
-
-    private bool isFullScreen = false;
-    private bool isFullHD = false;
+    private static bool isFullScreen = false;
+    private static bool isFullHD = false;
 }

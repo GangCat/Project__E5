@@ -27,6 +27,12 @@ public class StructureManager : MonoBehaviour
         }
     }
 
+    public void SetBuildDelayFast()
+    {
+        for(int i = 0; i < buildDelay.Length; ++i)
+            buildDelay[i] = 1f;
+    }
+
     public EObjectType CurStructureType()
     {
         return curStructureObjType;

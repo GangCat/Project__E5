@@ -7,6 +7,11 @@ public class StructureMainBase : Structure
     public override void Init(PF_Grid _grid)
     {
         grid = _grid;
+        arrCollider = GetComponentsInChildren<StructureCollider>();
+        for (int i = 0; i < arrCollider.Length; ++i)
+            arrCollider[i].Init();
+
+        HideHBeam();
     }
 
     public override void Init(int _structureIdx)

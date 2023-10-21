@@ -101,8 +101,10 @@ MonoBehaviour:
     attRate: 1
     attDmg: 1
     objectType: 0
-    TurretMissile: {fileID: 0}
-    missileSpawnTr: {fileID: 0}
+    ProjectileGo: {fileID: 0}
+    projectileSpawnTr: {fileID: 0}
+    heroProjectileSpawnTr: []
+    animator: {fileID: 0}
 --- !u!114 &2341253079211249543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,8 +124,10 @@ MonoBehaviour:
   objectDisplayDescription: "\uBC8C\uBAA9\uC6A9\uC73C\uB85C \uC124\uACC4\uB41C \uB85C\uBD07\uC774\uC9C0\uB9CC
     \uC774\uACF3\uC5D0\uC120 \uD6CC\uB96D\uD55C \uC804\uD22C\uB85C\uBD07\uC73C\uB85C
     \uD65C\uC6A9\uB418\uACE0 \uC788\uB2E4."
+  isDrawRange: 0
+  isDrawPath: 0
   chaseStartRange: 4
-  chaseFinishRange: 5
+  chaseEndRange: 6
   attackRange: 1.5
   stopDelay: 1
   followOffset: 3

@@ -312,13 +312,13 @@ public class Structure : MonoBehaviour, IPauseObserver
         mt.color = isBuildable ? oriColor : Color.red;
     }
 
-    private void ShowHBeam()
+    protected void ShowHBeam()
     {
         for (int i = 0; i < arrCollider.Length; ++i)
             arrCollider[i].ShowHBeam();
     }
 
-    private void HideHBeam()
+    protected void HideHBeam()
     {
         for (int i = 0; i < arrCollider.Length; ++i)
             arrCollider[i].HideHBeam();

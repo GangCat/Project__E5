@@ -129,8 +129,10 @@ MonoBehaviour:
   objectDisplayDescription: "\uC791\uC740 \uC678\uD615\uACFC \uB2EC\uB9AC \uAC15\uB825\uD55C
     \uB808\uC774\uC800\uB97C \uBC1C\uC0AC\uD558\uB294 \uC6D0\uAC70\uB9AC \uACF5\uACA9\uC6A9
     \uB85C\uBD07\uC774\uB2E4."
+  isDrawRange: 0
+  isDrawPath: 0
   chaseStartRange: 6
-  chaseFinishRange: 7
+  chaseEndRange: 8
   attackRange: 5
   stopDelay: 1
   followOffset: 3
