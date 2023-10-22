@@ -305,20 +305,20 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
             if (!curWayNode.walkable)
             {
-                curWayNode = null;
-                stateMachine.SetWaitForNewPath(true);
-                RequestPath(transform.position, targetPos);
-
-                while (curWayNode == null)
-                    yield return new WaitForSeconds(0.05f);
-
-                stateMachine.SetWaitForNewPath(false);
-                Debug.Log("!curWayNode.walkable");
-
+                //curWayNode = null;
                 //stateMachine.SetWaitForNewPath(true);
-                //curWayNode = GetNearWalkableNode(curWayNode);
-                //yield return new WaitForSeconds(0.1f);
+                //RequestPath(transform.position, targetPos);
+
+                //while (curWayNode == null)
+                //    yield return new WaitForSeconds(0.05f);
+
                 //stateMachine.SetWaitForNewPath(false);
+                //Debug.Log("!curWayNode.walkable");
+
+                stateMachine.SetWaitForNewPath(true);
+                curWayNode = GetNearWalkableNode(curWayNode);
+                yield return new WaitForSeconds(0.1f);
+                stateMachine.SetWaitForNewPath(false);
             }
 
             // 노드에 도착할 때마다 새로운 노드로 이동 갱신
@@ -400,16 +400,16 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             }
             else
             {
-                if (!hasTargetNode)
+                while (curWayNode == null)
+                    yield return new WaitForSeconds(0.05f);
+                
+                if (IsObjectBlocked())
                 {
-                    if (IsObjectBlocked())
-                    {
-                        stateMachine.SetWaitForNewPath(true);
-                        curWayNode = GetNearWalkableNode(curWayNode);
-                        yield return new WaitForSeconds(0.1f);
-                        hasTargetNode = true;
-                        stateMachine.SetWaitForNewPath(false);
-                    }
+                    stateMachine.SetWaitForNewPath(true);
+                    curWayNode = GetNearWalkableNode(curWayNode);
+                    yield return new WaitForSeconds(0.1f);
+                    hasTargetNode = true;
+                    stateMachine.SetWaitForNewPath(false);
                 }
 
                 if (!curWayNode.walkable)
@@ -479,6 +479,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     protected virtual bool IsObjectBlocked()
     {
+        if (curWayNode == null) return false;
+
         curPos = transform.position;
         if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("EnemySelectableObject")))
             return true;

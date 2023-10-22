@@ -15,7 +15,6 @@ public class UIManager : MonoBehaviour
         displayHUDMng.Init();
         displayMenuMng.Init();
         displayCurMng.Init();
-
     }
 
     public void HeroDead()

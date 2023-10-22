@@ -15,27 +15,19 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     private void Start()
     {
-        // 마우가�기
         Cursor.lockState = CursorLockMode.Confined;
-        // 마우모양 바꾸�
         //Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.ForceSoftware);
-        // �니�디�에�행�모드롤행
         //#if UNITY_EDITOR
         //        Screen.SetResolution(Screen.width, Screen.height, false);
         //#endif
 
-        // 빌드게임�서 �행�모드롤행
         //#if !UNITY_EDITOR
         //        Screen.SetResolution(1920, 1080, false);
         //#endif
 
-        //빌드게임�서 �행�체 �면 모드롤행
-#if !UNITY_EDITOR
-                Screen.SetResolution(1920, 1080, true);
+        Screen.SetResolution(1920, 1080, true);
+        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
 
-                // 검� �백 채우�
-                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-#endif
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitMenu();
         AudioManager.instance.PlayAudio_BGM();
