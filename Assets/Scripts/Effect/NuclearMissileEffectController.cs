@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NuclearMissileEffectController : EffectController
 {
-    public void EffectOn(int _idx, bool _effect = false)
+    public void EffectOn(int _idx, bool _effect)
     {
         if (_effect)
         {

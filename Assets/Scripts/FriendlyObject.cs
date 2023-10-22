@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// 최근꺼
 
 public class FriendlyObject : SelectableObject, ISubscriber
 {
@@ -128,6 +129,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 GetComponent<StructureBunker>().OutAllUnit();
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
+            }
+            else if (objectType.Equals(EObjectType.MAIN_BASE))
+            {
+                // 게임종료
+                UIManager.GameOver();
             }
             else
             {
@@ -619,7 +625,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 FinishState();
                 yield break;
             }
-            else if (targetTr.gameObject.activeSelf.Equals(false))
+            else if (!targetTr.gameObject.activeSelf)
             {
                 targetTr = null;
                 stateMachine.TargetTr = null;

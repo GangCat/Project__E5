@@ -35,87 +35,6 @@ public class EnemyObject : SelectableObject
         //}
     }
 
-    protected override IEnumerator CheckNormalMoveCoroutine()
-    {
-        RequestPath(transform.position, targetPos);
-
-        while (curWayNode == null)
-            yield return new WaitForSeconds(0.05f);
-
-        stateMachine.SetWaitForNewPath(false);
-        StartCoroutine("CheckIsEnemyInChaseStartRangeCoroutine");
-        while (true)
-        {
-            //if (!hasTargetNode)
-            //{
-            //    if (IsObjectBlocked())
-            //    {
-            //        stateMachine.SetWaitForNewPath(true);
-            //        curWayNode = GetNearWalkableNode(curWayNode);
-            //        yield return new WaitForSeconds(0.1f);
-            //        hasTargetNode = true;
-            //        stateMachine.SetWaitForNewPath(false);
-            //        Debug.Log("IsObjectBlocked");
-            //    }
-            //}
-
-            //if (!curWayNode.walkable)
-            //{
-            //    //curWayNode = null;
-            //    //stateMachine.SetWaitForNewPath(true);
-            //    //RequestPath(transform.position, targetPos);
-
-            //    //while (curWayNode == null)
-            //    //    yield return new WaitForSeconds(0.05f);
-
-            //    //stateMachine.SetWaitForNewPath(false);
-            //    Debug.Log("!curWayNode.walkable");
-            //    stateMachine.SetWaitForNewPath(true);
-            //    curWayNode = GetNearWalkableNode(curWayNode);
-            //    yield return new WaitForSeconds(0.1f);
-            //    stateMachine.SetWaitForNewPath(false);
-            //}
-
-            // 노드에 도착할 때마다 새로운 노드로 이동 갱신
-            if (IsTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
-            {
-                hasTargetNode = false;
-                ++targetIdx;
-                UpdateCurNode();
-                // 목적지에 도착시 
-                CheckIsTargetInAttackRange();
-
-                if (targetIdx >= arrPath.Length)
-                {
-                    curWayNode = null;
-
-                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
-                    {
-                        if (IsDestinationClose())
-                            targetPos = dest;
-
-                        RequestPath(transform.position, targetPos);
-
-                        stateMachine.SetWaitForNewPath(true);
-                        while (curWayNode == null)
-                            yield return new WaitForSeconds(0.05f);
-
-                        stateMachine.SetWaitForNewPath(false);
-                        continue;
-                    }
-
-                    FinishState();
-                    stateMachine.SetWaitForNewPath(false);
-                    yield break;
-                }
-                UpdateTargetPos();
-            }
-
-            yield return null;
-            //yield return new WaitForEndOfFrame();
-        }
-    }
-
     private bool IsDestinationClose()
     {
         return Vector3.SqrMagnitude(dest - transform.position) < 10000;
@@ -161,8 +80,8 @@ public class EnemyObject : SelectableObject
         Vector3 offset = new Vector3(0, 1, 0);
         return transform.position + offset;
     }
-    
-    
+
+
     [SerializeField]
     private GameObject powerCorePrefab = null;
 

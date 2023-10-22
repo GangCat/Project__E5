@@ -127,14 +127,17 @@ MonoBehaviour:
     \uD3C9\uBC94\uD55C \uAE30\uACC4\uCC98\uB7FC \uBCF4\uC778\uB2E4."
   isDrawRange: 0
   isDrawPath: 0
-  chaseStartRange: 15
-  chaseEndRange: 17
+  chaseStartRange: 6
+  chaseEndRange: 8
   attackRange: 5
   stopDelay: 1
   followOffset: 1
   overlapLayerMask:
     serializedVersion: 2
     m_Bits: 540672
+  blockCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 1048576
   powerCorePrefab: {fileID: 5884904722928855986, guid: 1a643c881652e6d4098d4f2d254e4038,
     type: 3}
 --- !u!114 &6352431132764653618

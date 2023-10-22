@@ -9,9 +9,9 @@ public class PF_PathRequestManager : MonoBehaviour
     {
         public Vector3 pathStart;
         public Vector3 pathEnd;
-        public Action<PF_Node[], bool> callback;
+        public Action<PF_Node[], bool, PF_Node> callback;
 
-        public SPathRequest(Vector3 _start, Vector3 _end, Action<PF_Node[], bool> _callback)
+        public SPathRequest(Vector3 _start, Vector3 _end, Action<PF_Node[], bool, PF_Node> _callback)
         {
             pathStart = _start;
             pathEnd = _end;
@@ -32,7 +32,7 @@ public class PF_PathRequestManager : MonoBehaviour
         pathFinding.CheckNodeBuildable(_arrSelectableObject);
     }
 
-    public static void FriendlyRequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool> _callback)
+    public static void FriendlyRequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool, PF_Node> _callback)
     {
         SPathRequest newRequest = new SPathRequest(_pathStart, _pathEnd, _callback);
         instance.queueFriendlyPathRequest.Enqueue(newRequest);
@@ -40,7 +40,7 @@ public class PF_PathRequestManager : MonoBehaviour
         instance.TryProcessNext();
     }
 
-    public static void EnemyRequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool> _callback)
+    public static void EnemyRequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool, PF_Node> _callback)
     {
         SPathRequest newRequest = new SPathRequest(_pathStart, _pathEnd, _callback);
         instance.queueEnemyPathRequest.Enqueue(newRequest);
@@ -49,9 +49,9 @@ public class PF_PathRequestManager : MonoBehaviour
     }
 
 
-    private void FinishedProcessingPath(PF_Node[] _arrPpath, bool _success)
+    private void FinishedProcessingPath(PF_Node[] _arrPpath, bool _success, PF_Node _newTargetNode = null)
     {
-        curPathRequest.callback(_arrPpath, _success);
+        curPathRequest.callback(_arrPpath, _success, _newTargetNode);
         isProcessingPath = false;
         TryProcessNext();
     }

@@ -48,7 +48,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     }
 
     public delegate void VoidSelectObjectTypeDelegate(EObjectType _objectType);
-    public bool IsFriendlyUnit => isFriendlyUnitInList;
+    public static bool IsFriendlyUnit => isFriendlyUnitInList;
+    public static bool IsEnemyUnitInList => isEnemyObjectInList;
     public static bool IsListFull => listSelectedFriendlyObject.Count > 11;
     public static bool IsListEmpty => listSelectedFriendlyObject.Count < 1;
     public static int LevelRangedUnitDmgUpgrade => levelRangedUnitDmgUpgrade;
@@ -856,9 +857,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private static int levelMeleeUnitHpUpgrade = 1;
     private static float delayUnitUpgrade = 5f;
 
-    private bool isFriendlyUnitInList = false;
-    private bool isFriendlyStructureInList = false;
-    private bool isEnemyObjectInList = false;
+    private static bool isFriendlyUnitInList = false;
+    private static bool isFriendlyStructureInList = false;
+    private static bool isEnemyObjectInList = false;
 
     private List<SelectableObject> tempListSelectableObject = null;
     private static List<FriendlyObject> listSelectedFriendlyObject = null;

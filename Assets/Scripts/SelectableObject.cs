@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+// 최근꺼
 
 public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPauseObserver
 {
@@ -156,6 +156,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                     // 해당 오브젝트의 ObjectType을 가져온다.
                     EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
                     // 쫓는 대상은 없는데 검사한 대상이 적 유닛이 아닐 경우(적 유닛만 사용할 조건이기 때문)
+                    // 큰 적도 있으니까 그것도 추가하기
                     if (!targetType.Equals(EObjectType.ENEMY_UNIT))
                     {
                         stateMachine.TargetTr = c.transform;
@@ -479,10 +480,12 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         }
     }
 
-    protected void OnPathFound(PF_Node[] _newPath, bool _pathSuccessful)
+    protected void OnPathFound(PF_Node[] _newPath, bool _pathSuccessful, PF_Node _newTargetNode = null)
     {
         if (_pathSuccessful)
         {
+            if (_newTargetNode != null)
+                targetPos = _newTargetNode.worldPos;
             arrPath = _newPath;
             targetIdx = 0;
             if (arrPath.Length > 0)
@@ -510,7 +513,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         if (curWayNode == null) return false;
 
         curPos = transform.position;
-        if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("EnemySelectableObject")))
+        if (Physics.Linecast(curPos, curWayNode.worldPos, blockCheckLayerMask))
             return true;
 
         return false;
@@ -719,6 +722,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     protected float followOffset = 3f;
     [SerializeField]
     protected LayerMask overlapLayerMask;
+    [SerializeField]
+    protected LayerMask blockCheckLayerMask;
 
     protected EMoveState curMoveCondition = EMoveState.NONE;
     protected EMoveState prevMoveCondition = EMoveState.NONE;

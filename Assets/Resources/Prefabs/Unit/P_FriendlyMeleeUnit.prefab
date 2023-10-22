@@ -134,6 +134,9 @@ MonoBehaviour:
   overlapLayerMask:
     serializedVersion: 2
     m_Bits: 1048576
+  blockCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 524288
   isMovable: 1
   unitType: 0
   friendlyLayerMask:

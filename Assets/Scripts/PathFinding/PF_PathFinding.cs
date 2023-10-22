@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 
 public class PF_PathFinding : MonoBehaviour
 {
-    public delegate void FinishPathFindDelegate(PF_Node[] _waypoints, bool _isPathSuccess);
+    public delegate void FinishPathFindDelegate(PF_Node[] _waypoints, bool _isPathSuccess, PF_Node _newTargetNode = null);
 
     public void Init(FinishPathFindDelegate _finishPathFindCallback, float _gridWorldSizeX, float _gridWorldSizeY, PF_Grid _grid)
     {
@@ -16,7 +16,7 @@ public class PF_PathFinding : MonoBehaviour
 
         openSet = new PF_Heap<PF_Node>(searchLimitCnt + 50);
         closedSet = new HashSet<PF_Node>(searchLimitCnt + 50);
-        listNeighbor = new List<PF_Node>(8);
+        listNeighbor = new List<PF_Node>(9);
         listWayNode = new List<PF_Node>(searchLimitCnt / 2);
     }
 
@@ -127,7 +127,7 @@ public class PF_PathFinding : MonoBehaviour
             listWayNode = RetracePath(startNode, curNode);
         }
 
-        finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess);
+        finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess, targetNode);
     }
 
     //private IEnumerator FindPath(PF_Node startNode, PF_Node targetNode)

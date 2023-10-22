@@ -83,6 +83,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         }
     }
 
+    private EnemyObject[] arrAllMapEnemy = null;
+
     private void FinalWaveStart()
     {
         AudioManager.instance.StopAudio_BGM_WithFade(3.0f);
@@ -101,9 +103,25 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             enemyObj.MoveAttack(mainBasePos);
         }
 
-        EnemyObject[] arrAllMapEnemy = mapEnemyHolder.GetComponentsInChildren<EnemyObject>();
+        arrAllMapEnemy = mapEnemyHolder.GetComponentsInChildren<EnemyObject>();
         for (int i = 0; i < arrAllMapEnemy.Length; ++i)
             arrAllMapEnemy[i].MoveAttack(mainBasePos);
+
+        StartCoroutine("CheckIsGameClearCoroutine");
+    }
+
+    private IEnumerator CheckIsGameClearCoroutine()
+    {
+        while (true)
+        {
+            if (memoryPoolMap.ActiveCnt < 1 && memoryPoolWave.ActiveCnt < 1)
+            {
+                UIManager.GameClear();
+                yield break;
+            }
+
+            yield return new WaitForSeconds(5f);
+        }
     }
 
     public void SpawnWaveEnemy(Vector3 _targetPos, int _count)

@@ -8,7 +8,7 @@ public class StructureNuclear : Structure
     {
         base.Init(_structureIdx);
         myNuclear = GetComponentInChildren<MissileNuclear>();
-        myNuclear.SetActive(false);
+        myNuclear.Init();
         upgradeLevel = 3;
     }
 

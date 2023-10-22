@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class MissileNuclear : MonoBehaviour, IPauseObserver
 {
+    public void Init()
+    {
+        effectCtrl = GetComponent<NuclearMissileEffectController>();
+        effectCtrl.Init();
+        SetActive(false);
+    }
     public void SetActive(bool _isActive)
     {
         gameObject.SetActive(_isActive);
@@ -21,6 +27,7 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
 
     public void Launch(Vector3 _destPos)
     {
+        effectCtrl.EffectOn(0);
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         StartCoroutine("LaunchCoroutine", _destPos);
     }
@@ -57,9 +64,9 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
         AudioManager.instance.PlayAudio_Misc(EAudioType_Misc.NUCLEAR_EXPLOSION);
 
         // nuclearMissileEffect.EffectOn(0, true);
-
+        effectCtrl.EffectOn(1, true);
         ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
-        Destroy(visibleGo, 3f);
+        Destroy(visibleGo, 5f);
         SetActive(false);
     }
 
@@ -74,6 +81,8 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
     private float launchSpeed = 0f;
     [SerializeField]
     private GameObject visibleAreaGo = null;
+
+    private NuclearMissileEffectController effectCtrl = null;
 
     private bool isPause = false;
 

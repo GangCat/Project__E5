@@ -11,10 +11,15 @@ public class UIManager : MonoBehaviour
         displayHUDMng = GetComponentInChildren<DisplayHUDManager>();
         displayMenuMng = GetComponentInChildren<DisplayMenuManager>();
         displayCurMng = GetComponentInChildren<DisplayCurrencyManager>();
+        canvasGameOver = GetComponentInChildren<CanvasGameOver>();
+        canvasGameClear = GetComponentInChildren<CanvasGameClear>();
+
         funcBtnMng.Init();
         displayHUDMng.Init();
         displayMenuMng.Init(_isFullHD, _isFullScreen);
         displayCurMng.Init();
+        canvasGameOver.Init();
+        canvasGameClear.Init();
     }
 
     public void HeroDead()
@@ -47,9 +52,21 @@ public class UIManager : MonoBehaviour
         displayCurMng.UpdateCurMaxPopulation(_curMaxPopulation);
     }
 
+    public static void GameClear()
+    {
+        canvasGameClear.GameClear();
+    }
+
+    public static void GameOver()
+    {
+        canvasGameOver.GameOver();
+    }
+
     private FuncButtonManager funcBtnMng = null;
     private DisplayHUDManager displayHUDMng = null;
     private DisplayMenuManager displayMenuMng = null;
     private DisplayCurrencyManager displayCurMng = null;
+    private static CanvasGameOver canvasGameOver = null;
+    private static CanvasGameClear canvasGameClear = null;
 
 }
