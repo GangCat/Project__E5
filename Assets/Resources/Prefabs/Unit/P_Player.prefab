@@ -140,7 +140,7 @@ MonoBehaviour:
     attRate: 1
     attDmg: 4
     objectType: 2
-    ProjectileGo: {fileID: 1523153560657062, guid: 00fb9234feaebcf4db53e2d69dd43a55,
+    ProjectileGo: {fileID: 1523153560657062, guid: 07c579ec538a867468c64aedbe6b33cf,
       type: 3}
     projectileSpawnTr: {fileID: 0}
     heroProjectileSpawnTr:
@@ -1037,35 +1037,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7175020197789139696}
     m_Modifications:
-    - target: {fileID: 860128067606622872, guid: e57190db63a758545b856a9825ee6ee7,
+    - target: {fileID: 856830495338791984, guid: e57190db63a758545b856a9825ee6ee7,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.378
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 860128067606622872, guid: e57190db63a758545b856a9825ee6ee7,
+    - target: {fileID: 1383301220255979385, guid: e57190db63a758545b856a9825ee6ee7,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.798
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 860128067606622872, guid: e57190db63a758545b856a9825ee6ee7,
+    - target: {fileID: 2940177356372238536, guid: e57190db63a758545b856a9825ee6ee7,
         type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.293
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385316487095771601, guid: e57190db63a758545b856a9825ee6ee7,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.424
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385316487095771601, guid: e57190db63a758545b856a9825ee6ee7,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.814
-      objectReference: {fileID: 0}
-    - target: {fileID: 1385316487095771601, guid: e57190db63a758545b856a9825ee6ee7,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.263
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8471590968468972389, guid: e57190db63a758545b856a9825ee6ee7,
         type: 3}
@@ -1121,6 +1106,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_EffectHeroUnitAttack_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015780752943252974, guid: e57190db63a758545b856a9825ee6ee7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

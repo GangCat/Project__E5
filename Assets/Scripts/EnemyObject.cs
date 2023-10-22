@@ -77,7 +77,7 @@ public class EnemyObject : SelectableObject
             //}
 
             // 노드에 도착할 때마다 새로운 노드로 이동 갱신
-            if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
+            if (IsTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 hasTargetNode = false;
                 ++targetIdx;

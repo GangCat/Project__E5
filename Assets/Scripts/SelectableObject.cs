@@ -145,7 +145,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         {
             // 추적 범위만큼 overlapLayerMask에 해당하는 충돌체를 overlapSphere로 검사
             Collider[] arrCollider = null;
-            arrCollider = overlapSphere(chaseStartRange);
+            arrCollider = OverlapSphereForDetectTarget(chaseStartRange);
             // 충돌한 오브젝트가 존재한다면
             if (arrCollider.Length > 0)
             {
@@ -172,6 +172,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     protected IEnumerator CheckIsTargetInChaseFinishRangeCoroutine()
     {
+        Collider[] arrCol = null;
         yield return null;
         while (true)
         {
@@ -198,13 +199,31 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 //StateMove();
                 yield break;
             }
-            else if (!isTargetInRangeFromMyPos(targetTr.position, chaseEndRange))
+            else if (!IsTargetInRangeFromMyPos(targetTr.position, chaseEndRange))
             {
                 stateMachine.TargetTr = null;
                 targetTr = null;
                 FinishState();
                 //StateMove();
                 yield break;
+            }
+            if (!targetTr.GetComponent<StructureWall>())
+            {
+                arrCol = OverlapSphereForDetectTarget(chaseStartRange);
+                if (arrCol.Length > 0)
+                {
+                    foreach (Collider c in arrCol)
+                    {
+                        // 해당 오브젝트의 ObjectType을 가져온다.
+                        EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
+                        if (targetType.Equals(EObjectType.WALL))
+                        {
+                            stateMachine.TargetTr = c.transform;
+                            targetTr = c.transform;
+                            yield break;
+                        }
+                    }
+                }
             }
             yield return new WaitForSeconds(0.5f);
         }
@@ -214,7 +233,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     {
         if (targetTr && targetTr.gameObject.activeSelf.Equals(true))
         {
-            if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
+            if (IsTargetInRangeFromMyPos(targetTr.position, attackRange))
                 StateAttack();
         }
     }
@@ -225,7 +244,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         {
             if (targetTr != null && targetTr.gameObject.activeSelf.Equals(true))
             {
-                if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
+                if (IsTargetInRangeFromMyPos(targetTr.position, attackRange))
                     StateAttack();
             }
             yield return new WaitForSeconds(0.1f);
@@ -321,7 +340,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             }
 
             // 노드에 도착할 때마다 새로운 노드로 이동 갱신
-            if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
+            if (IsTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 hasTargetNode = false;
                 ++targetIdx;
@@ -430,7 +449,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
 
 
-                if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
+                if (IsTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                 {
                     hasTargetNode = false;
                     ++targetIdx;
@@ -543,7 +562,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 FinishState();
                 yield break;
             }
-            else if (!isTargetInRangeFromMyPos(targetTr.position, attackRange))
+            else if (!IsTargetInRangeFromMyPos(targetTr.position, attackRange))
             {
                 FinishState();
                 yield break;
@@ -578,12 +597,12 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         stateMachine.ChangeState(_state);
     }
 
-    protected bool isTargetInRangeFromMyPos(Vector3 _targetPos, float _range)
+    protected bool IsTargetInRangeFromMyPos(Vector3 _targetPos, float _range)
     {
         return Vector3.SqrMagnitude(transform.position - _targetPos) < Mathf.Pow(_range, 2);
     }
 
-    protected Collider[] overlapSphere(float _range)
+    protected Collider[] OverlapSphereForDetectTarget(float _range)
     {
         return Physics.OverlapSphere(transform.position, _range, overlapLayerMask);
     }

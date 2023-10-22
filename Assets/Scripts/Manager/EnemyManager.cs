@@ -142,7 +142,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private IEnumerator SpawnWaveEnemyCoroutine(Vector3 _spawnPos, int _count)
     {
         int unitCnt = 0;
-        List<EnemyObject> tempList = new List<EnemyObject>();
+        //List<EnemyObject> tempList = new List<EnemyObject>();
 
         while (unitCnt < _count)
         {
@@ -156,15 +156,15 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             enemyObj.Position = spawnPos;
             enemyObj.Init();
             enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
-            tempList.Add(enemyObj);
-            //enemyObj.MoveAttack(mainBasePos);
+            //tempList.Add(enemyObj);
+            enemyObj.MoveAttack(mainBasePos);
             ++waveEnemyIdx;
             ++unitCnt;
             yield return null;
         }
 
-        SelectableObjectManager.MoveWaveEnemy(wayPoint.position, tempList.ToArray());
-        tempList.Clear();
+        //SelectableObjectManager.MoveWaveEnemy(wayPoint.position, tempList.ToArray());
+        //tempList.Clear();
     }
 
     private IEnumerator SpawnMapEnemyCoroutine()

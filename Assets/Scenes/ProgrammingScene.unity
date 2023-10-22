@@ -2829,7 +2829,7 @@ MonoBehaviour:
   - {fileID: 1810121891}
   - {fileID: 1616876876}
   - {fileID: 1197370877}
-  WaveOuterCircleRad: 15
+  WaveOuterCircleRad: 10
   WaveInnerCircleRad: 0
 --- !u!4 &214568547
 Transform:

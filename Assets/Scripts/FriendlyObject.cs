@@ -306,7 +306,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         {
             // ���� ������ŭ overlapLayerMask�� �ش��ϴ� �浹ü�� overlapSphere�� �˻�
             Collider[] arrCollider = null;
-            arrCollider = overlapSphere(chaseStartRange);
+            arrCollider = OverlapSphereForDetectTarget(chaseStartRange);
 
             if (arrCollider.Length > 0)
             {
@@ -457,7 +457,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
 
 
-            if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
+            if (IsTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 hasTargetNode = false;
                 ++targetIdx;
@@ -539,7 +539,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
 
             // ��忡 ������ ������ ���ο� ���� �̵� ����
-            if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
+            if (IsTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
                 hasTargetNode = false;
                 ++targetIdx;
@@ -614,7 +614,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             if (elapsedTime > stopDelay)
             {
                 elapsedTime = 0f;
-                if (!isTargetInRangeFromMyPos(targetTr.position, followOffset))
+                if (!IsTargetInRangeFromMyPos(targetTr.position, followOffset))
                 {
                     curWayNode = null;
                     RequestPath(transform.position, targetTr.position);
@@ -662,7 +662,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                         //stateMachine.SetWaitForNewPath(false);
                     }
 
-                    if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
+                    if (IsTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         hasTargetNode = false;
                         ++targetIdx;
@@ -712,7 +712,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         while (true)
         {
             Collider[] arrCollider = null;
-            arrCollider = overlapSphere(attackRange);
+            arrCollider = OverlapSphereForDetectTarget(attackRange);
 
             if (arrCollider.Length > 0)
             {
