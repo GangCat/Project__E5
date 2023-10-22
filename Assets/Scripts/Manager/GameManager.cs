@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         }
         else if(_scene.name.Equals("ProgrammingSceneMainMenu"))
         {
+            pauseObserverList.Clear();
             mainMenuMng = FindAnyObjectByType<MainMenuManager>();
             mainMenuMng.Init(isFullHD, isFullScreen);
         }
