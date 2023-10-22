@@ -214,7 +214,7 @@ public class Structure : MonoBehaviour, IPauseObserver
             if (myObj.IsSelect)
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, progressPercent);
 
-            if (elapsedTime > _buildDelay / 3)
+            //if (elapsedTime > _buildDelay / 3)
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
             progressPercent = elapsedTime / _buildDelay;

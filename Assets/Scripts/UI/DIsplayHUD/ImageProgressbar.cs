@@ -18,7 +18,7 @@ public class ImageProgressbar : MonoBehaviour
     /// <param name="_ratio"></param>
     public virtual void UpdateLength(float _ratio)
     {
-        myRt.sizeDelta = new Vector2(maxLength * _ratio, myHeight);
+          myRt.sizeDelta = new Vector2(maxLength * _ratio, myHeight);
     }
 
     [SerializeField]
