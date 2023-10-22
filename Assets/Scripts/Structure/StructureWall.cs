@@ -98,9 +98,11 @@ public class StructureWall : Structure
         }
 
         if (!_walkable)
-            ArrayHUDCommand.Use(EHUDCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
+            ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
+        //ArrayHUDCommand.Use(EHUDCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
         else
-            ArrayHUDCommand.Use(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
+            ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
+        //ArrayHUDCommand.Use(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
     }
 
     protected override IEnumerator CheckBuildableCoroutine()

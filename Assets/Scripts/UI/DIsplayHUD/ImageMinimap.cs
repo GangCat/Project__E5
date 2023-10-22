@@ -133,6 +133,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
                     isBigEnemySignalDisplay = true;
                     arrImageBigEnemySignal[i].rectTransform.anchoredPosition = WorldToMinimapPosition(arrBigEnemyTr[i].position, imageMinimap.rectTransform, 128, 128);
                 }
+                else
+                    arrImageBigEnemySignal[i].gameObject.SetActive(false);
             }
         }
 
@@ -143,6 +145,9 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     {
         isBigEnemySignalDisplay = true;
         arrBigEnemyTr = _arrTr;
+
+        for (int i = 0; i < arrBigEnemyTr.Length; ++i)
+            arrImageBigEnemySignal[i].gameObject.SetActive(true);
     }
 
     public void FriendlySignal(Vector3 _worldPos)

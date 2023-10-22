@@ -157,7 +157,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                     EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
                     // 쫓는 대상은 없는데 검사한 대상이 적 유닛이 아닐 경우(적 유닛만 사용할 조건이기 때문)
                     // 큰 적도 있으니까 그것도 추가하기
-                    if (!targetType.Equals(EObjectType.ENEMY_UNIT))
+                    if (!targetType.Equals(EObjectType.ENEMY_SMALL))
                     {
                         stateMachine.TargetTr = c.transform;
                         targetTr = c.transform;

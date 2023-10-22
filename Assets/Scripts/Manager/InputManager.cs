@@ -206,7 +206,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 return;
             }
 
-            if (SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType().Equals(EObjectType.ENEMY_UNIT))
+            if (SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType().Equals(EObjectType.ENEMY_SMALL))
             {
                 return;
             }

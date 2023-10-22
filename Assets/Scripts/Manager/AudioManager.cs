@@ -97,7 +97,7 @@ public class AudioManager : MonoBehaviour
             case EObjectType.UNIT_HERO:
                 AudioPlayer_Hero.instance.PlayAudio(AudioPlayer_Hero.EAudioType_Hero.ATTACK);
                 break;
-            case EObjectType.ENEMY_UNIT:
+            case EObjectType.ENEMY_SMALL:
                 AudioPlayer_Enemy.instance.PlayAudio(AudioPlayer_Enemy.EAudioType_Enemy.ATTACK);
                 break;
             case EObjectType.TURRET:
@@ -258,7 +258,7 @@ public class AudioManager : MonoBehaviour
             case EObjectType.UNIT_HERO:
                 AudioPlayer_Hero.instance.PlayAudio(AudioPlayer_Hero.EAudioType_Hero.DEAD);
                 break;
-            case EObjectType.ENEMY_UNIT:
+            case EObjectType.ENEMY_SMALL:
                 AudioPlayer_Enemy.instance.PlayAudio(AudioPlayer_Enemy.EAudioType_Enemy.DEAD);
                 break;
             case EObjectType.MAIN_BASE:

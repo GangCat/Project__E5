@@ -37,7 +37,7 @@ public class EffectManager : MonoBehaviour
             case EObjectType.UNIT_02:
                 EffectPlayer_Attack.instance.PlayEffect(EffectPlayer_Attack.AttackEffectType.UNIT_02, effectPosition);
                 break;
-            case EObjectType.ENEMY_UNIT:
+            case EObjectType.ENEMY_SMALL:
                 EffectPlayer_Attack.instance.PlayEffect(EffectPlayer_Attack.AttackEffectType.ENEMY_01, effectPosition);
                 break;
             default:
@@ -59,7 +59,7 @@ public class EffectManager : MonoBehaviour
                 if(friendlyObject != null)
                     return friendlyObject.GetEffectPosition();
                 break;
-            case EObjectType.ENEMY_UNIT:
+            case EObjectType.ENEMY_SMALL:
                 if(enemyObject != null)
                     return enemyObject.GetEffectPosition();
                 break;
