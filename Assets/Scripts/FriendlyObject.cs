@@ -104,10 +104,10 @@ public class FriendlyObject : SelectableObject, ISubscriber
     public override void GetDmg(float _dmg)
     {
         ArrayAlertCommand.Use(EAlertCommand.UNDER_ATTACK);
+        ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.ATTACK_SIGNAL, transform.position);
 
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
-            ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.ATTACK_SIGNAL, transform.position);
             StopAllCoroutines();
 
             // Unit Dead Audio

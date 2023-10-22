@@ -16,6 +16,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         memoryPoolWave = new MemoryPool(enemySmallPrefab, 5, waveEnemyHolder);
         memoryPoolMap = new MemoryPool(enemySmallPrefab, 5, mapEnemyHolder);
         memoryPoolEnemyDeadEffect = new MemoryPool(enemyDeadEffect, 5, transform);
+        arrBigEnemyTr = new Transform[3];
 
         ArrayHUDCommand.Use(EHUDCommand.INIT_WAVE_TIME, bigWaveDelay_sec);
         SpawnMapEnemy();
@@ -79,7 +80,9 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 enemyObj.Init();
                 enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
                 enemyObj.MoveAttack(mainBasePos);
+                arrBigEnemyTr[i] = bigGo.transform;
             }
+            ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.BIG_ENEMY_SIGNAL, arrBigEnemyTr);
         }
     }
 
@@ -101,11 +104,14 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             enemyObj.Init();
             enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
             enemyObj.MoveAttack(mainBasePos);
+            arrBigEnemyTr[i] = bigGo.transform;
         }
 
         arrAllMapEnemy = mapEnemyHolder.GetComponentsInChildren<EnemyObject>();
         for (int i = 0; i < arrAllMapEnemy.Length; ++i)
             arrAllMapEnemy[i].MoveAttack(mainBasePos);
+
+        ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.BIG_ENEMY_SIGNAL, arrBigEnemyTr);
 
         StartCoroutine("CheckIsGameClearCoroutine");
     }
@@ -268,6 +274,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private PF_Grid grid = null;
 
     private MemoryPool memoryPoolEnemyDeadEffect = null;
+    Transform[] arrBigEnemyTr = null;
+
 
     private AudioManager audioMng = null;
     // private AudioPlayer_BGM audioType;

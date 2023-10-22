@@ -125,19 +125,23 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
         if (isBigEnemySignalDisplay)
         {
+            isBigEnemySignalDisplay = false;
             for (int i = 0; i < arrBigEnemyTr.Length; ++i)
             {
-                arrImageBigEnemySignal[i].rectTransform.anchoredPosition = WorldToMinimapPosition(arrBigEnemyTr[i].position, imageMinimap.rectTransform, 128, 128);
+                if (arrBigEnemyTr[i] && arrBigEnemyTr[i].gameObject.activeSelf)
+                {
+                    isBigEnemySignalDisplay = true;
+                    arrImageBigEnemySignal[i].rectTransform.anchoredPosition = WorldToMinimapPosition(arrBigEnemyTr[i].position, imageMinimap.rectTransform, 128, 128);
+                }
             }
         }
-        // 여기서 중형 유닛 위치 받아서 그 위치에 픽셀 대신 그 위치에 BigEnemySignal 그림
-
 
         tex2d.Apply();
     }
 
     public void BigEnemySignal(Transform[] _arrTr)
     {
+        isBigEnemySignalDisplay = true;
         arrBigEnemyTr = _arrTr;
     }
 
