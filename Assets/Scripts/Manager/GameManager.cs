@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitMenu();
-        AudioManager.instance.PlayAudio_BGM();
+        AudioManager.instance.PlayAudio_BGM_MainMenu();
     }
 
     private void Update()
@@ -280,9 +280,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
     }
 
     [SerializeField]
-    private float worldSizeX = 100f; // 미니맵에 �시�드가로길
+    private float worldSizeX = 100f; // ???????????? ?????????????????
     [SerializeField]
-    private float worldSizeY = 100f; // 미니맵에 �시�드�로길이
+    private float worldSizeY = 100f; // ???????????? ??????????????????
     [SerializeField]
     private Texture2D customCursor = null;
 

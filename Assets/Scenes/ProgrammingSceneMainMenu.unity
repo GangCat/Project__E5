@@ -7252,6 +7252,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 383d99b32653739408be42a83360fe28, type: 3}
   - {fileID: 8300000, guid: 8c976c83782a750458d72b77a0c76abf, type: 3}
   - {fileID: 8300000, guid: 2df88a1e78231ef4eaa6af8abe7055f4, type: 3}
+  - {fileID: 8300000, guid: 27391fec2e39e344daa84b6769375c63, type: 3}
   audioChannels: 7
 --- !u!1 &2104816623
 GameObject:

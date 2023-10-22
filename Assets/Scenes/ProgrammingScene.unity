@@ -8378,15 +8378,45 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Stage
       objectReference: {fileID: 0}
+    - target: {fileID: 2679293045299478890, guid: 38a2d0eef785224408c963daaaeab647,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3016250503978157820, guid: 38a2d0eef785224408c963daaaeab647,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3333283727690333693, guid: 38a2d0eef785224408c963daaaeab647,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4449380602490092720, guid: 38a2d0eef785224408c963daaaeab647,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5869603673725560376, guid: 38a2d0eef785224408c963daaaeab647,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7907674701916607100, guid: 38a2d0eef785224408c963daaaeab647,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 4cf3213efdec4a041a7cbcfd06e729f6, type: 2}
+      objectReference: {fileID: 2100000, guid: 210678cf591785b45a668b28f4be7170, type: 2}
     - target: {fileID: 9112022241154537201, guid: 38a2d0eef785224408c963daaaeab647,
         type: 3}
       propertyPath: m_Name
       value: GameMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 9112022241154537201, guid: 38a2d0eef785224408c963daaaeab647,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -7,6 +7,8 @@ public class MissileTurret : MonoBehaviour, IPauseObserver
     public void Init(Vector3 _spawnPos)
     {
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
+        turretEffectController = GetComponentInChildren<MissileTurretEffectController>();
+        turretEffectController.Init();
         StartCoroutine(LaunchMissileCoroutine(_spawnPos));
     }
 
@@ -56,6 +58,7 @@ public class MissileTurret : MonoBehaviour, IPauseObserver
             yield return null;
         }
         ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
+        turretEffectController.EffectOn(0, true);
         Destroy(gameObject);
     }
 
@@ -88,4 +91,5 @@ public class MissileTurret : MonoBehaviour, IPauseObserver
     private LayerMask targetLayerMask;
 
     private bool isPause = false;
+    private MissileTurretEffectController turretEffectController;
 }
