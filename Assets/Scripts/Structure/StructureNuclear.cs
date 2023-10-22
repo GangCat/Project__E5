@@ -7,8 +7,6 @@ public class StructureNuclear : Structure
     public override void Init(int _structureIdx)
     {
         base.Init(_structureIdx);
-        myNuclear = GetComponentInChildren<MissileNuclear>();
-        myNuclear.Init();
         upgradeLevel = 3;
     }
 
@@ -93,9 +91,9 @@ public class StructureNuclear : Structure
     private void SpawnComplete(VoidNuclearDelegate _spwnCompleteCallback)
     {
         hasNuclear = true;
-        myNuclear.SetPos(nuclearSpawnPos);
-        myNuclear.SetActive(true);
-        myNuclear.ResetRotate();
+        curNuclear = Instantiate(myNuclear, nuclearSpawnPos, Quaternion.identity, transform).GetComponent<MissileNuclear>();
+        curNuclear.SetPos(nuclearSpawnPos);
+        curNuclear.Init();
         _spwnCompleteCallback?.Invoke(this);
         
         // Nuclear Ready Audio
@@ -105,7 +103,7 @@ public class StructureNuclear : Structure
 
     public void LaunchNuclear(Vector3 _destPos)
     {
-        myNuclear.Launch(_destPos);
+        curNuclear.Launch(_destPos);
         hasNuclear = false;
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
@@ -113,14 +111,18 @@ public class StructureNuclear : Structure
         // Nuclear Ready Audio
         audioType = EAudioType_Advisor.NUCLEAR_LAUNCH;
         AudioManager.instance.PlayAudio_Advisor(audioType);
+
+        curNuclear = null;
     }
 
 
 
     [SerializeField]
     private Vector3 nuclearSpawnPos = Vector3.zero;
+    [SerializeField]
+    private GameObject myNuclear = null;
 
-    private MissileNuclear myNuclear = null;
+    private MissileNuclear curNuclear = null;
     private bool hasNuclear = false;
     private bool isProcessingSpawnNuclear = false;
 

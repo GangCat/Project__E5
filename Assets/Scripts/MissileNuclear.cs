@@ -8,7 +8,6 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
     {
         effectCtrl = GetComponent<NuclearMissileEffectController>();
         effectCtrl.Init();
-        SetActive(false);
     }
     public void SetActive(bool _isActive)
     {
@@ -63,11 +62,10 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
         // Nuclear Explosion Audio
         AudioManager.instance.PlayAudio_Misc(EAudioType_Misc.NUCLEAR_EXPLOSION);
 
-        // nuclearMissileEffect.EffectOn(0, true);
         effectCtrl.EffectOn(1, true);
         ArrayPauseCommand.Use(EPauseCommand.REMOVE, this);
         Destroy(visibleGo, 5f);
-        SetActive(false);
+        Destroy(gameObject);
     }
 
     public void CheckPause(bool _isPause)
