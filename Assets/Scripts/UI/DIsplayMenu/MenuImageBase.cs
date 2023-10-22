@@ -23,4 +23,6 @@ public class MenuImageBase : MonoBehaviour
     {
         gameObject.SetActive(_isActive);
     }
+
+    protected EObjectType objectType;
 }

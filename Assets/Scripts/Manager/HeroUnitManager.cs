@@ -9,9 +9,6 @@ public class HeroUnitManager : MonoBehaviour
         hero = _hero;
         hero.Init();
         resurrectionPos = hero.transform.position;
-#if UNITY_EDITOR
-        StartCoroutine("DisplayHeroStateCoroutine");
-#endif
     }
 
     public void DebugMode(bool _isDebugMode)
@@ -22,7 +19,7 @@ public class HeroUnitManager : MonoBehaviour
             StopCoroutine("DisplayHeroStateCoroutine");
     }
 
-#if UNITY_EDITOR
+
     public static void UpdateCurState(EState _state)
     {
         curState = _state;
@@ -38,7 +35,7 @@ public class HeroUnitManager : MonoBehaviour
             yield return null;
         }
     }
-#endif
+
     public void Dead()
     {
         hero.Dead();

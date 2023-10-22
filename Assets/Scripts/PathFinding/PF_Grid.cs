@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 
 public class PF_Grid : MonoBehaviour
 {
-
     public void Init(float _gridWorldSizeX, float _gridWorldSizeY)
     {
         instance = this;
@@ -14,7 +13,8 @@ public class PF_Grid : MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
-        listPrevBuildableNode = new List<PF_Node>();
+        listPrevBuildableNode = new List<PF_Node>(10000);
+        neighbours = new List<PF_Node>(8);
         CreateGrid();
     }
     
@@ -127,9 +127,6 @@ public class PF_Grid : MonoBehaviour
         int ttlCnt = _radius * (2 * _radius + 2) + 1;
         int factor = 1;
         int i = 0;
-        int j = 0;
-        int k = 0;
-        int l = 0;
 
         int curIdxX = centerX;
         int idxY = centerY + _radius;
@@ -253,19 +250,20 @@ public class PF_Grid : MonoBehaviour
     /// <returns></returns>
     public List<PF_Node> GetNeighbors(PF_Node _curNode)
     {
-        List<PF_Node> neighbours = new List<PF_Node>();
-        //int checkX = 0;
-        //int checkY = 0;
+        neighbours.Clear();
+        checkX = 0;
+        checkY = 0;
 
         // _curNode기준으로 3by3위치의 노드들을 반환하기 위한 반복문
 
         for (int i = 0; i < 9; ++i)
         {
             if (i.Equals(4)) continue;
-            //checkX = Mathf.Clamp(_curNode.gridX + (i / 3) - 1, 0, gridSizeX);
-            //checkY = Mathf.Clamp(_curNode.gridY + (i % 3) - 1, 0, gridSizeY);
+            checkX = Mathf.Clamp(_curNode.gridX + (i / 3) - 1, 0, gridSizeX + 1);
+            checkY = Mathf.Clamp(_curNode.gridY + (i % 3) - 1, 0, gridSizeY + 1);
 
-            neighbours.Add(grid[_curNode.gridX + (i / 3) - 1, _curNode.gridY + (i % 3) - 1]);
+            neighbours.Add(grid[checkX, checkY]);
+            //neighbours.Add(grid[_curNode.gridX + (i / 3) - 1, _curNode.gridY + (i % 3) - 1]);
         }
 
         //for (int x = -1; x <= 1; ++x)
@@ -288,12 +286,12 @@ public class PF_Grid : MonoBehaviour
     {
         queueNotVisitedNode.Clear();
         hashSetVisitedNode.Clear();
-
         listNeighborNode.Clear();
 
         listNeighborNode = GetNeighbors(_targetNode);
-        foreach (PF_Node neighbor in listNeighborNode)
+        for(int i = 0; i < listNeighborNode.Count; ++i)
         {
+            neighbor = listNeighborNode[i];
             if (!hashSetVisitedNode.Contains(neighbor))
             {
                 hashSetVisitedNode.Add(neighbor);
@@ -304,7 +302,7 @@ public class PF_Grid : MonoBehaviour
         while (queueNotVisitedNode.Count > 0)
         {
             listNeighborNode.Clear();
-            PF_Node currentNode = queueNotVisitedNode.Dequeue();
+            currentNode = queueNotVisitedNode.Dequeue();
 
             if (currentNode.walkable)
             {
@@ -312,8 +310,9 @@ public class PF_Grid : MonoBehaviour
             }
 
             listNeighborNode = GetNeighbors(currentNode);
-            foreach (PF_Node neighbor in listNeighborNode)
+            for (int i = 0; i < listNeighborNode.Count; ++i)
             {
+                neighbor = listNeighborNode[i];
                 if (!hashSetVisitedNode.Contains(neighbor))
                 {
                     hashSetVisitedNode.Add(neighbor);
@@ -413,4 +412,11 @@ public class PF_Grid : MonoBehaviour
     private PF_Node[,] grid = null;
 
     private List<PF_Node> listPrevBuildableNode = null;
+    private List<PF_Node> neighbours = null;
+
+    private int checkX = 0;
+    private int checkY = 0;
+
+    private PF_Node neighbor = null;
+    private PF_Node currentNode = null;
 }

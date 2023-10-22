@@ -12,6 +12,11 @@ public class StructureNuclear : Structure
         upgradeLevel = 3;
     }
 
+    public override void SetNuclearSpawnDelay(float _SpawnNuclearDelay)
+    {
+        nuclearProduceDelay = _SpawnNuclearDelay;
+    }
+
     public void UpdateSpawnNuclearInfo()
     {
         ArrayHUDSpawnNuclearCommand.Use(EHUDSpawnNuclearCommand.UPDATE_SPAWN_NUCLEAR_TIME, progressPercent);
@@ -111,12 +116,13 @@ public class StructureNuclear : Structure
     }
 
 
-    [SerializeField]
-    private float nuclearProduceDelay = 0f;
+
     [SerializeField]
     private Vector3 nuclearSpawnPos = Vector3.zero;
 
     private MissileNuclear myNuclear = null;
     private bool hasNuclear = false;
     private bool isProcessingSpawnNuclear = false;
+
+    private float nuclearProduceDelay = 0f;
 }

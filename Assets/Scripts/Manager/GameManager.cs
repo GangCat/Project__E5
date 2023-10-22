@@ -8,41 +8,30 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private void Awake()
     {
         if (FindObjectsByType<GameManager>(FindObjectsSortMode.None).Length > 1)
-        {
-            GameManager existingGameManager = FindAnyObjectByType<GameManager>();
-            if (existingGameManager != null)
-                Destroy(existingGameManager.gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
+        else
+            DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
-        // ?????????????
         Cursor.lockState = CursorLockMode.Confined;
-        // ???????????? ????????
         //Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.ForceSoftware);
-        // ??????????????????????????????
         //#if UNITY_EDITOR
         //        Screen.SetResolution(Screen.width, Screen.height, false);
         //#endif
 
-        // ???????????????? ??????????????????
         //#if !UNITY_EDITOR
         //        Screen.SetResolution(1920, 1080, false);
         //#endif
 
-        //???????????????? ???????? ???? ????????????
-#if !UNITY_EDITOR
-                Screen.SetResolution(1920, 1080, true);
+        Screen.SetResolution(1920, 1080, true);
+        Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        isFullHD = true;
+        isFullScreen = true;
 
-                // ???? ???? ????????
-                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-#endif
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitMenu();
-        
-        AudioManager.instance.PlayAudio_BGM_MainMenu();
     }
 
     private void Update()
@@ -56,13 +45,19 @@ public class GameManager : MonoBehaviour, IPauseSubject
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    public static bool IsFullHD => isFullHD;
+    public static bool IsFullScreen => isFullScreen;
+
     private void OnSceneLoaded(Scene _scene, LoadSceneMode _mode)
     {
         if (_scene.name.Equals("ProgrammingScene"))
         {
-            isMainMenu = false;
-            isInGame = true;
             InitInGame();
+        }
+        else if(_scene.name.Equals("ProgrammingSceneMainMenu"))
+        {
+            mainMenuMng = FindAnyObjectByType<MainMenuManager>();
+            mainMenuMng.Init(isFullHD, isFullScreen);
         }
     }
 
@@ -91,11 +86,11 @@ public class GameManager : MonoBehaviour, IPauseSubject
         inputMng = FindFirstObjectByType<InputManager>();
 
         InitCommandList();
-        RegistObserver();
         InitInGameManager();
+        RegistObserver();
     }
 
-    public void ChangeDisplayFullHD(bool _isFullHD)
+    public static void ChangeDisplayFullHD(bool _isFullHD)
     {
         isFullHD = _isFullHD;
         if (isFullHD)
@@ -104,27 +99,25 @@ public class GameManager : MonoBehaviour, IPauseSubject
             Screen.SetResolution(1600, 1000, isFullScreen);
     }
 
-    public void ToggleFullscreen(bool _isFullScreen)
+    public static void ToggleFullscreen(bool _isFullScreen)
     {
         isFullScreen = _isFullScreen;
         if (isFullHD)
             Screen.SetResolution(1920, 1080, isFullScreen);
         else
             Screen.SetResolution(1600, 1000, isFullScreen);
-
     }
 
     private void InitMenuManager()
     {
-        loadSceneMng.Init();
-        mainMenuMng.Init();
         audioMng.Init();
-
+        loadSceneMng.Init();
+        mainMenuMng.Init(isFullHD, isFullScreen);
     }
     private void InitInGameManager()
     {
         cameraMng.Init();
-        uiMng.Init();
+        uiMng.Init(isFullHD, isFullScreen);
         inputMng.Init(mainBaseTr.GetComponent<SelectableObject>(), TriggerDebugMode);
 
         pathMng.Init(worldSizeX, worldSizeY);
@@ -137,7 +130,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         populationMng.Init();
 
         fogMng.Init();
-        debugMng.Init();
+        debugMng.Init(structureMng);
         heroMng.Init(FindFirstObjectByType<UnitHero>());
 
         InitMainBase();
@@ -231,6 +224,10 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayRefundCurrencyCommand.Add(ERefuncCurrencyCommand.SPAWN_NUCLEAR, new CommandRefundSpawnNuclear(currencyMng));
 
         ArrayDebugModeCommand.Add(EDebugModeCommand.MOVE_STATE_INDICATOR, new CommandMoveCurStateIndicator(debugMng));
+        ArrayDebugModeCommand.Add(EDebugModeCommand.DELAY_FAST, new CommandChangeBuildDelayFast(structureMng));
+        ArrayDebugModeCommand.Add(EDebugModeCommand.TOGGLE_FOG, new CommandToggleDisplayFog(fogMng));
+        ArrayDebugModeCommand.Add(EDebugModeCommand.MONEY_INFLATION, new CommandMoneyInflation(currencyMng));
+
 
         ArrayChangeHotkeyCommand.Add(EChangeHotkeyCommand.SELECT_UNIT_FUNC_BUTTON, new CommandChangeUnitFuncHotkey(inputMng));
 
@@ -305,7 +302,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private LoadSceneManager loadSceneMng = null;
     private EAudioType_BGM audioType;
 
-
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;
 
@@ -313,11 +309,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private bool isPause = false;
     private bool isDebugMode = false;
 
-    [SerializeField]
-    private bool isMainMenu = false;
-    [SerializeField]
-    private bool isInGame = false;
-
-    private bool isFullScreen = false;
-    private bool isFullHD = false;
+    private static bool isFullScreen = false;
+    private static bool isFullHD = false;
 }

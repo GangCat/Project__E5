@@ -15,16 +15,27 @@ public class StateAttack : IState
         projectileGo = _structState.ProjectileGo;
         spawnTr = _structState.projectileSpawnTr;
         heroSpawnTr = _structState.heroProjectileSpawnTr;
-        if(_structState.animator)
-            _structState.animator.SetBool("isAttack", true);
+        anim = _structState.animator;
+        if (anim)
+            anim.SetBool("isAttack", true);
     }
 
     public void Update(ref SUnitState _structState)
     {
-        if (targetTr == null) return;
-        if (targetTr.gameObject.activeSelf == false) return;
-        if (_structState.isPause) return;
-     
+        if (!targetTr) return;
+        if (!targetTr.gameObject.activeSelf) return;
+        if (_structState.isPause)
+        {
+            if(anim)
+                anim.StartPlayback();
+            return;
+        }
+        else
+        {
+            if(anim)
+                anim.StopPlayback();
+        }
+
         dir = targetTr.position - myTr.position;
         dir.y = 0f;
         myTr.rotation = Quaternion.LookRotation(dir);
@@ -58,14 +69,15 @@ public class StateAttack : IState
 
     public void End(ref SUnitState _structState)
     {
-        if(_structState.animator)
-            _structState.animator.SetBool("isAttack", false);
+        if (anim)
+            anim.SetBool("isAttack", false);
     }
 
     private float attDmg = 0;
     private float elapsedTime = 0f;
     private float attRate = 0f;
     private EObjectType objectType;
+    private Animator anim = null;
 
     private Transform targetTr = null;
     private Transform myTr = null;

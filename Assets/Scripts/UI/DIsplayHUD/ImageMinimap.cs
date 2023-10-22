@@ -8,6 +8,11 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 {
     public void Init()
     {
+        listObserver = new List<IMinimapObserver>();
+        tempFriendlyNodeList = new List<PF_Node>();
+        tempEnemyNodeList = new List<PF_Node>();
+        listStructureNode = new List<PF_Node>();
+
         ArrayPauseCommand.Use(EPauseCommand.REGIST,this);
         imageMinimap = GetComponent<Image>();
         tex2d = new Texture2D(256, 256);
@@ -18,8 +23,6 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
         texRect = new Rect(0, 0, texW, texH);
         pivotVec = new Vector2(0.5f, 0.5f);
-
-        listStructureNode = new List<PF_Node>();
 
         int idx = 0;
 
@@ -64,6 +67,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
     private IEnumerator UpdateMinimap()
     {
+        yield return null;
         while (true)
         {
             while (isPause)
@@ -171,9 +175,9 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
     private int texH = 0;
     private int texW = 0;
-    private List<IMinimapObserver> listObserver = new List<IMinimapObserver>();
-    private List<PF_Node> tempFriendlyNodeList = new List<PF_Node>();
-    private List<PF_Node> tempEnemyNodeList = new List<PF_Node>();
+    private List<IMinimapObserver> listObserver = null;
+    private List<PF_Node> tempFriendlyNodeList = null;
+    private List<PF_Node> tempEnemyNodeList = null;
 
     private float worldSizeX = 0f;
     private float worldSizeY = 0f;

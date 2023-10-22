@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CanvasMainOptions : CanvasMenuOptions
 {
-    public override void Init()
+    public override void Init(bool _isFullHD, bool _isFullScreen)
     {
         buttonGraphic.onClick.AddListener(
             () =>
@@ -28,6 +28,9 @@ public class CanvasMainOptions : CanvasMenuOptions
                 AudioManager.instance.PlayAudio_UI(objectType);
                 SetActive(false);
             });
+
+        imageGraphic.Init(_isFullHD, _isFullScreen);
+        imageSound.Init();
 
         SetActive(false);
     }

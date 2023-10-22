@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DisplayMenuManager : MonoBehaviour
 {
-    public void Init()
+    public void Init(bool _isFullHD, bool _isFullScreen)
     {
         canvasMenuPopup = GetComponentInChildren<CanvasMenuPopup>();
         canvasMenuOptions = GetComponentInChildren<CanvasMenuOptions>();
@@ -12,7 +12,7 @@ public class DisplayMenuManager : MonoBehaviour
 
         canvasPause.Init();
         canvasMenuPopup.Init();
-        canvasMenuOptions.Init();
+        canvasMenuOptions.Init(_isFullHD, _isFullScreen);
 
         ArrayMenuCommand.Add(EMenuCommand.DISPLAY_MENU, new CommandDisplayMenu(canvasMenuPopup));
         ArrayMenuCommand.Add(EMenuCommand.HIDE_MENU, new CommandHideMenu(canvasMenuPopup));

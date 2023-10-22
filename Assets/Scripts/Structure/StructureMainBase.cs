@@ -7,6 +7,11 @@ public class StructureMainBase : Structure
     public override void Init(PF_Grid _grid)
     {
         grid = _grid;
+        arrCollider = GetComponentsInChildren<StructureCollider>();
+        for (int i = 0; i < arrCollider.Length; ++i)
+            arrCollider[i].Init();
+
+        HideHBeam();
     }
 
     public override void Init(int _structureIdx)
@@ -18,6 +23,12 @@ public class StructureMainBase : Structure
         myStructureIdx = _structureIdx;
         upgradeLevel = 1;
         UpdateNodeWalkable(false);
+    }
+
+    public override void SetUpgradeDelay(float _delay)
+    {
+        upgradePopulationDelay = _delay;
+        upgradeEnergySupplyDelay = _delay;
     }
 
     public bool IsPopulationUpgrade => isPopulationUpgrade;
@@ -115,13 +126,20 @@ public class StructureMainBase : Structure
             elapsedTime += 0.5f;
             progressPercent = elapsedTime / upgradePopulationDelay;
         }
+
+        UpgradePopulationComplete();
+    }
+
+    private void UpgradePopulationComplete()
+    {
         isProcessingUpgrade = false;
-        isPopulationUpgrade = false; 
+        isPopulationUpgrade = false;
         curUpgradeType = EUpgradeType.NONE;
         ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_POPULATION_COMPLETE);
-        if(myObj.IsSelect)
+        if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
-        
+
+        ArrayAlertCommand.Use(EAlertCommand.UPGRADE_COMPLETE);
         AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);
     }
 
@@ -152,13 +170,19 @@ public class StructureMainBase : Structure
             elapsedTime += 0.5f;
             progressPercent = elapsedTime / upgradeEnergySupplyDelay;
         }
+        UpgradeEnergySupplyComplete();
+    }
+
+    private void UpgradeEnergySupplyComplete()
+    {
         isProcessingUpgrade = false;
         isEnergySupplyUpgrade = false;
         curUpgradeType = EUpgradeType.NONE;
         ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY_COMPLETE);
         if (myObj.IsSelect)
             ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
-        
+
+        ArrayAlertCommand.Use(EAlertCommand.UPGRADE_COMPLETE);
         AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);
     }
 

@@ -246,8 +246,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             return;
         }
 
-        if (Input.GetKeyDown(arrDeveloperMenuHotkey[(int)EDeveloperMenuKey.DISPLAY_STATE_AND_FOG]))
-            onDebugModeCallback?.Invoke();
+        if (Input.GetKey(arrDebugModeHotkey[(int)EDeveloperMenuKey.COMMAND_KEY]))
+            if (DeveloperMenuHotkeyActione())
+                return;
 
 
         if (SelectableObjectManager.IsListEmpty) return;
@@ -326,19 +327,17 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private bool DeveloperMenuHotkeyActione()
     {
-        if (Input.GetKeyDown(arrDeveloperMenuHotkey[(int)EDeveloperMenuKey.DISPLAY_STATE_AND_FOG]))
-        {
-            Debug.Log("1");
-        }
-        //Array ���� �Ʒ����� �������� Ŀ�ǵ� �����
-        else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.DEMOLISH]))
-            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DEMOLISH);
-        else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE]))
-            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.UPGRADE);
-        else if (Input.GetKeyDown(cancleKey))
-            ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.CANCLE_CURRENT_FUNCTION);
+        if (Input.GetKeyDown(arrDebugModeHotkey[(int)EDeveloperMenuKey.DISPLAY_STATE_AND_FOGTEXTURE]))
+            onDebugModeCallback?.Invoke();
+        else if (Input.GetKeyDown(arrDebugModeHotkey[(int)EDeveloperMenuKey.TOGGLE_FOG]))
+            ArrayDebugModeCommand.Use(EDebugModeCommand.TOGGLE_FOG);
+        else if (Input.GetKeyDown(arrDebugModeHotkey[(int)EDeveloperMenuKey.FAST_BUILD]))
+            ArrayDebugModeCommand.Use(EDebugModeCommand.DELAY_FAST);
+        else if (Input.GetKeyDown(arrDebugModeHotkey[(int)EDeveloperMenuKey.MONEY_INFLATION]))
+            ArrayDebugModeCommand.Use(EDebugModeCommand.MONEY_INFLATION);
         else
             return false;
+
         return true;
     }
 
@@ -758,9 +757,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 return false;
         }
 
-        for (int i = 0; i < arrDeveloperMenuHotkey.Length; ++i)
+        for (int i = 0; i < arrDebugModeHotkey.Length; ++i)
         {
-            if (_changeKey.Equals(arrDeveloperMenuHotkey[i]))
+            if (_changeKey.Equals(arrDebugModeHotkey[i]))
                 return false;
         }
 
@@ -831,7 +830,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     [Header("-Debug Mode Hotkey")]
     [SerializeField]
-    private KeyCode[] arrDeveloperMenuHotkey = null;
+    private KeyCode[] arrDebugModeHotkey = null;
 
     private float elapsedTime = 0f;
     private float leftClickElapsedTime = 0f;

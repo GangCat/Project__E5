@@ -16,7 +16,7 @@ public class StructureCollider : MonoBehaviour, IGetObjectType, IDamageable
 
     public void Init()
     {
-        beamRenderer = GetComponentInChildren<MeshRenderer>();
+        beamRenderer = GetComponentsInChildren<MeshRenderer>();
     }
 
     public void GetDmg(float _dmg)
@@ -31,16 +31,18 @@ public class StructureCollider : MonoBehaviour, IGetObjectType, IDamageable
 
     public void ShowHBeam()
     {
-        beamRenderer.enabled = true;
+        for(int i = 0; i < beamRenderer.Length; ++i)
+            beamRenderer[i].enabled = true;
     }
     
     public void HideHBeam()
     {
-        beamRenderer.enabled = false;
+        for (int i = 0; i < beamRenderer.Length; ++i)
+            beamRenderer[i].enabled = false;
     }
 
     private StructureColliderTakeDamageDelegate getDmgCallback = null;
     private EObjectType objectType = EObjectType.NONE;
-    private Renderer beamRenderer = null;
+    private Renderer[] beamRenderer = null;
     private EffectController effectCtrl = null;
 }
