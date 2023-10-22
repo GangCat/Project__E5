@@ -221,7 +221,20 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         float mappedY = Mathf.Lerp(minY, maxY, relativeY);
 
         // 실제 화면 좌표를 반환합니다.
-        return new Vector2(mappedX, mappedY);
+        //return new Vector2(mappedX, mappedY);
+        return RotatePointAroundPivot(new Vector2(mappedX, mappedY), minimapRectTransform.rect.center, 45f);
+    }
+
+    public Vector2 RotatePointAroundPivot(Vector2 point, Vector2 pivot, float angle)
+    {
+        // 앵커를 중심으로 회전하는 Quaternion을 생성합니다.
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+        // 포인트를 앵커를 중심으로 회전합니다.
+        Vector2 rotatedPoint = rotation * (point - pivot);
+
+        // 회전된 포인트를 반환합니다.
+        return rotatedPoint + pivot;
     }
 
     public void RegisterPauseObserver(IMinimapObserver _observer)
