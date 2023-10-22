@@ -107,6 +107,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
+            ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.ATTACK_SIGNAL, transform.position);
             StopAllCoroutines();
 
             // Unit Dead Audio

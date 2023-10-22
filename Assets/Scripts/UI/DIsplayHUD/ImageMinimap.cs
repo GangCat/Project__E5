@@ -32,8 +32,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
             ++idx;
         }
 
-        imageFriendlySignal.gameObject.SetActive(false);
-        imageAttackSignal.gameObject.SetActive(false);
+        imageFriendlySignal.Init();
+        imageAttackSignal.Init();
         for (int i = 0; i < arrImageBigEnemySignal.Length; ++i)
             arrImageBigEnemySignal[i].gameObject.SetActive(false);
 
@@ -157,8 +157,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     {
         imageFriendlySignal.gameObject.SetActive(true);
         isFriendlySignalDisplay = true;
-        imageFriendlySignal.rectTransform.anchoredPosition = WorldToMinimapPosition(_worldPos, imageMinimap.rectTransform, 128, 128);
-        yield return new WaitForSeconds(2f);
+        imageFriendlySignal.SetAnchoredPos(WorldToMinimapPosition(_worldPos, imageMinimap.rectTransform, 128, 128));
+        yield return new WaitForSeconds(5f);
 
         imageFriendlySignal.gameObject.SetActive(false);
         isFriendlySignalDisplay = false;
@@ -168,8 +168,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     {
         imageAttackSignal.gameObject.SetActive(true);
         isAttackSignalDisplay = true;
-        imageAttackSignal.rectTransform.anchoredPosition = WorldToMinimapPosition(_worldPos, imageMinimap.rectTransform, 128, 128);
-        yield return new WaitForSeconds(2f);
+        imageAttackSignal.SetAnchoredPos(WorldToMinimapPosition(_worldPos, imageMinimap.rectTransform, 128, 128));
+        yield return new WaitForSeconds(5f);
 
         imageAttackSignal.gameObject.SetActive(false);
         isAttackSignalDisplay = false;
@@ -253,9 +253,9 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     }
 
     [SerializeField]
-    private Image imageFriendlySignal = null;
+    private ImageMinimapSignal imageFriendlySignal = null;
     [SerializeField]
-    private Image imageAttackSignal = null;
+    private ImageMinimapSignal imageAttackSignal = null;
     [SerializeField]
     private Image[] arrImageBigEnemySignal = null;
 

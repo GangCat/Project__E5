@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a00ec801ec8bc5a4a8954673855d48b0
+guid: 1199c029b66154942b08bcc62c0a5021
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -95,22 +95,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MiniMapPlane 1_0
+      name: Button (1)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 360
-        height: 359
+        x: 5
+        y: 6
+        width: 126
+        height: 125
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5d258702a69f0c49bb2c29ba1ea8fb8
-      internalID: 1860825780
+      spriteID: 14140d369e514574f8ba271c9c07173a
+      internalID: -1571627562
       vertices: []
       indices: 
       edges: []
@@ -118,7 +118,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 88946c91ba31d3246a06ddb69e2709bf
+    spriteID: ba3baaef4257f9048beae5aef1a497c0
     internalID: 0
     vertices: []
     indices: 
@@ -126,7 +126,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MiniMapPlane 1_0: 1860825780
+      Button (1)_0: -1571627562
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
