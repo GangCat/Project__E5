@@ -31,7 +31,7 @@ public class AudioPlayer_BGM : AudioPlayerBase
     public void PlayAudio(EAudioType_BGM _audioType = EAudioType_BGM.NONE)
     {
         if(_audioType == EAudioType_BGM.NONE)
-            _audioType = (EAudioType_BGM)UnityEngine.Random.Range(1, (int)EAudioType_BGM.LENGTH); // 1부터 LENGTH-1까지 랜덤 선택
+            _audioType = (EAudioType_BGM)Random.Range(1, (int)EAudioType_BGM.LENGTH); // 1부터 LENGTH-1까지 랜덤 선택
         
         for (int i = 0; i < audioPlayers.Length; ++i)
         {

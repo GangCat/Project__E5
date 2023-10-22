@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CanvasMenuOptions : CanvasBase
 {
-    public virtual void Init()
+    public virtual void Init(bool _isFullHD, bool _isFullScreen)
     {
         buttonGraphic.onClick.AddListener(
             () =>
@@ -37,6 +37,9 @@ public class CanvasMenuOptions : CanvasBase
             });
 
         //imageHotkey.Init();
+
+        imageGraphic.Init(_isFullHD, _isFullScreen);
+        imageSound.Init();
 
         SetActive(false);
     }
@@ -80,9 +83,9 @@ public class CanvasMenuOptions : CanvasBase
     [SerializeField]
     protected Button buttonReturnMenu = null;
     [SerializeField]
-    protected MenuImageBase imageGraphic = null;
+    protected ImageOptionGraphic imageGraphic = null;
     [SerializeField]
-    protected MenuImageBase imageSound = null;
+    protected ImageOptionSound imageSound = null;
     //[SerializeField]
     //private MenuImageBase imageHotkey = null;
 

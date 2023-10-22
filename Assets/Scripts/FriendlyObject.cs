@@ -102,6 +102,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     public override void GetDmg(float _dmg)
     {
+        ArrayAlertCommand.Use(EAlertCommand.UNDER_ATTACK);
+
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
@@ -304,45 +306,52 @@ public class FriendlyObject : SelectableObject, ISubscriber
         {
             // ���� ������ŭ overlapLayerMask�� �ش��ϴ� �浹ü�� overlapSphere�� �˻�
             Collider[] arrCollider = null;
-            arrCollider = overlapSphere(chaseStartRange);
+            arrCollider = OverlapSphereForDetectTarget(chaseStartRange);
 
-            if (targetTr != null)
+            if (arrCollider.Length > 0)
             {
-                for (int i = 0; i < arrCollider.Length; ++i)
-                {
-                    if (arrCollider[i].transform.Equals(targetTr))
+                //if (targetTr != null)
+                //{
+                //    Debug.Log("1");
+                //    for (int i = arrCollider.Length - 1; i > -1; --i)
+                //    {
+                //        if (arrCollider[i].transform.Equals(targetTr))
+                //        {
+                //            prevMoveCondition = curMoveCondition;
+                //            curMoveCondition = EMoveState.CHASE;
+                //            PushState();
+                //            StateMove();
+                //            yield break;
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                    float closeDistance = 999f;
+                    Collider tempCol = null;
+
+                    for (int i = 0; i < arrCollider.Length; ++i)
                     {
-                        // ���� �̵� ������ prev�� �����ϰ� �̵� ������ �������� ������ �� ����.
+                        float curDistance = Vector3.Distance(arrCollider[i].transform.position, transform.position);
+                        if (curDistance < closeDistance)
+                        {
+                            closeDistance = curDistance;
+                            tempCol = arrCollider[i];
+                        }
+                    }
+
+                    if (tempCol.gameObject.activeSelf)
+                    {
+                        targetTr = tempCol.transform;
+                        stateMachine.TargetTr = targetTr;
+                        isAttack = true;
                         prevMoveCondition = curMoveCondition;
                         curMoveCondition = EMoveState.CHASE;
                         PushState();
                         StateMove();
                         yield break;
                     }
-                }
-            }
-            else
-            {
-                for (int i = 0; i < arrCollider.Length; ++i)
-                {
-                    EObjectType targetType = arrCollider[i].GetComponent<IGetObjectType>().GetObjectType();
-
-                    if (targetType.Equals(EObjectType.ENEMY_UNIT) || targetType.Equals(EObjectType.ENEMY_BIG))
-                    {
-                        // �ش� ���� ����ִٸ�
-                        if (arrCollider[i].gameObject.activeSelf)
-                        {
-                            targetTr = arrCollider[i].transform;
-                            stateMachine.TargetTr = targetTr;
-                            isAttack = true;
-                            prevMoveCondition = curMoveCondition;
-                            curMoveCondition = EMoveState.CHASE;
-                            PushState();
-                            StateMove();
-                            yield break;
-                        }
-                    }
-                }
+                //}
             }
             yield return new WaitForSeconds(0.05f);
         }
@@ -448,7 +457,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
 
 
-            if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
+            if (IsTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 hasTargetNode = false;
                 ++targetIdx;
@@ -530,7 +539,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
 
             // ��忡 ������ ������ ���ο� ���� �̵� ����
-            if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
+            if (IsTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
             {
                 hasTargetNode = false;
                 ++targetIdx;
@@ -597,12 +606,15 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 FinishState();
                 yield break;
             }
+            else if (isAttack)
+                CheckIsTargetInAttackRange();
+
             elapsedTime += Time.deltaTime;
 
             if (elapsedTime > stopDelay)
             {
                 elapsedTime = 0f;
-                if (!isTargetInRangeFromMyPos(targetTr.position, followOffset))
+                if (!IsTargetInRangeFromMyPos(targetTr.position, followOffset))
                 {
                     curWayNode = null;
                     RequestPath(transform.position, targetTr.position);
@@ -650,13 +662,13 @@ public class FriendlyObject : SelectableObject, ISubscriber
                         //stateMachine.SetWaitForNewPath(false);
                     }
 
-                    if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
+                    if (IsTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                     {
                         hasTargetNode = false;
                         ++targetIdx;
                         UpdateCurNode();
-                        if (isAttack)
-                            CheckIsTargetInAttackRange();
+                        //if (isAttack)
+                        //    CheckIsTargetInAttackRange();
 
                         if (targetIdx >= arrPath.Length)
                         {
@@ -672,6 +684,16 @@ public class FriendlyObject : SelectableObject, ISubscriber
             }
             yield return null;
         }
+    }
+
+    protected override bool IsObjectBlocked()
+    {
+        curPos = transform.position;
+        //if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("EnemySelectableObject")))
+        if (Physics.Linecast(curPos, curWayNode.worldPos, friendlyLayerMask))
+            return true;
+
+        return false;
     }
     #endregion
 
@@ -690,7 +712,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         while (true)
         {
             Collider[] arrCollider = null;
-            arrCollider = overlapSphere(attackRange);
+            arrCollider = OverlapSphereForDetectTarget(attackRange);
 
             if (arrCollider.Length > 0)
             {
@@ -800,6 +822,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private bool isMovable = false;
     [SerializeField]
     private EUnitType unitType = EUnitType.NONE;
+    [SerializeField]
+    private LayerMask friendlyLayerMask;
 
     private Vector3 wayPointStart = Vector3.zero;
     private Transform targetBunker = null;

@@ -97,10 +97,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myGridX: 4
   myGridY: 4
-  upgradeDelay: 0
   demolishDelay: 4
   modelGo: {fileID: 5662810876524193887}
-  nuclearProduceDelay: 10
+  anim: {fileID: 0}
   nuclearSpawnPos: {x: 0.75, y: 2, z: 0.75}
 --- !u!114 &-4067709134023557582
 MonoBehaviour:
@@ -120,8 +119,10 @@ MonoBehaviour:
   objectDisplayName: "\uD575 \uAC1C\uBC1C\uAE30\uC9C0"
   objectDisplayDescription: "\uB300\uB7C9 \uD559\uC0B4\uC5D0 \uB9E4\uC6B0 \uD6A8\uACFC\uC801\uC778
     \uD575\uC744 \uC0DD\uC0B0\uD558\uB294 \uAC74\uBB3C\uC774\uB2E4."
+  isDrawRange: 0
+  isDrawPath: 0
   chaseStartRange: 0
-  chaseFinishRange: 0
+  chaseEndRange: 0
   attackRange: 0
   stopDelay: 0
   followOffset: 0
@@ -130,6 +131,9 @@ MonoBehaviour:
     m_Bits: 0
   isMovable: 0
   unitType: -1
+  friendlyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &3843237742298459904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -948,7 +952,7 @@ PrefabInstance:
     - target: {fileID: 1848857445697840332, guid: 46fc1b812e7caf14bb3624b7a780bbc9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.17
+      value: 1.134
       objectReference: {fileID: 0}
     - target: {fileID: 1848857445697840332, guid: 46fc1b812e7caf14bb3624b7a780bbc9,
         type: 3}

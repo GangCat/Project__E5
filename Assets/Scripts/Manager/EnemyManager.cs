@@ -33,6 +33,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         bigWaveCnt = 0;
         bigWaveTimeDelay = 0f;
         smallWaveTimeDelay = 0f;
+        
 
         while (bigWaveCnt < totalBigWaveCnt)
         {
@@ -56,6 +57,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             }
 
             ++bigWaveCnt;
+            ArrayAlertCommand.Use(EAlertCommand.WAVE_START);
+            // 웨이브 사운드 출력
 
             if (bigWaveCnt.Equals(totalBigWaveCnt))
             {
@@ -70,14 +73,14 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 smallWaveTimeDelay = 0f;
                 smallWaveCnt = 0;
 
+
                 GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
                 EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
                 enemyObj.Init();
-                enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+                enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
                 enemyObj.MoveAttack(mainBasePos);
             }
         }
-
     }
 
     private void FinalWaveStart()
@@ -94,7 +97,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
             EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
             enemyObj.Init();
-            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
             enemyObj.MoveAttack(mainBasePos);
         }
 
@@ -139,6 +142,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private IEnumerator SpawnWaveEnemyCoroutine(Vector3 _spawnPos, int _count)
     {
         int unitCnt = 0;
+        //List<EnemyObject> tempList = new List<EnemyObject>();
+
         while (unitCnt < _count)
         {
             Vector3 spawnPos = _spawnPos + Functions.GetRandomPosition(WaveOuterCircleRad, WaveInnerCircleRad);
@@ -150,12 +155,16 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             EnemyObject enemyObj = enemyGo.GetComponent<EnemyObject>();
             enemyObj.Position = spawnPos;
             enemyObj.Init();
-            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx);
+            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
+            //tempList.Add(enemyObj);
             enemyObj.MoveAttack(mainBasePos);
             ++waveEnemyIdx;
             ++unitCnt;
             yield return null;
         }
+
+        //SelectableObjectManager.MoveWaveEnemy(wayPoint.position, tempList.ToArray());
+        //tempList.Clear();
     }
 
     private IEnumerator SpawnMapEnemyCoroutine()
@@ -174,7 +183,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 enemyObj.Position = spawnNode.worldPos;
                 enemyObj.Rotate(Random.Range(0, 360));
                 enemyObj.Init();
-                enemyObj.Init(EnemyObject.EEnemySpawnType.MAP_SPAWN, mapEnemyIdx);
+                enemyObj.Init(EnemyObject.EEnemySpawnType.MAP_SPAWN, mapEnemyIdx, mainBasePos);
                 ++mapEnemyIdx;
                 ++unitCnt;
             }
@@ -195,6 +204,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private EnemyMapSpawnPoint[] arrMapSpawnPoint = null;
     [SerializeField]
     private GameObject enemyDeadEffect = null;
+    [SerializeField]
+    private Transform wayPoint = null;
 
     [Header("-Enemy Map Random Spawn(outer > inner)")]
     [SerializeField]
@@ -231,7 +242,6 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private int mapEnemyIdx = 0;
     private int smallWaveCnt = 0;
 
-    private bool isBigWaveTurn = false;
     private bool isPause = false;
     private int bigWaveCnt = 0;
     private float bigWaveTimeDelay = 0f;

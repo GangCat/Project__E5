@@ -140,12 +140,12 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     protected virtual IEnumerator CheckIsEnemyInChaseStartRangeCoroutine()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.01f);
         while (true)
         {
             // 추적 범위만큼 overlapLayerMask에 해당하는 충돌체를 overlapSphere로 검사
             Collider[] arrCollider = null;
-            arrCollider = overlapSphere(chaseStartRange);
+            arrCollider = OverlapSphereForDetectTarget(chaseStartRange);
             // 충돌한 오브젝트가 존재한다면
             if (arrCollider.Length > 0)
             {
@@ -172,6 +172,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     protected IEnumerator CheckIsTargetInChaseFinishRangeCoroutine()
     {
+        Collider[] arrCol = null;
         yield return null;
         while (true)
         {
@@ -198,13 +199,31 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 //StateMove();
                 yield break;
             }
-            else if (!isTargetInRangeFromMyPos(targetTr.position, chaseFinishRange))
+            else if (!IsTargetInRangeFromMyPos(targetTr.position, chaseEndRange))
             {
                 stateMachine.TargetTr = null;
                 targetTr = null;
                 FinishState();
                 //StateMove();
                 yield break;
+            }
+            if (!targetTr.GetComponent<StructureWall>())
+            {
+                arrCol = OverlapSphereForDetectTarget(chaseStartRange);
+                if (arrCol.Length > 0)
+                {
+                    foreach (Collider c in arrCol)
+                    {
+                        // 해당 오브젝트의 ObjectType을 가져온다.
+                        EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
+                        if (targetType.Equals(EObjectType.WALL))
+                        {
+                            stateMachine.TargetTr = c.transform;
+                            targetTr = c.transform;
+                            yield break;
+                        }
+                    }
+                }
             }
             yield return new WaitForSeconds(0.5f);
         }
@@ -214,7 +233,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     {
         if (targetTr && targetTr.gameObject.activeSelf.Equals(true))
         {
-            if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
+            if (IsTargetInRangeFromMyPos(targetTr.position, attackRange))
                 StateAttack();
         }
     }
@@ -225,7 +244,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         {
             if (targetTr != null && targetTr.gameObject.activeSelf.Equals(true))
             {
-                if (isTargetInRangeFromMyPos(targetTr.position, attackRange))
+                if (IsTargetInRangeFromMyPos(targetTr.position, attackRange))
                     StateAttack();
             }
             yield return new WaitForSeconds(0.1f);
@@ -241,37 +260,41 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         UpdateCurNode();
         ChangeState(EState.MOVE);
 
-        switch (curMoveCondition)
-        {
-            case EMoveState.ATTACK:
-                StartCoroutine("CheckNormalMoveCoroutine");
+        if (gameObject.activeSelf)
 
-                break;
-            case EMoveState.CHASE:
-                if (!targetTr || targetTr.gameObject.activeSelf.Equals(false))
-                {
-                    if (prevMoveCondition != EMoveState.NONE)
+        {
+            switch (curMoveCondition)
+            {
+                case EMoveState.ATTACK:
+                    StartCoroutine("CheckNormalMoveCoroutine");
+
+                    break;
+                case EMoveState.CHASE:
+                    if (!targetTr || targetTr.gameObject.activeSelf.Equals(false))
                     {
-                        curMoveCondition = prevMoveCondition;
-                        prevMoveCondition = EMoveState.NONE;
-                        StateMove();
+                        if (prevMoveCondition != EMoveState.NONE)
+                        {
+                            curMoveCondition = prevMoveCondition;
+                            prevMoveCondition = EMoveState.NONE;
+                            StateMove();
+                        }
+                        else
+                        {
+                            ResetStateStack();
+                            PushState();
+                            StateStop();
+                        }
                     }
                     else
                     {
-                        ResetStateStack();
-                        PushState();
-                        StateStop();
+                        StartCoroutine("CheckFollowMoveCoroutine");
+                        StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
+                        //StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
                     }
-                }
-                else
-                {
-                    StartCoroutine("CheckFollowMoveCoroutine");
-                    StartCoroutine("CheckIsTargetInChaseFinishRangeCoroutine");
-                    //StartCoroutine("CheckIsTargetInAttackRangeCoroutine");
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -300,23 +323,24 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
             if (!curWayNode.walkable)
             {
-                curWayNode = null;
-                stateMachine.SetWaitForNewPath(true);
-                RequestPath(transform.position, targetPos);
-
-                while (curWayNode == null)
-                    yield return new WaitForSeconds(0.05f);
-
-                stateMachine.SetWaitForNewPath(false);
-
+                //curWayNode = null;
                 //stateMachine.SetWaitForNewPath(true);
-                //curWayNode = GetNearWalkableNode(curWayNode);
-                //yield return new WaitForSeconds(0.1f);
+                //RequestPath(transform.position, targetPos);
+
+                //while (curWayNode == null)
+                //    yield return new WaitForSeconds(0.05f);
+
                 //stateMachine.SetWaitForNewPath(false);
+                //Debug.Log("!curWayNode.walkable");
+
+                stateMachine.SetWaitForNewPath(true);
+                curWayNode = GetNearWalkableNode(curWayNode);
+                yield return new WaitForSeconds(0.1f);
+                stateMachine.SetWaitForNewPath(false);
             }
 
             // 노드에 도착할 때마다 새로운 노드로 이동 갱신
-            if (isTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
+            if (IsTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
             {
                 hasTargetNode = false;
                 ++targetIdx;
@@ -394,16 +418,16 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             }
             else
             {
-                if (!hasTargetNode)
+                while (curWayNode == null)
+                    yield return new WaitForSeconds(0.05f);
+                
+                if (IsObjectBlocked())
                 {
-                    if (IsObjectBlocked())
-                    {
-                        stateMachine.SetWaitForNewPath(true);
-                        curWayNode = GetNearWalkableNode(curWayNode);
-                        yield return new WaitForSeconds(0.1f);
-                        hasTargetNode = true;
-                        stateMachine.SetWaitForNewPath(false);
-                    }
+                    stateMachine.SetWaitForNewPath(true);
+                    curWayNode = GetNearWalkableNode(curWayNode);
+                    yield return new WaitForSeconds(0.1f);
+                    hasTargetNode = true;
+                    stateMachine.SetWaitForNewPath(false);
                 }
 
                 if (!curWayNode.walkable)
@@ -425,7 +449,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
 
 
-                if (isTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
+                if (IsTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                 {
                     hasTargetNode = false;
                     ++targetIdx;
@@ -471,10 +495,12 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         stateMachine.TargetPos = curWayNode.worldPos;
     }
 
-    protected bool IsObjectBlocked()
+    protected virtual bool IsObjectBlocked()
     {
+        if (curWayNode == null) return false;
+
         curPos = transform.position;
-        if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("SelectableObject")))
+        if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("EnemySelectableObject")))
             return true;
 
         return false;
@@ -536,7 +562,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 FinishState();
                 yield break;
             }
-            else if (!isTargetInRangeFromMyPos(targetTr.position, attackRange))
+            else if (!IsTargetInRangeFromMyPos(targetTr.position, attackRange))
             {
                 FinishState();
                 yield break;
@@ -571,12 +597,12 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         stateMachine.ChangeState(_state);
     }
 
-    protected bool isTargetInRangeFromMyPos(Vector3 _targetPos, float _range)
+    protected bool IsTargetInRangeFromMyPos(Vector3 _targetPos, float _range)
     {
         return Vector3.SqrMagnitude(transform.position - _targetPos) < Mathf.Pow(_range, 2);
     }
 
-    protected Collider[] overlapSphere(float _range)
+    protected Collider[] OverlapSphereForDetectTarget(float _range)
     {
         return Physics.OverlapSphere(transform.position, _range, overlapLayerMask);
     }
@@ -609,7 +635,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     public void OnDrawGizmos()
     {
-        if (arrPath != null)
+        if (arrPath != null && isDrawPath)
         {
             for (int i = targetIdx; i < arrPath.Length; ++i)
             {
@@ -621,6 +647,20 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 else
                     Gizmos.DrawLine(arrPath[i - 1].worldPos, arrPath[i].worldPos);
             }
+        }
+
+        if (isDrawRange)
+        {// 공격 범위를 그리는 기즈모 (빨간색 원)
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
+
+            // 추적 시작 범위를 그리는 기즈모 (노란색 원)
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, chaseStartRange);
+
+            // 추적 종료 범위를 그리는 기즈모 (초록색 원)
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, chaseEndRange);
         }
     }
 
@@ -650,13 +690,17 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     [TextArea]
     [SerializeField]
     protected string objectDisplayDescription = null;
+    [SerializeField]
+    protected bool isDrawRange = false;
+    [SerializeField]
+    protected bool isDrawPath = false;
 
 
     [Header("-Unit Control Values")]
     [SerializeField]
     protected float chaseStartRange = 0f;
     [SerializeField]
-    protected float chaseFinishRange = 0f;
+    protected float chaseEndRange = 0f;
     [SerializeField]
     protected float attackRange = 0f;
     [SerializeField]

@@ -10,34 +10,45 @@ public class CanvasMainMenu : MonoBehaviour
         buttonStartGame.onClick.AddListener(
             () =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
+
                 LoadSceneManager.ChangeScene("ProgrammingScene");
             });
 
         buttonOption.onClick.AddListener(
             () =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
                 _displayOptionCallback?.Invoke();
             });
 
         buttonExit.onClick.AddListener(
             () =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
                 DisplayExitRecheckButton();
             });
 
-        buttonExitReCheck.onClick.AddListener(
+        buttonExitConfrim.onClick.AddListener(
             () =>
             {
                 Application.Quit();
-                buttonExitReCheck.gameObject.SetActive(false);
             });
 
-        buttonExitReCheck.gameObject.SetActive(false);
+        buttonExitCancle.onClick.AddListener(
+            () =>
+            {
+                AudioManager.instance.PlayAudio_UI(objectType);
+                exitReCheckGo.SetActive(false);
+            });
+
+
+        exitReCheckGo.gameObject.SetActive(false);
     }
 
     private void DisplayExitRecheckButton()
     {
-        buttonExitReCheck.gameObject.SetActive(true);
+        exitReCheckGo.gameObject.SetActive(true);
     }
 
 
@@ -48,5 +59,11 @@ public class CanvasMainMenu : MonoBehaviour
     [SerializeField]
     private Button buttonExit = null;
     [SerializeField]
-    private Button buttonExitReCheck = null;
+    private GameObject exitReCheckGo = null;
+    [SerializeField]
+    private Button buttonExitConfrim = null;
+    [SerializeField]
+    private Button buttonExitCancle = null;
+
+    private EObjectType objectType;
 }

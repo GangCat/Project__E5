@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  maxHp: 10
+  maxHp: 100
 --- !u!114 &4556634007579230422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +114,7 @@ MonoBehaviour:
   upgradeDelay: 30
   demolishDelay: 4
   modelGo: {fileID: 359025217173431541}
+  anim: {fileID: 0}
   arrSpawnUnitDelay:
   - 8
   - 6
@@ -142,8 +143,10 @@ MonoBehaviour:
   objectDisplayDescription: "\uB77C\uCCC7 \uBD07\uACFC \uB808\uC774 \uBD07\uC744
     \uC0DD\uC0B0\uD560 \uC218 \uC788\uB294 \uAC74\uBB3C.\n\uC591\uCABD\uC5D0 \uB2EC\uB9B0
     \uD30C\uC774\uD504\uAC00 \uB208\uC5D0 \uB748\uB2E4."
+  isDrawRange: 0
+  isDrawPath: 0
   chaseStartRange: 0
-  chaseFinishRange: 0
+  chaseEndRange: 0
   attackRange: 0
   stopDelay: 0
   followOffset: 0

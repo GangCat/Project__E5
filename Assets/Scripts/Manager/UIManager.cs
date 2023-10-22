@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public void Init()
+    public void Init(bool _isFullHD, bool _isFullScreen)
     {
         funcBtnMng = GetComponentInChildren<FuncButtonManager>();
         displayHUDMng = GetComponentInChildren<DisplayHUDManager>();
@@ -13,9 +13,8 @@ public class UIManager : MonoBehaviour
         displayCurMng = GetComponentInChildren<DisplayCurrencyManager>();
         funcBtnMng.Init();
         displayHUDMng.Init();
-        displayMenuMng.Init();
+        displayMenuMng.Init(_isFullHD, _isFullScreen);
         displayCurMng.Init();
-
     }
 
     public void HeroDead()

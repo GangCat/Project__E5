@@ -39,11 +39,13 @@ public class CanvasMenuPopup : CanvasBase
             () =>
             {
                 LoadSceneManager.ChangeScene("ProgrammingSceneMainMenu");
+                //Application.Quit();
             });
 
         btnGameExitCancle.onClick.AddListener(
             () =>
             {
+                AudioManager.instance.PlayAudio_UI(objectType);
                 reCheckGo.SetActive(false);
             });
 

@@ -30,6 +30,12 @@ public class Structure : MonoBehaviour, IPauseObserver
     }
 
     public virtual void Init() { }
+    public virtual void SetUnitSpawnDelay(float[] _arrSpawnDelay) { }
+    public virtual void SetNuclearSpawnDelay(float _SpawnNuclearDelay) { }
+    public virtual void SetUpgradeDelay(float _upgradeDelay)
+    {
+        upgradeDelay = upgradeLevel * _upgradeDelay;
+    }
 
     public EUpgradeType CurUpgradeType => curUpgradeType;
     public int UpgradeLevel => upgradeLevel;
@@ -146,7 +152,8 @@ public class Structure : MonoBehaviour, IPauseObserver
         ++upgradeLevel;
         if (myObj.IsSelect)
             UpdateInfo();
-        
+
+        ArrayAlertCommand.Use(EAlertCommand.UPGRADE_COMPLETE);
         AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);
     }
 
@@ -204,6 +211,8 @@ public class Structure : MonoBehaviour, IPauseObserver
 
             if (myObj.IsSelect)
                 ArrayHUDConstructCommand.Use(EHUDConstructCommand.UPDATE_CONSTRUCT_TIME, progressPercent);
+
+            if (elapsedTime > _buildDelay / 3)
             yield return new WaitForSeconds(0.5f);
             elapsedTime += 0.5f;
             progressPercent = elapsedTime / _buildDelay;
@@ -219,8 +228,9 @@ public class Structure : MonoBehaviour, IPauseObserver
         ShowModel();
         if (myObj.IsSelect)
             UpdateInfo();
-        
+
         // Build Complete Audio Play
+        ArrayAlertCommand.Use(EAlertCommand.BUILD_COMPLETE);
         AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.CONST_COMPLETE);
     }
 
@@ -312,13 +322,13 @@ public class Structure : MonoBehaviour, IPauseObserver
         mt.color = isBuildable ? oriColor : Color.red;
     }
 
-    private void ShowHBeam()
+    protected void ShowHBeam()
     {
         for (int i = 0; i < arrCollider.Length; ++i)
             arrCollider[i].ShowHBeam();
     }
 
-    private void HideHBeam()
+    protected void HideHBeam()
     {
         for (int i = 0; i < arrCollider.Length; ++i)
             arrCollider[i].HideHBeam();
@@ -337,6 +347,17 @@ public class Structure : MonoBehaviour, IPauseObserver
     public void CheckPause(bool _isPause)
     {
         isPause = _isPause;
+        if (isPause)
+        {
+            if (anim)
+                anim.StartPlayback();
+        }
+        else
+        {
+            if (anim)
+                anim.StopPlayback();
+        }
+
     }
 
     [SerializeField]
@@ -344,11 +365,11 @@ public class Structure : MonoBehaviour, IPauseObserver
     [SerializeField]
     protected int myGridY = 1;
     [SerializeField]
-    protected float upgradeDelay = 0f;
-    [SerializeField]
     protected float demolishDelay = 4f;
     [SerializeField]
     protected GameObject modelGo = null;
+    [SerializeField]
+    protected Animator anim = null;
 
     protected PF_Grid grid = null;
     protected PF_Node curNode = null;
@@ -362,6 +383,7 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected int upgradeLevel = 0;
 
     protected float progressPercent = 0f;
+    protected float upgradeDelay = 0f;
 
     protected bool isBuildable = false;
     protected bool isProcessingUpgrade = false;

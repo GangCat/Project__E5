@@ -17,6 +17,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasNuclearInfo = GetComponentInChildren<CanvasSpawnNuclearInfo>();
         canvasMenu = GetComponentInChildren<CanvasMenu>();
         canvasTooltip = GetComponentInChildren<CanvasTooltip>();
+        canvasAlert = GetComponentInChildren<CanvasAlert>();
 
         canvasMinimap.Init();
         canvasWaveInfo.Init();
@@ -29,6 +30,7 @@ public class DisplayHUDManager : MonoBehaviour
         canvasNuclearInfo.Init();
         canvasMenu.Init();
         canvasTooltip.Init();
+        canvasAlert.Init();
 
         ArrayHUDCommand.Add(EHUDCommand.INIT_WAVE_TIME, new CommandInitWaveTime(canvasWaveInfo));
         ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
@@ -61,6 +63,11 @@ public class DisplayHUDManager : MonoBehaviour
 
         ArrayHUDSpawnNuclearCommand.Add(EHUDSpawnNuclearCommand.DISPLAY_SPAWN_NUCLEAR_INFO, new CommandDisplaySpawnNuclearInfo(canvasNuclearInfo));
         ArrayHUDSpawnNuclearCommand.Add(EHUDSpawnNuclearCommand.UPDATE_SPAWN_NUCLEAR_TIME, new CommandUpdateSpawnNuclearTime(canvasNuclearInfo));
+
+        ArrayAlertCommand.Add(EAlertCommand.UNDER_ATTACK, new CommandAlertUnderAttack(canvasAlert));
+        ArrayAlertCommand.Add(EAlertCommand.UPGRADE_COMPLETE, new CommandAlertUpgradeComplete(canvasAlert));
+        ArrayAlertCommand.Add(EAlertCommand.BUILD_COMPLETE, new CommandAlertBuildComplete(canvasAlert));
+        ArrayAlertCommand.Add(EAlertCommand.WAVE_START, new CommandAlertWaveStart(canvasAlert));
     }
 
     public void HideDisplay()
@@ -90,4 +97,5 @@ public class DisplayHUDManager : MonoBehaviour
     private CanvasSpawnNuclearInfo canvasNuclearInfo = null;
     private CanvasMenu canvasMenu = null;
     private CanvasTooltip canvasTooltip = null;
+    private CanvasAlert canvasAlert = null;
 }

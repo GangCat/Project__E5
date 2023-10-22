@@ -15,7 +15,7 @@ public class CollectCoreCollider : MonoBehaviour
         {
             AudioManager.instance.PlayAudio_Misc(EAudioType_Misc.PICKUP);
             
-            effectCtrl.EffectOn(3, _other.transform.position);
+            effectCtrl.EffectOn(2, _other.transform.position);
             ArrayCurrencyCommand.Use(ECurrencyCommand.COLLECT_CORE, coreAmount);
             Destroy(_other.gameObject);
         }

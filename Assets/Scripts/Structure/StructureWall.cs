@@ -54,14 +54,12 @@ public class StructureWall : Structure
 
     public void OpenDoor()
     {
-        animDoorR.SetBool("IsUnitEnter", true);
-        animDoorL.SetBool("IsUnitEnter", true);
+        anim.SetBool("IsUnitEnter", true);
     }
 
     public void CloseDoor()
     {
-        animDoorR.SetBool("IsUnitEnter", false);
-        animDoorL.SetBool("IsUnitEnter", false);
+        anim.SetBool("IsUnitEnter", false);
     }
 
     protected override void UpgradeComplete()
@@ -152,10 +150,6 @@ public class StructureWall : Structure
 
     [SerializeField]
     private float upgradeHpAmount = 0f;
-    [SerializeField]
-    private Animator animDoorR = null;
-    [SerializeField]
-    private Animator animDoorL = null;
 
     private CommandUpgradeStructureHP upgradeHpCmd = null;
 }
