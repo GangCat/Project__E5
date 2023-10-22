@@ -174,9 +174,11 @@ public class Structure : MonoBehaviour, IPauseObserver
         }
 
         if (!_walkable)
-            ArrayHUDCommand.Use(EHUDCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
+            ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
+        //ArrayHUDCommand.Use(EHUDCommand.ADD_STRUCTURE_NODE_TO_MINIMAP, listNode.ToArray());
         else
-            ArrayHUDCommand.Use(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
+            ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
+            //ArrayHUDCommand.Use(EHUDCommand.REMOVE_STRUCTURE_NODE_FROM_MINIMAP, listNode.ToArray());
     }
 
     public void BuildCancle()
@@ -231,6 +233,7 @@ public class Structure : MonoBehaviour, IPauseObserver
 
         // Build Complete Audio Play
         ArrayAlertCommand.Use(EAlertCommand.BUILD_COMPLETE);
+        ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.FRIENDLY_SIGNAL, transform.position);
         AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.CONST_COMPLETE);
     }
 

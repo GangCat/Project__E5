@@ -32,6 +32,11 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
             ++idx;
         }
 
+        imageFriendlySignal.gameObject.SetActive(false);
+        imageAttackSignal.gameObject.SetActive(false);
+        for (int i = 0; i < arrImageBigEnemySignal.Length; ++i)
+            arrImageBigEnemySignal[i].gameObject.SetActive(false);
+
         StartCoroutine("UpdateMinimap");
     }
 
@@ -118,7 +123,56 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
             tex2d.SetPixel(tempNode.gridX, tempNode.gridY, Color.green);
         }
 
+        if (isBigEnemySignalDisplay)
+        {
+            for (int i = 0; i < arrBigEnemyTr.Length; ++i)
+            {
+                arrImageBigEnemySignal[i].rectTransform.anchoredPosition = WorldToMinimapPosition(arrBigEnemyTr[i].position, imageMinimap.rectTransform, 128, 128);
+            }
+        }
+        // 여기서 중형 유닛 위치 받아서 그 위치에 픽셀 대신 그 위치에 BigEnemySignal 그림
+
+
         tex2d.Apply();
+    }
+
+    public void BigEnemySignal(Transform[] _arrTr)
+    {
+        arrBigEnemyTr = _arrTr;
+    }
+
+    public void FriendlySignal(Vector3 _worldPos)
+    {
+        if (!isFriendlySignalDisplay)
+            StartCoroutine(FriendlySignalAutoDisable(_worldPos));
+    }
+
+    public void AttackSignal(Vector3 _worldPos)
+    {
+        if (!isAttackSignalDisplay)
+            StartCoroutine(AttackSignalAutoDisable(_worldPos));
+    }
+
+    private IEnumerator FriendlySignalAutoDisable(Vector3 _worldPos)
+    {
+        imageFriendlySignal.gameObject.SetActive(true);
+        isFriendlySignalDisplay = true;
+        imageFriendlySignal.rectTransform.anchoredPosition = WorldToMinimapPosition(_worldPos, imageMinimap.rectTransform, 128, 128);
+        yield return new WaitForSeconds(2f);
+
+        imageFriendlySignal.gameObject.SetActive(false);
+        isFriendlySignalDisplay = false;
+    }
+
+    private IEnumerator AttackSignalAutoDisable(Vector3 _worldPos)
+    {
+        imageAttackSignal.gameObject.SetActive(true);
+        isAttackSignalDisplay = true;
+        imageAttackSignal.rectTransform.anchoredPosition = WorldToMinimapPosition(_worldPos, imageMinimap.rectTransform, 128, 128);
+        yield return new WaitForSeconds(2f);
+
+        imageAttackSignal.gameObject.SetActive(false);
+        isAttackSignalDisplay = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -150,6 +204,26 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         }
     }
 
+    private Vector2 WorldToMinimapPosition(Vector3 worldPosition, RectTransform minimapRectTransform, float worldSizeX, float worldSizeY)
+    {
+        // 월드 좌표를 미니맵상의 상대 좌표로 변환합니다.
+        float relativeX = (worldPosition.x / worldSizeX) + 0.5f;
+        float relativeY = (worldPosition.z / worldSizeY) + 0.5f;
+
+        // 미니맵 RectTransform의 크기를 고려하여 실제 화면 좌표로 변환합니다.
+        float minX = minimapRectTransform.rect.xMin + minimapRectTransform.anchoredPosition.x;
+        float maxX = minimapRectTransform.rect.xMax + minimapRectTransform.anchoredPosition.x;
+        float minY = minimapRectTransform.rect.yMin + minimapRectTransform.anchoredPosition.y;
+        float maxY = minimapRectTransform.rect.yMax + minimapRectTransform.anchoredPosition.y;
+
+        // 미니맵상의 상대 좌표를 실제 화면 좌표로 매핑합니다.
+        float mappedX = Mathf.Lerp(minX, maxX, relativeX);
+        float mappedY = Mathf.Lerp(minY, maxY, relativeY);
+
+        // 실제 화면 좌표를 반환합니다.
+        return new Vector2(mappedX, mappedY);
+    }
+
     public void RegisterPauseObserver(IMinimapObserver _observer)
     {
         listObserver.Add(_observer);
@@ -165,6 +239,13 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         isPause = _isPause;
     }
 
+    [SerializeField]
+    private Image imageFriendlySignal = null;
+    [SerializeField]
+    private Image imageAttackSignal = null;
+    [SerializeField]
+    private Image[] arrImageBigEnemySignal = null;
+
     private static Texture2D visibleAreaTexture = null;
 
     private Image imageMinimap = null;
@@ -172,6 +253,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     private Rect texRect;
     private Vector2 pivotVec;
     private List<PF_Node> listStructureNode = null;
+    private Transform[] arrBigEnemyTr = null;
 
     private int texH = 0;
     private int texW = 0;
@@ -183,5 +265,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     private float worldSizeY = 0f;
 
     private bool isPause = false;
-    
+    private bool isFriendlySignalDisplay = false;
+    private bool isAttackSignalDisplay = false;
+    private bool isBigEnemySignalDisplay = false;
+
 }
