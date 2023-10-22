@@ -53,7 +53,7 @@ public class StateAttack : IState
                 GameObject missile = GameObject.Instantiate(projectileGo, spawnTr.position, spawnTr.rotation);
                 missile.GetComponent<ProjectileBase>().Init(targetTr.position);
             }
-            else
+            else if(heroSpawnTr.Length > 0)
             {
                 GameObject missile1 = GameObject.Instantiate(projectileGo, heroSpawnTr[0].position, heroSpawnTr[0].rotation);
                 GameObject missile2 = GameObject.Instantiate(projectileGo, heroSpawnTr[1].position, heroSpawnTr[1].rotation);
