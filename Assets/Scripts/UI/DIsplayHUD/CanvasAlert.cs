@@ -27,6 +27,7 @@ public class CanvasAlert : MonoBehaviour
         {
             imageBox.Display(underAttackText);
             StartCoroutine(UnderAttackDelayCoroutine());
+            StartCalcAutoHideAlert();
         }
     }
 

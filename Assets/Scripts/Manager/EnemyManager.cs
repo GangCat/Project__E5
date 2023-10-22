@@ -57,6 +57,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             }
 
             ++bigWaveCnt;
+            ArrayAlertCommand.Use(EAlertCommand.WAVE_START);
             // 웨이브 사운드 출력
 
             if (bigWaveCnt.Equals(totalBigWaveCnt))
