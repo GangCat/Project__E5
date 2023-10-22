@@ -199,6 +199,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_EnemyStoneModel
       objectReference: {fileID: 0}
+    - target: {fileID: 3204629962323533092, guid: b932acc8807ab864d9bbe1b8c44ca6cd,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204629962323533092, guid: b932acc8807ab864d9bbe1b8c44ca6cd,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204629962323533092, guid: b932acc8807ab864d9bbe1b8c44ca6cd,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3333690762751060639, guid: b932acc8807ab864d9bbe1b8c44ca6cd,
         type: 3}
       propertyPath: m_LocalPosition.x

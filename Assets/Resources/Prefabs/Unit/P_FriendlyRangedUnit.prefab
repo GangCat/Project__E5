@@ -101,7 +101,7 @@ MonoBehaviour:
     effectCtrl: {fileID: 0}
     moveSpeed: 3
     attRate: 0.5
-    attDmg: 2
+    attDmg: 1.5
     objectType: 1
     ProjectileGo: {fileID: 1523153560657062, guid: a666e0cb0d0dc2344b3c4f8ad627d501,
       type: 3}
@@ -356,6 +356,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9079034941289010944, guid: 281dfab7014b36e408324d59385b1e34,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9079034941289010944, guid: 281dfab7014b36e408324d59385b1e34,
+        type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -802,6 +812,21 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2d048c0f0011d234f93b42e4ab751a53,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2d048c0f0011d234f93b42e4ab751a53,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2d048c0f0011d234f93b42e4ab751a53,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2d048c0f0011d234f93b42e4ab751a53,
+        type: 3}
+      propertyPath: m_LightProbeUsage
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 2d048c0f0011d234f93b42e4ab751a53,
