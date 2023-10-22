@@ -44,8 +44,11 @@ public class StructureManager : MonoBehaviour
             structure.SetUnitSpawnDelay(arrSpawnUnitDelay);
             structure.SetUpgradeDelay(upgradeDelay);
         }
-        
+        //Structure mainBase = null;
+        //dicStructure.TryGetValue(0, out mainBase);
+        //mainBase.GetComponent<StructureMainBase>().SetUpgradeDelay(upgradeDelay);
     }
+
     public EObjectType CurStructureType()
     {
         return curStructureObjType;

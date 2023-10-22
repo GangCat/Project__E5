@@ -128,7 +128,7 @@ MonoBehaviour:
   isDrawRange: 0
   isDrawPath: 0
   chaseStartRange: 15
-  chaseEndRange: 20
+  chaseEndRange: 17
   attackRange: 5
   stopDelay: 1
   followOffset: 1

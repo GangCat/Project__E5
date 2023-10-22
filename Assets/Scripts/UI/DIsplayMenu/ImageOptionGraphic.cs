@@ -5,11 +5,13 @@ using UnityEngine.UI;
 
 public class ImageOptionGraphic : MenuImageBase
 {
-    public override void Init()
+    public void Init(bool _isFullHD, bool _isFullScreen)
     {
         toggleFullHD.onValueChanged.AddListener(
             (bool _value) =>
             {
+                if (_value.Equals(GameManager.IsFullHD))
+                    return;
                 AudioManager.instance.PlayAudio_UI(objectType);
                 GameManager.ChangeDisplayFullHD(_value);
             });
@@ -17,23 +19,19 @@ public class ImageOptionGraphic : MenuImageBase
         toggleFullScreen.onValueChanged.AddListener(
             (bool _value) =>
             {
+                if (_value.Equals(GameManager.IsFullScreen))
+                    return;
                 AudioManager.instance.PlayAudio_UI(objectType);
                 GameManager.ToggleFullscreen(_value);
             });
 
-        Debug.Log(Screen.fullScreen);
-        Debug.Log(Screen.height);
+        toggleFullHD.isOn = _isFullHD;
+        toggleFullScreen.isOn = _isFullScreen;
 
-        toggleFullScreen.isOn = Screen.fullScreen;
-        if (Screen.height.Equals(1000))
-            toggleFullHD.isOn = false;
-        else
-            toggleFullHD.isOn = true;
     }
 
     [SerializeField]
     private Toggle toggleFullScreen = null;
     [SerializeField]
     private Toggle toggleFullHD = null;
-    
 }

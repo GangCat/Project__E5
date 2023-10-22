@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
         Screen.SetResolution(1920, 1080, true);
         Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        isFullHD = true;
+        isFullScreen = true;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitMenu();
@@ -44,6 +46,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    public static bool IsFullHD => isFullHD;
+    public static bool IsFullScreen => isFullScreen;
+
     private void OnSceneLoaded(Scene _scene, LoadSceneMode _mode)
     {
         if (_scene.name.Equals("ProgrammingScene"))
@@ -53,7 +58,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         else if(_scene.name.Equals("ProgrammingSceneMainMenu"))
         {
             mainMenuMng = FindAnyObjectByType<MainMenuManager>();
-            mainMenuMng.Init();
+            mainMenuMng.Init(isFullHD, isFullScreen);
         }
     }
 
@@ -102,19 +107,18 @@ public class GameManager : MonoBehaviour, IPauseSubject
             Screen.SetResolution(1920, 1080, isFullScreen);
         else
             Screen.SetResolution(1600, 1000, isFullScreen);
-
     }
 
     private void InitMenuManager()
     {
         audioMng.Init();
         loadSceneMng.Init();
-        mainMenuMng.Init();
+        mainMenuMng.Init(isFullHD, isFullScreen);
     }
     private void InitInGameManager()
     {
         cameraMng.Init();
-        uiMng.Init();
+        uiMng.Init(isFullHD, isFullScreen);
         inputMng.Init(mainBaseTr.GetComponent<SelectableObject>(), TriggerDebugMode);
 
         pathMng.Init(worldSizeX, worldSizeY);

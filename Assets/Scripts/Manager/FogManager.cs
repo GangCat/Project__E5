@@ -64,28 +64,22 @@ public class FogManager : MonoBehaviour, IPauseObserver
 
         // fogRenderTexture ����
         mainCam.RenderFog();
-        // ���̴��� �����迭�� ������ ��ġ, �ǹ��� ��ġ�� �迭�� ����.
 
 
-        // �ش� ���� newFogRenderTexture�� ����
         Graphics.CopyTexture(fogRenderTexture, newFogRenderTexture);
 
-        // newBackBufferRenderTexture�� newFogRenderTexture�� ���� �����
         int threadGroupsX = Mathf.CeilToInt(newFogRenderTexture.width / 8f);
         int threadGroupsY = Mathf.CeilToInt(newFogRenderTexture.height / 8f);
         fogComputeShader.Dispatch(0, threadGroupsX, threadGroupsY, 1);
 
-        // ������ �����ؽ����� ���� �ؽ��Ŀ� ����
         Graphics.CopyTexture(newFogRenderTexture, curFogTexture);
         Graphics.CopyTexture(newBackBuffRenderTexture, backBufftexture);
 
-        // �� ������Ʈ�� ���׸��� �ؽ��� ����
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_FogTexture", curFogTexture);
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_BackBufferTexture", backBufftexture);
         combineGo.GetComponent<MeshRenderer>().material.SetTexture("_MapTexture", mapRenderTexture);
         ImageMinimap.SetVisibleTexture(curFogTexture);
 
-        // ������� ���� �̹����� ��ȯ�� ǥ��
         if (isDebugMode)
         {
         Sprite spriteFog = Sprite.Create(curFogTexture, new Rect(0, 0, curFogTexture.width, curFogTexture.height), new Vector2(0.5f, 0.5f));
@@ -96,7 +90,6 @@ public class FogManager : MonoBehaviour, IPauseObserver
         bufferImage.sprite = spriteBuffer;
         }
 
-        // �ݺ�
         Invoke("UpdateFogTexture", updateFogDelay);
     }
 

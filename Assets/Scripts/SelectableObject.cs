@@ -299,7 +299,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                     yield return new WaitForSeconds(0.1f);
                     hasTargetNode = true;
                     stateMachine.SetWaitForNewPath(false);
-                    Debug.Log("IsObjectBlocked");
                 }
             }
 

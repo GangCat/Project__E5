@@ -241,7 +241,6 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private int mapEnemyIdx = 0;
     private int smallWaveCnt = 0;
 
-    private bool isBigWaveTurn = false;
     private bool isPause = false;
     private int bigWaveCnt = 0;
     private float bigWaveTimeDelay = 0f;

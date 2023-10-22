@@ -32,7 +32,7 @@ public class Structure : MonoBehaviour, IPauseObserver
     public virtual void Init() { }
     public virtual void SetUnitSpawnDelay(float[] _arrSpawnDelay) { }
     public virtual void SetNuclearSpawnDelay(float _SpawnNuclearDelay) { }
-    public void SetUpgradeDelay(float _upgradeDelay)
+    public virtual void SetUpgradeDelay(float _upgradeDelay)
     {
         upgradeDelay = upgradeLevel * _upgradeDelay;
     }
@@ -152,7 +152,8 @@ public class Structure : MonoBehaviour, IPauseObserver
         ++upgradeLevel;
         if (myObj.IsSelect)
             UpdateInfo();
-        
+
+        ArrayAlertCommand.Use(EAlertCommand.UPGRADE_COMPLETE);
         AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);
     }
 
@@ -227,8 +228,9 @@ public class Structure : MonoBehaviour, IPauseObserver
         ShowModel();
         if (myObj.IsSelect)
             UpdateInfo();
-        
+
         // Build Complete Audio Play
+        ArrayAlertCommand.Use(EAlertCommand.BUILD_COMPLETE);
         AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.CONST_COMPLETE);
     }
 

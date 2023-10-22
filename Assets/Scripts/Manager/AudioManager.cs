@@ -371,7 +371,6 @@ public class AudioManager : MonoBehaviour
     private List<AudioPlayerBase> listBGMPlayer = new List<AudioPlayerBase>();
     private List<AudioPlayerBase> listEffectPlayer = new List<AudioPlayerBase>();
 
-    private float sliderMaster = 0f;
     private float sliderBGM = 0f;
     private float sliderEffect = 0f;
 

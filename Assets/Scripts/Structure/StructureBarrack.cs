@@ -241,6 +241,7 @@ public class StructureBarrack : Structure, ISubscriber
 
     private void UpgradeUnitComplete(EUnitUpgradeType _upgradeType)
     {
+        ArrayAlertCommand.Use(EAlertCommand.UPGRADE_COMPLETE);
         switch (_upgradeType)
         {
             case EUnitUpgradeType.RANGED_UNIT_DMG:
@@ -282,11 +283,6 @@ public class StructureBarrack : Structure, ISubscriber
                 break;
         }
     }
-
-    [Header("-Melee, Range, Rocket(temp)")]
-
-    [SerializeField]
-    private GameObject[] arrUnitPrefab = null;
 
     [Header("-Upgrade Attribute")]
     [SerializeField]

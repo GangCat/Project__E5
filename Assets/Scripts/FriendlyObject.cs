@@ -102,6 +102,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     public override void GetDmg(float _dmg)
     {
+        ArrayAlertCommand.Use(EAlertCommand.UNDER_ATTACK);
+
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
             StopAllCoroutines();
@@ -421,21 +423,21 @@ public class FriendlyObject : SelectableObject, ISubscriber
         stateMachine.SetWaitForNewPath(false);
         while (true)
         {
-            //if (!hasTargetNode)
-            //{
-            //    if (IsObjectBlocked())
-            //    {
-            //        stateMachine.SetWaitForNewPath(true);
-            //        curWayNode = GetNearWalkableNode(curWayNode);
-            //        yield return new WaitForSeconds(0.1f);
-            //        hasTargetNode = true;
-            //        stateMachine.SetWaitForNewPath(false);
+            if (!hasTargetNode)
+            {
+                if (IsObjectBlocked())
+                {
+                    stateMachine.SetWaitForNewPath(true);
+                    curWayNode = GetNearWalkableNode(curWayNode);
+                    yield return new WaitForSeconds(0.1f);
+                    hasTargetNode = true;
+                    stateMachine.SetWaitForNewPath(false);
 
-            //        //stateMachine.SetWaitForNewPath(true);
-            //        //yield return new WaitForSeconds(0.5f);
-            //        //stateMachine.SetWaitForNewPath(false);
-            //    }
-            //}
+                    //stateMachine.SetWaitForNewPath(true);
+                    //yield return new WaitForSeconds(0.5f);
+                    //stateMachine.SetWaitForNewPath(false);
+                }
+            }
 
             if (!curWayNode.walkable)
             {
@@ -604,6 +606,9 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 FinishState();
                 yield break;
             }
+            else if (isAttack)
+                CheckIsTargetInAttackRange();
+
             elapsedTime += Time.deltaTime;
 
             if (elapsedTime > stopDelay)
@@ -662,8 +667,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
                         hasTargetNode = false;
                         ++targetIdx;
                         UpdateCurNode();
-                        if (isAttack)
-                            CheckIsTargetInAttackRange();
+                        //if (isAttack)
+                        //    CheckIsTargetInAttackRange();
 
                         if (targetIdx >= arrPath.Length)
                         {
