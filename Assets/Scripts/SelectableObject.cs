@@ -138,18 +138,20 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     }
     #endregion
 
+    protected Collider[] arrtempcol = null;
+
     protected virtual IEnumerator CheckIsEnemyInChaseStartRangeCoroutine()
     {
         yield return new WaitForSeconds(0.01f);
         while (true)
         {
             // 추적 범위만큼 overlapLayerMask에 해당하는 충돌체를 overlapSphere로 검사
-            Collider[] arrCollider = null;
-            arrCollider = OverlapSphereForDetectTarget(chaseStartRange);
+            //Collider[] arrCollider = null;
+            arrtempcol = OverlapSphereForDetectTarget(chaseStartRange);
             // 충돌한 오브젝트가 존재한다면
-            if (arrCollider.Length > 0)
+            if (arrtempcol.Length > 0)
             {
-                foreach (Collider c in arrCollider)
+                foreach (Collider c in arrtempcol)
                 {
                     // 해당 오브젝트의 ObjectType을 가져온다.
                     EObjectType targetType = c.GetComponent<IGetObjectType>().GetObjectType();
@@ -231,7 +233,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     protected void CheckIsTargetInAttackRange()
     {
-        if (targetTr && targetTr.gameObject.activeSelf.Equals(true))
+        if (targetTr && targetTr.gameObject.activeSelf)
         {
             if (IsTargetInRangeFromMyPos(targetTr.position, attackRange))
                 StateAttack();
@@ -313,64 +315,75 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             {
                 if (IsObjectBlocked())
                 {
+                    curWayNode = null;
+                    stateMachine.SetWaitForNewPath(true);
+                    RequestPath(transform.position, targetPos);
+
+                    while (curWayNode == null)
+                        yield return new WaitForSeconds(0.05f);
+
+                    stateMachine.SetWaitForNewPath(false);
+
+                    //    stateMachine.SetWaitForNewPath(true);
+                    //    curWayNode = GetNearWalkableNode(curWayNode);
+                    //    yield return new WaitForSeconds(0.1f);
+                    //    hasTargetNode = true;
+                    //    stateMachine.SetWaitForNewPath(false);
+                    //}
+                }
+
+                if (!curWayNode.walkable)
+                {
+                    //curWayNode = null;
+                    //stateMachine.SetWaitForNewPath(true);
+                    //RequestPath(transform.position, targetPos);
+
+                    //while (curWayNode == null)
+                    //    yield return new WaitForSeconds(0.05f);
+
+                    //stateMachine.SetWaitForNewPath(false);
+                    //Debug.Log("!curWayNode.walkable");
+
                     stateMachine.SetWaitForNewPath(true);
                     curWayNode = GetNearWalkableNode(curWayNode);
                     yield return new WaitForSeconds(0.1f);
-                    hasTargetNode = true;
                     stateMachine.SetWaitForNewPath(false);
                 }
-            }
 
-            if (!curWayNode.walkable)
-            {
-                //curWayNode = null;
-                //stateMachine.SetWaitForNewPath(true);
-                //RequestPath(transform.position, targetPos);
-
-                //while (curWayNode == null)
-                //    yield return new WaitForSeconds(0.05f);
-
-                //stateMachine.SetWaitForNewPath(false);
-                //Debug.Log("!curWayNode.walkable");
-
-                stateMachine.SetWaitForNewPath(true);
-                curWayNode = GetNearWalkableNode(curWayNode);
-                yield return new WaitForSeconds(0.1f);
-                stateMachine.SetWaitForNewPath(false);
-            }
-
-            // 노드에 도착할 때마다 새로운 노드로 이동 갱신
-            if (IsTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
-            {
-                hasTargetNode = false;
-                ++targetIdx;
-                UpdateCurNode();
-                // 목적지에 도착시 
-                CheckIsTargetInAttackRange();
-
-                if (targetIdx >= arrPath.Length)
+                // 노드에 도착할 때마다 새로운 노드로 이동 갱신
+                if (IsTargetInRangeFromMyPos(stateMachine.TargetPos, 0.1f))
                 {
-                    curWayNode = null;
+                    hasTargetNode = false;
+                    ++targetIdx;
+                    UpdateCurNode();
+                    // 목적지에 도착시 
+                    CheckIsTargetInAttackRange();
 
-                    if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
+                    if (targetIdx >= arrPath.Length)
                     {
-                        RequestPath(transform.position, targetPos);
-                        stateMachine.SetWaitForNewPath(true);
-                        while (curWayNode == null)
-                            yield return new WaitForSeconds(0.05f);
+                        curWayNode = null;
 
+                        if (Vector3.SqrMagnitude(targetPos - transform.position) > Mathf.Pow(1.4f, 2f))
+                        {
+                            RequestPath(transform.position, targetPos);
+                            stateMachine.SetWaitForNewPath(true);
+                            while (curWayNode == null)
+                                yield return new WaitForSeconds(0.05f);
+
+                            stateMachine.SetWaitForNewPath(false);
+                            continue;
+                        }
+
+                        FinishState();
                         stateMachine.SetWaitForNewPath(false);
-                        continue;
+                        yield break;
                     }
-
-                    FinishState();
-                    stateMachine.SetWaitForNewPath(false);
-                    yield break;
+                    UpdateTargetPos();
                 }
-                UpdateTargetPos();
-            }
 
-            yield return new WaitForEndOfFrame();
+                //yield return new WaitForEndOfFrame();
+                yield return null;
+            }
         }
     }
 
@@ -418,15 +431,14 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
             }
             else
             {
-                while (curWayNode == null)
-                    yield return new WaitForSeconds(0.05f);
-                
+                //while (curWayNode == null)
+                //    yield return new WaitForSeconds(0.05f);
+
                 if (IsObjectBlocked())
                 {
                     stateMachine.SetWaitForNewPath(true);
                     curWayNode = GetNearWalkableNode(curWayNode);
                     yield return new WaitForSeconds(0.1f);
-                    hasTargetNode = true;
                     stateMachine.SetWaitForNewPath(false);
                 }
 
@@ -446,8 +458,6 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                     //yield return null;
                     //stateMachine.SetWaitForNewPath(false);
                 }
-
-
 
                 if (IsTargetInRangeFromMyPos(curWayNode.worldPos, 0.1f))
                 {

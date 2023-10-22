@@ -259,8 +259,8 @@ public class PF_Grid : MonoBehaviour
         for (int i = 0; i < 9; ++i)
         {
             if (i.Equals(4)) continue;
-            checkX = Mathf.Clamp(_curNode.gridX + (i / 3) - 1, 0, gridSizeX + 1);
-            checkY = Mathf.Clamp(_curNode.gridY + (i % 3) - 1, 0, gridSizeY + 1);
+            checkX = Mathf.Clamp(_curNode.gridX + (i / 3) - 1, 0, gridSizeX - 1);
+            checkY = Mathf.Clamp(_curNode.gridY + (i % 3) - 1, 0, gridSizeY - 1);
 
             neighbours.Add(grid[checkX, checkY]);
             //neighbours.Add(grid[_curNode.gridX + (i / 3) - 1, _curNode.gridY + (i % 3) - 1]);

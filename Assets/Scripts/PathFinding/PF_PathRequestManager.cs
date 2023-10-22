@@ -22,16 +22,14 @@ public class PF_PathRequestManager : MonoBehaviour
     public void Init(float _gridWorldSizeX, float _gridWorldSizeY)
     {
         instance = this;
-        arrPathFinding = GetComponents<PF_PathFinding>();
-        PF_Grid[] arrGrid = GetComponents<PF_Grid>();
-        arrIsProcessingPath = new bool[arrPathFinding.Length];
-        for (int i = 0; i < arrPathFinding.Length; ++i)
-            arrPathFinding[i].Init(FinishedProcessingPath, _gridWorldSizeX, _gridWorldSizeY, arrGrid[i], i);
+        pathFinding = GetComponent<PF_PathFinding>();
+        PF_Grid grid = GetComponent<PF_Grid>();
+        pathFinding.Init(FinishedProcessingPath, _gridWorldSizeX, _gridWorldSizeY, grid);
     }
 
     public void CheckNodeBuildable(PF_Node[] _arrSelectableObject)
     {
-        arrPathFinding[0].CheckNodeBuildable(_arrSelectableObject);
+        pathFinding.CheckNodeBuildable(_arrSelectableObject);
     }
 
     public static void FriendlyRequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool> _callback)
@@ -51,34 +49,31 @@ public class PF_PathRequestManager : MonoBehaviour
     }
 
 
-    private void FinishedProcessingPath(PF_Node[] _arrPpath, bool _success, int _idx)
+    private void FinishedProcessingPath(PF_Node[] _arrPpath, bool _success)
     {
         curPathRequest.callback(_arrPpath, _success);
-        arrIsProcessingPath[_idx] = false;
+        isProcessingPath = false;
         TryProcessNext();
     }
 
 
     private void TryProcessNext()
     {
-        for(int i = 0; i < arrIsProcessingPath.Length; ++i)
-        {
-            if (!arrIsProcessingPath[i])
+            if (!isProcessingPath)
             {
                 if (queueFriendlyPathRequest.Count > 0)
                 {
                     curPathRequest = queueFriendlyPathRequest.Dequeue();
-                    arrIsProcessingPath[i] = true;
-                    arrPathFinding[0].StartFindPath(curPathRequest.pathStart, curPathRequest.pathEnd);
+                isProcessingPath = true;
+                pathFinding.StartFindPath(curPathRequest.pathStart, curPathRequest.pathEnd);
                 }
                 else if (queueEnemyPathRequest.Count > 0)
                 {
                     curPathRequest = queueEnemyPathRequest.Dequeue();
-                    arrIsProcessingPath[i] = true;
-                    arrPathFinding[0].StartFindPath(curPathRequest.pathStart, curPathRequest.pathEnd);
+                isProcessingPath = true;
+                pathFinding.StartFindPath(curPathRequest.pathStart, curPathRequest.pathEnd);
                 }
             }
-        }
     }
 
 
@@ -87,8 +82,8 @@ public class PF_PathRequestManager : MonoBehaviour
     private SPathRequest curPathRequest;
 
     private static PF_PathRequestManager instance = null;
-    private PF_PathFinding[] arrPathFinding = null;
+    private PF_PathFinding pathFinding = null;
 
-    private bool[] arrIsProcessingPath = null;
+    private bool isProcessingPath = false;
 
 }

@@ -11,7 +11,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         SelectableObjectManager.InitNodeFriendly(transform.position, out nodeIdx);
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
-        if(!displayCircleObject)
+        if (!displayCircleObject)
             displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
         displayCircleObject.Init();
         statusHp.Init();
@@ -327,30 +327,30 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 //}
                 //else
                 //{
-                    float closeDistance = 999f;
-                    Collider tempCol = null;
+                float closeDistance = 999f;
+                Collider tempCol = null;
 
-                    for (int i = 0; i < arrCollider.Length; ++i)
+                for (int i = 0; i < arrCollider.Length; ++i)
+                {
+                    float curDistance = Vector3.Distance(arrCollider[i].transform.position, transform.position);
+                    if (curDistance < closeDistance)
                     {
-                        float curDistance = Vector3.Distance(arrCollider[i].transform.position, transform.position);
-                        if (curDistance < closeDistance)
-                        {
-                            closeDistance = curDistance;
-                            tempCol = arrCollider[i];
-                        }
+                        closeDistance = curDistance;
+                        tempCol = arrCollider[i];
                     }
+                }
 
-                    if (tempCol.gameObject.activeSelf)
-                    {
-                        targetTr = tempCol.transform;
-                        stateMachine.TargetTr = targetTr;
-                        isAttack = true;
-                        prevMoveCondition = curMoveCondition;
-                        curMoveCondition = EMoveState.CHASE;
-                        PushState();
-                        StateMove();
-                        yield break;
-                    }
+                if (tempCol != null && tempCol.gameObject.activeSelf)
+                {
+                    targetTr = tempCol.transform;
+                    stateMachine.TargetTr = targetTr;
+                    isAttack = true;
+                    prevMoveCondition = curMoveCondition;
+                    curMoveCondition = EMoveState.CHASE;
+                    PushState();
+                    StateMove();
+                    yield break;
+                }
                 //}
             }
             yield return new WaitForSeconds(0.05f);
@@ -436,6 +436,15 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     //stateMachine.SetWaitForNewPath(true);
                     //yield return new WaitForSeconds(0.5f);
                     //stateMachine.SetWaitForNewPath(false);
+
+                    //curWayNode = null;
+                    //stateMachine.SetWaitForNewPath(true);
+                    //RequestPath(transform.position, targetPos);
+
+                    //while (curWayNode == null)
+                    //    yield return new WaitForSeconds(0.05f);
+
+                    //stateMachine.SetWaitForNewPath(false);
                 }
             }
 
@@ -463,6 +472,16 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 ++targetIdx;
                 UpdateCurNode();
 
+
+                //curWayNode = null;
+                //stateMachine.SetWaitForNewPath(true);
+                //RequestPath(transform.position, targetPos);
+
+                //while (curWayNode == null)
+                //    yield return new WaitForSeconds(0.05f);
+
+                //stateMachine.SetWaitForNewPath(false);
+
                 if (isAttack)
                     CheckIsTargetInAttackRange();
 
@@ -488,7 +507,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 UpdateTargetPos();
             }
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
     }
 
@@ -518,6 +537,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     yield return new WaitForSeconds(0.1f);
                     hasTargetNode = true;
                     stateMachine.SetWaitForNewPath(false);
+
+
                 }
             }
 
@@ -606,8 +627,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 FinishState();
                 yield break;
             }
-            else if (isAttack)
-                CheckIsTargetInAttackRange();
+            //else if (isAttack)
+            //    CheckIsTargetInAttackRange();
 
             elapsedTime += Time.deltaTime;
 
@@ -637,10 +658,18 @@ public class FriendlyObject : SelectableObject, ISubscriber
                             //yield return new WaitForSeconds(0.5f);
                             //stateMachine.SetWaitForNewPath(false);
 
+                            //stateMachine.SetWaitForNewPath(true);
+                            //curWayNode = GetNearWalkableNode(curWayNode);
+                            //yield return new WaitForSeconds(0.1f);
+                            //hasTargetNode = true;
+                            //stateMachine.SetWaitForNewPath(false);
+
+                            curWayNode = null;
                             stateMachine.SetWaitForNewPath(true);
-                            curWayNode = GetNearWalkableNode(curWayNode);
-                            yield return new WaitForSeconds(0.1f);
-                            hasTargetNode = true;
+
+                            while (curWayNode == null)
+                                yield return new WaitForSeconds(0.05f);
+
                             stateMachine.SetWaitForNewPath(false);
                         }
                     }
@@ -649,6 +678,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     {
                         curWayNode = null;
                         stateMachine.SetWaitForNewPath(true);
+                        RequestPath(transform.position, targetPos);
 
                         while (curWayNode == null)
                             yield return new WaitForSeconds(0.05f);
@@ -667,8 +697,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
                         hasTargetNode = false;
                         ++targetIdx;
                         UpdateCurNode();
-                        //if (isAttack)
-                        //    CheckIsTargetInAttackRange();
+                        if (isAttack)
+                            CheckIsTargetInAttackRange();
 
                         if (targetIdx >= arrPath.Length)
                         {
@@ -688,9 +718,14 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     protected override bool IsObjectBlocked()
     {
+        if (curWayNode == null) return false;
+
         curPos = transform.position;
-        //if (Physics.Linecast(curPos, curWayNode.worldPos, 1 << LayerMask.NameToLayer("EnemySelectableObject")))
-        if (Physics.Linecast(curPos, curWayNode.worldPos, friendlyLayerMask))
+        curPos.y += 1;
+        targetPos = curWayNode.worldPos;
+        targetPos.y += 1;
+        //if(Physics.BoxCast(curPos, Vector3.one * 0.5f, transform.forward, transform.rotation, Vector3.Distance(curPos, curWayNode.worldPos), friendlyLayerMask))
+        if (Physics.Linecast(curPos, targetPos, friendlyLayerMask))
             return true;
 
         return false;

@@ -6,14 +6,13 @@ using Cysharp.Threading.Tasks;
 
 public class PF_PathFinding : MonoBehaviour
 {
-    public delegate void FinishPathFindDelegate(PF_Node[] _waypoints, bool _isPathSuccess, int _myIdx);
+    public delegate void FinishPathFindDelegate(PF_Node[] _waypoints, bool _isPathSuccess);
 
-    public void Init(FinishPathFindDelegate _finishPathFindCallback, float _gridWorldSizeX, float _gridWorldSizeY, PF_Grid _grid, int _idx)
+    public void Init(FinishPathFindDelegate _finishPathFindCallback, float _gridWorldSizeX, float _gridWorldSizeY, PF_Grid _grid)
     {
         grid = _grid;
         grid.Init(_gridWorldSizeX, _gridWorldSizeY);
         finishPathFindCallback = _finishPathFindCallback;
-        myIdx = _idx;
 
         openSet = new PF_Heap<PF_Node>(searchLimitCnt + 50);
         closedSet = new HashSet<PF_Node>(searchLimitCnt + 50);
@@ -33,7 +32,7 @@ public class PF_PathFinding : MonoBehaviour
 
         if (startNode.Equals(targetNode))
         {
-            finishPathFindCallback?.Invoke(new PF_Node[1] { targetNode }, true, myIdx);
+            finishPathFindCallback?.Invoke(new PF_Node[1] { targetNode }, true);
             return;
         }
 
@@ -128,7 +127,7 @@ public class PF_PathFinding : MonoBehaviour
             listWayNode = RetracePath(startNode, curNode);
         }
 
-        finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess, myIdx);
+        finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess);
     }
 
     //private IEnumerator FindPath(PF_Node startNode, PF_Node targetNode)
@@ -237,14 +236,20 @@ public class PF_PathFinding : MonoBehaviour
         return path;
     }
 
+    //List<Vector3> waypoints = new List<Vector3>();
+    //Vector2 directionOld = Vector2.zero;
+    //Vector2 directionNew = Vector2.zero;
+
     //private Vector3[] SimplifyPath(List<PF_Node> _path)
     //{
-    //    List<Vector3> waypoints = new List<Vector3>();
-    //    Vector2 directionOld = Vector2.zero;
+    //    waypoints.Clear();
+    //    directionOld = Vector2.zero;
 
     //    for (int i = 1; i < _path.Count; ++i)
     //    {
-    //        Vector2 directionNew = new Vector2(_path[i - 1].gridX - _path[i].gridX, _path[i - 1].gridY - _path[i].gridY);
+    //        directionNew.x = _path[i - 1].gridX - _path[i].gridX;
+    //        directionNew.y = _path[i - 1].gridY - _path[i].gridY;
+
     //        if (directionNew != directionOld)
     //        {
     //            waypoints.Add(_path[i].worldPos);
@@ -286,7 +291,6 @@ public class PF_PathFinding : MonoBehaviour
     private Dictionary<Tuple<PF_Node, PF_Node>, int> distanceCache = new Dictionary<Tuple<PF_Node, PF_Node>, int>();
 
     private int newGCostToNeighbor = 0;
-    private int myIdx = -1;
 
     private PF_Node startNode = null;
     private PF_Node targetNode = null;

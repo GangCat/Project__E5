@@ -6817,7 +6817,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC815\uB9D0 \uC885\uB8CC\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  m_text: "\uBA54\uC778 \uBA54\uB274\uB85C\n\uB3CC\uC544\uAC00\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cab76cc419c7b8048ac72d250b142c2a, type: 2}
   m_sharedMaterial: {fileID: 6262502781447844367, guid: cab76cc419c7b8048ac72d250b142c2a,
@@ -8407,7 +8407,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 210678cf591785b45a668b28f4be7170, type: 2}
+      objectReference: {fileID: 2100000, guid: 4cf3213efdec4a041a7cbcfd06e729f6, type: 2}
     - target: {fileID: 9112022241154537201, guid: 38a2d0eef785224408c963daaaeab647,
         type: 3}
       propertyPath: m_Name
@@ -9378,7 +9378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:
@@ -18728,7 +18728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:
@@ -18803,7 +18803,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:
@@ -24983,10 +24983,6 @@ GameObject:
   - component: {fileID: 1446206867}
   - component: {fileID: 1446206863}
   - component: {fileID: 1446206868}
-  - component: {fileID: 1446206870}
-  - component: {fileID: 1446206869}
-  - component: {fileID: 1446206872}
-  - component: {fileID: 1446206871}
   m_Layer: 0
   m_Name: PathRequestManager
   m_TagString: Untagged
@@ -25056,76 +25052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   searchLimitCnt: 300
---- !u!114 &1446206869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446206862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839df6b60ac23c54c8fc34328b06ec20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  searchLimitCnt: 300
---- !u!114 &1446206870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446206862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40c08009765cc0346823b520eabe2da5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayNodeGizmos: 0
-  displayUnwalkableNodeGizmos: 0
-  displayBuildableNodeGizmos: 0
-  unWalkableMask:
-    serializedVersion: 2
-    m_Bits: 1536
-  buildableMask:
-    serializedVersion: 2
-    m_Bits: 8388608
-  nodeRadius: 0.25
---- !u!114 &1446206871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446206862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839df6b60ac23c54c8fc34328b06ec20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  searchLimitCnt: 300
---- !u!114 &1446206872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446206862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40c08009765cc0346823b520eabe2da5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayNodeGizmos: 0
-  displayUnwalkableNodeGizmos: 0
-  displayBuildableNodeGizmos: 0
-  unWalkableMask:
-    serializedVersion: 2
-    m_Bits: 1536
-  buildableMask:
-    serializedVersion: 2
-    m_Bits: 8388608
-  nodeRadius: 0.25
 --- !u!1 &1446712261
 GameObject:
   m_ObjectHideFlags: 0
@@ -35827,7 +35753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:

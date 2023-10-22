@@ -111,7 +111,8 @@ public class EnemyObject : SelectableObject
                 UpdateTargetPos();
             }
 
-            yield return new WaitForEndOfFrame();
+            yield return null;
+            //yield return new WaitForEndOfFrame();
         }
     }
 
