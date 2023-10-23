@@ -32,18 +32,26 @@ public class PF_PathRequestManager : MonoBehaviour
         pathFinding.CheckNodeBuildable(_arrSelectableObject);
     }
 
-    public static void FriendlyRequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool, PF_Node> _callback)
+    public static void FriendlyRequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool, PF_Node> _callback, bool isAttack)
     {
         SPathRequest newRequest = new SPathRequest(_pathStart, _pathEnd, _callback);
-        instance.queueFriendlyPathRequest.Enqueue(newRequest);
+
+        if (isAttack)
+            instance.queueAttackPathRequest.Enqueue(newRequest);
+        else
+            instance.queueFriendlyPathRequest.Enqueue(newRequest);
 
         instance.TryProcessNext();
     }
 
-    public static void EnemyRequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool, PF_Node> _callback)
+    public static void EnemyRequestPath(Vector3 _pathStart, Vector3 _pathEnd, Action<PF_Node[], bool, PF_Node> _callback, bool isAttack)
     {
         SPathRequest newRequest = new SPathRequest(_pathStart, _pathEnd, _callback);
-        instance.queueEnemyPathRequest.Enqueue(newRequest);
+
+        if (isAttack)
+            instance.queueAttackPathRequest.Enqueue(newRequest);
+        else
+            instance.queueEnemyPathRequest.Enqueue(newRequest);
 
         instance.TryProcessNext();
     }
@@ -59,26 +67,33 @@ public class PF_PathRequestManager : MonoBehaviour
 
     private void TryProcessNext()
     {
-            if (!isProcessingPath)
+        if (!isProcessingPath)
+        {
+            if (queueFriendlyPathRequest.Count > 0)
             {
-                if (queueFriendlyPathRequest.Count > 0)
-                {
-                    curPathRequest = queueFriendlyPathRequest.Dequeue();
+                curPathRequest = queueFriendlyPathRequest.Dequeue();
                 isProcessingPath = true;
                 pathFinding.StartFindPath(curPathRequest.pathStart, curPathRequest.pathEnd);
-                }
-                else if (queueEnemyPathRequest.Count > 0)
-                {
-                    curPathRequest = queueEnemyPathRequest.Dequeue();
-                isProcessingPath = true;
-                pathFinding.StartFindPath(curPathRequest.pathStart, curPathRequest.pathEnd);
-                }
             }
+            else if (queueAttackPathRequest.Count > 0)
+            {
+                curPathRequest = queueAttackPathRequest.Dequeue();
+                isProcessingPath = true;
+                pathFinding.StartFindPath(curPathRequest.pathStart, curPathRequest.pathEnd);
+            }
+            else if (queueEnemyPathRequest.Count > 0)
+            {
+                curPathRequest = queueEnemyPathRequest.Dequeue();
+                isProcessingPath = true;
+                pathFinding.StartFindPath(curPathRequest.pathStart, curPathRequest.pathEnd);
+            }
+        }
     }
 
 
     private Queue<SPathRequest> queueFriendlyPathRequest = new Queue<SPathRequest>();
     private Queue<SPathRequest> queueEnemyPathRequest = new Queue<SPathRequest>();
+    private Queue<SPathRequest> queueAttackPathRequest = new Queue<SPathRequest>();
     private SPathRequest curPathRequest;
 
     private static PF_PathRequestManager instance = null;

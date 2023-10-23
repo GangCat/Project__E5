@@ -390,7 +390,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     protected virtual IEnumerator CheckFollowMoveCoroutine()
     {
-        RequestPath(transform.position, targetTr.position);
+        RequestPath(transform.position, targetTr.position, true);
 
         while (curWayNode == null)
             yield return new WaitForSeconds(0.05f);
@@ -421,7 +421,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 if (Vector3.SqrMagnitude(transform.position - targetTr.position) > Mathf.Pow(followOffset, 2f))
                 {
                     curWayNode = null;
-                    RequestPath(transform.position, targetTr.position);
+                    RequestPath(transform.position, targetTr.position, true);
                     stateMachine.SetWaitForNewPath(true);
 
                     while (curWayNode == null)
@@ -443,7 +443,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                     //stateMachine.SetWaitForNewPath(false);
 
                     curWayNode = null;
-                    RequestPath(transform.position, targetTr.position);
+                    RequestPath(transform.position, targetTr.position, true);
                     stateMachine.SetWaitForNewPath(true);
 
                     while (curWayNode == null)
@@ -455,7 +455,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
                 if (!curWayNode.walkable)
                 {
                     curWayNode = null;
-                    RequestPath(transform.position, targetTr.position);
+                    RequestPath(transform.position, targetTr.position, true);
                     stateMachine.SetWaitForNewPath(true);
 
                     while (curWayNode == null)
@@ -686,9 +686,9 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
         }
     }
 
-    protected virtual void RequestPath(Vector3 _startPos, Vector3 _endPos)
+    protected virtual void RequestPath(Vector3 _startPos, Vector3 _endPos, bool _isAttack = false)
     {
-        PF_PathRequestManager.FriendlyRequestPath(_startPos, _endPos, OnPathFound);
+        PF_PathRequestManager.EnemyRequestPath(_startPos, _endPos, OnPathFound, _isAttack);
     }
 
     public void CheckPause(bool _isPause)

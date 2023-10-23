@@ -341,7 +341,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
         while (true)
         {
-            // ���� ������ŭ overlapLayerMask�� �ش��ϴ� �浹ü�� overlapSphere�� �˻�
             Collider[] arrCollider = null;
             arrCollider = OverlapSphereForDetectTarget(chaseStartRange);
 
@@ -621,7 +620,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     protected override IEnumerator CheckFollowMoveCoroutine()
     {
-        RequestPath(transform.position, targetTr.position);
+        RequestPath(transform.position, targetTr.position, isAttack);
 
         while (curWayNode == null)
             yield return new WaitForSeconds(0.05f);
@@ -657,7 +656,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 if (!IsTargetInRangeFromMyPos(targetTr.position, followOffset))
                 {
                     curWayNode = null;
-                    RequestPath(transform.position, targetTr.position);
+                    RequestPath(transform.position, targetTr.position, isAttack);
                     stateMachine.SetWaitForNewPath(true);
                     while (curWayNode == null)
                         yield return new WaitForSeconds(0.05f);
@@ -697,7 +696,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     {
                         curWayNode = null;
                         stateMachine.SetWaitForNewPath(true);
-                        RequestPath(transform.position, targetPos);
+                        RequestPath(transform.position, targetPos, isAttack);
 
                         while (curWayNode == null)
                             yield return new WaitForSeconds(0.05f);
@@ -782,6 +781,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
         }
     }
     #endregion
+
+    protected override void RequestPath(Vector3 _startPos, Vector3 _endPos, bool _isAttack = false)
+    {
+        PF_PathRequestManager.FriendlyRequestPath(_startPos, _endPos, OnPathFound, _isAttack);
+    }
 
     protected override void GetCurState(EState _curStateEnum)
     {

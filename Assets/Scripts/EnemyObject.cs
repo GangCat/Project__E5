@@ -65,9 +65,9 @@ public class EnemyObject : SelectableObject
         }
     }
 
-    protected override void RequestPath(Vector3 _startPos, Vector3 _endPos)
+    protected override void RequestPath(Vector3 _startPos, Vector3 _endPos, bool _isAttack = false)
     {
-        PF_PathRequestManager.EnemyRequestPath(_startPos, _endPos, OnPathFound);
+        PF_PathRequestManager.EnemyRequestPath(_startPos, _endPos, OnPathFound, _isAttack);
     }
 
     public Vector3 GetPosition()
