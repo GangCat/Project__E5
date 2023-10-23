@@ -641,6 +641,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
         if (_obj.GetObjectType().Equals(EObjectType.ENEMY_SMALL) || _obj.GetObjectType().Equals(EObjectType.ENEMY_BIG))
         {
+            unitInfoContainer.unitType = EUnitType.NONE;
             _obj.ActivateCircle();
         }
         else
