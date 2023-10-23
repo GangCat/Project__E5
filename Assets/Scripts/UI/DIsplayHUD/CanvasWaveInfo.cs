@@ -9,6 +9,7 @@ public class CanvasWaveInfo : MonoBehaviour
     public void Init()
     {
         imageWaveProgressbar.Init();
+        wheel.Init();
     }
 
     public void Init(float _ttlBigWaveTime)
@@ -27,6 +28,8 @@ public class CanvasWaveInfo : MonoBehaviour
     private ImageProgressbar imageWaveProgressbar = null;
     [SerializeField]
     private TMP_Text textBigWaveTime = null;
+    [SerializeField]
+    private ImageWaveWheel wheel = null;
 
     private float ttlBigWaveTime = 0f;
 }
