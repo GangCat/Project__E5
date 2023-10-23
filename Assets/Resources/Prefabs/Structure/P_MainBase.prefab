@@ -184,7 +184,7 @@ MonoBehaviour:
   myGridY: 11
   demolishDelay: 4
   modelGo: {fileID: 0}
-  anim: {fileID: 0}
+  anim: {fileID: 2607960604520721474}
   upgradeHpAmount: 100
   upgradePopulationDelay: 3
   upgradeEnergySupplyDelay: 3
@@ -1753,6 +1753,12 @@ PrefabInstance:
       addedObject: {fileID: 7964209197046578313}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e88102aa000fb4a4d8f91af8faad83f4, type: 3}
+--- !u!95 &2607960604520721474 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 214576542120681084, guid: e88102aa000fb4a4d8f91af8faad83f4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2795330606237987390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8965171424341594355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6530691740545491661, guid: e88102aa000fb4a4d8f91af8faad83f4,

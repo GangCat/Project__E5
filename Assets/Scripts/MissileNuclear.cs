@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class MissileNuclear : MonoBehaviour, IPauseObserver
 {
-    public void Init()
+    public void Init(Vector3 _pos)
     {
         effectCtrl = GetComponent<NuclearMissileEffectController>();
         effectCtrl.Init();
+        transform.localPosition = _pos;
     }
     public void SetActive(bool _isActive)
     {
         gameObject.SetActive(_isActive);
-    }
-
-    public void SetPos(Vector3 _pos)
-    {
-        transform.localPosition = _pos;
     }
 
     public void ResetRotate()

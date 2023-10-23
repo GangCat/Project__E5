@@ -92,8 +92,7 @@ public class StructureNuclear : Structure
     {
         hasNuclear = true;
         curNuclear = Instantiate(myNuclear, nuclearSpawnPos, Quaternion.identity, transform).GetComponent<MissileNuclear>();
-        curNuclear.SetPos(nuclearSpawnPos);
-        curNuclear.Init();
+        curNuclear.Init(nuclearSpawnPos);
         _spwnCompleteCallback?.Invoke(this);
         
         // Nuclear Ready Audio
