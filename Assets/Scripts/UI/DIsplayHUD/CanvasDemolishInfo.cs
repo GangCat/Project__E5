@@ -7,7 +7,6 @@ public class CanvasDemolishInfo : MonoBehaviour
 {
     public void Init()
     {
-        imageUnit = GetComponentInChildren<ImageModel>();
         textInfoStructureName = GetComponentInChildren<TextBase>();
         imageUnit.Init();
         textInfoStructureName.Init();
@@ -48,7 +47,7 @@ public class CanvasDemolishInfo : MonoBehaviour
     [Header("-TURRET, BUNKER, WALL, BARRACK, NUCLEAR")]
     [SerializeField]
     private Sprite[] arrSpriteObject = null;
-
+    [SerializeField]
     private ImageModel imageUnit = null;
     private TextBase textInfoStructureName = null;
 }

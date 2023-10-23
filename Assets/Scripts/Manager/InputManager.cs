@@ -441,12 +441,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private void MoveWithMouseClick()
     {
-        if (elapsedTime < 0.2f)
-            return;
-        else
-            elapsedTime = 0f;
-
-
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 

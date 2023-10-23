@@ -7,7 +7,6 @@ public class CanvasConstructInfo : MonoBehaviour
 {
     public void Init()
     {
-        imageUnit = GetComponentInChildren<ImageModel>();
         textInfoStructureName = GetComponentInChildren<TextBase>();
         imageUnit.Init();
         textInfoStructureName.Init();
@@ -48,7 +47,8 @@ public class CanvasConstructInfo : MonoBehaviour
     [Header("-MAIN_BASE, TURRET, BUNKER, WALL, BARRACK, NUCLEAR")]
     [SerializeField]
     private Sprite[] arrSpriteObject = null;
-
+    [SerializeField]
     private ImageModel imageUnit = null;
+
     private TextBase textInfoStructureName = null;
 }

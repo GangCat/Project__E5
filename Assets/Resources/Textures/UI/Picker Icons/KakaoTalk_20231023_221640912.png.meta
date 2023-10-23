@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ef3682db374ba494e8d629b27a74f0da
+guid: e0b53e1b37d787147a689cb8e6e3ef15
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,40 +93,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: LowButton_empty_0
-      rect:
-        serializedVersion: 2
-        x: 3
-        y: 1
-        width: 100
-        height: 100
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f1cb8ad8466b3d40a37fe4a4d1ae2a4
-      internalID: 1146792009
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f5f0677adb62ed447b1bb55898b02abc
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      LowButton_empty_0: 1146792009
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ef3682db374ba494e8d629b27a74f0da
+guid: 3d960594b55226841a737c64d97f9701
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -95,22 +95,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LowButton_empty_0
+      name: GameClearPlane_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 1
-        width: 100
-        height: 100
+        x: 16
+        y: 20
+        width: 1414
+        height: 838
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f1cb8ad8466b3d40a37fe4a4d1ae2a4
-      internalID: 1146792009
+      spriteID: f62386004a31ef74ba2011f048303fdf
+      internalID: -642652236
       vertices: []
       indices: 
       edges: []
@@ -118,7 +118,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f5f0677adb62ed447b1bb55898b02abc
+    spriteID: c6c5d73a0bce8164f92e6b63015bf0c4
     internalID: 0
     vertices: []
     indices: 
@@ -126,7 +126,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      LowButton_empty_0: 1146792009
+      GameClearPlane_0: -642652236
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -7,13 +7,6 @@ public class SingleUnitInfo : MonoBehaviour
 {
     public void Init()
     {
-        statInfo = GetComponentInChildren<StatusInfo>();
-        textInfoUnitName = GetComponentInChildren<TextInfoUnitName>();
-        textInfoUnitDescription = GetComponentInChildren<TextInfoUnitDescription>();
-        textStructureLevel = GetComponentInChildren<TextStructureLevel>();
-        imageProgressbar = GetComponentInChildren<ImageProgressbarAutoController>();
-        imageModel = GetComponentInChildren<ImageModel>();
-
         textInfoUnitName.Init();
         textInfoUnitDescription.Init();
         textStructureLevel.Init();
@@ -71,12 +64,18 @@ public class SingleUnitInfo : MonoBehaviour
     private Sprite[] arrOtherSprite = null;
     [SerializeField]
     private Sprite[] arrFriendlyUnitSprite = null;
-
+    [SerializeField]
     private StatusInfo statInfo = null;
+    [SerializeField]
     private TextInfoUnitName textInfoUnitName = null;
+    [SerializeField]
     private TextInfoUnitDescription textInfoUnitDescription = null;
+    [SerializeField]
     private TextStructureLevel textStructureLevel = null;
+    [SerializeField]
     private UnitInfoContainer container = null;
+    [SerializeField]
     private ImageProgressbarAutoController imageProgressbar = null;
+    [SerializeField]
     private ImageModel imageModel = null;
 }

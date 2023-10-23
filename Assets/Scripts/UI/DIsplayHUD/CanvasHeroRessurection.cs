@@ -6,7 +6,6 @@ public class CanvasHeroRessurection : MonoBehaviour
 {
     public void Init()
     {
-        textTimer = GetComponentInChildren<TextRessurectionTimer>();
         textTimer.Init();
         SetActive(false);
     }
@@ -21,5 +20,6 @@ public class CanvasHeroRessurection : MonoBehaviour
         textTimer.UpdateText((int)_remainingTime);
     }
 
+    [SerializeField]
     private TextRessurectionTimer textTimer = null;
 }

@@ -325,12 +325,12 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
                     stateMachine.SetWaitForNewPath(false);
 
-                    //    stateMachine.SetWaitForNewPath(true);
-                    //    curWayNode = GetNearWalkableNode(curWayNode);
-                    //    yield return new WaitForSeconds(0.1f);
-                    //    hasTargetNode = true;
-                    //    stateMachine.SetWaitForNewPath(false);
-                    //}
+                    //stateMachine.SetWaitForNewPath(true);
+                    //curWayNode = GetNearWalkableNode(curWayNode);
+                    //yield return new WaitForSeconds(0.1f);
+                    //hasTargetNode = true;
+                    //stateMachine.SetWaitForNewPath(false);
+
                 }
 
                 if (!curWayNode.walkable)
@@ -437,9 +437,18 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
                 if (IsObjectBlocked())
                 {
+                    //stateMachine.SetWaitForNewPath(true);
+                    //curWayNode = GetNearWalkableNode(curWayNode);
+                    //yield return new WaitForSeconds(0.1f);
+                    //stateMachine.SetWaitForNewPath(false);
+
+                    curWayNode = null;
+                    RequestPath(transform.position, targetTr.position);
                     stateMachine.SetWaitForNewPath(true);
-                    curWayNode = GetNearWalkableNode(curWayNode);
-                    yield return new WaitForSeconds(0.1f);
+
+                    while (curWayNode == null)
+                        yield return new WaitForSeconds(0.05f);
+
                     stateMachine.SetWaitForNewPath(false);
                 }
 
@@ -484,8 +493,8 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     {
         if (_pathSuccessful)
         {
-            if (_newTargetNode != null)
-                targetPos = _newTargetNode.worldPos;
+            //if (_newTargetNode != null)
+            //    targetPos = _newTargetNode.worldPos;
             arrPath = _newPath;
             targetIdx = 0;
             if (arrPath.Length > 0)

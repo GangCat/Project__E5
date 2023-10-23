@@ -6,7 +6,6 @@ public class CanvasUpgradeInfo : MonoBehaviour
 {
     public void Init()
     {
-        imageUpgradeModel = GetComponentInChildren<ImageModel>();
         imageUpgradeModel.Init();
         imageUpgradeProgressbar.Init();
         SetActive(false);
@@ -38,7 +37,6 @@ public class CanvasUpgradeInfo : MonoBehaviour
     [Header("-Energy/Population/Structure/RangedDmg/RangedHp/MeleeDmg/MeleeHp")]
     [SerializeField]
     private Sprite[] arrSpriteUpgrade = null;
-
-
+    [SerializeField]
     private ImageModel imageUpgradeModel = null;
 }

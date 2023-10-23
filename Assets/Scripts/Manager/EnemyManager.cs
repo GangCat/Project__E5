@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         grid = _grid;
         mainBasePos = _mainBasePos;
+        waitDotZeroOne = new WaitForSeconds(0.05f);
 
         waveEnemyHolder = GetComponentInChildren<WaveEnemyHolder>().GetTransform();
         mapEnemyHolder = GetComponentInChildren<MapEnemyHolder>().GetTransform();
@@ -69,7 +70,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 
             for (int i = 0; i < bigWaveCnt; ++i)
             {
-                SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, bigWaveCnt * 100);
+                SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, /*bigWaveCnt * */100);
                 bigWaveTimeDelay = 0f;
                 smallWaveTimeDelay = 0f;
                 smallWaveCnt = 0;
@@ -97,7 +98,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, 0f);
         for (int i = 0; i < totalBigWaveCnt; ++i)
         {
-            SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, totalBigWaveCnt * 100);
+            SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, /*totalBigWaveCnt * */100);
 
             GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
             EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
@@ -184,7 +185,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             enemyObj.MoveAttack(mainBasePos);
             ++waveEnemyIdx;
             ++unitCnt;
-            yield return null;
+            yield return waitDotZeroOne;
         }
 
         //SelectableObjectManager.MoveWaveEnemy(wayPoint.position, tempList.ToArray());
@@ -211,7 +212,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 ++mapEnemyIdx;
                 ++unitCnt;
             }
-            yield return null;
+            yield return waitDotZeroOne;
         }
     }
 
@@ -230,6 +231,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private GameObject enemyDeadEffect = null;
     [SerializeField]
     private Transform wayPoint = null;
+
+    private WaitForSeconds waitDotZeroOne = null;
 
     [Header("-Enemy Map Random Spawn(outer > inner)")]
     [SerializeField]

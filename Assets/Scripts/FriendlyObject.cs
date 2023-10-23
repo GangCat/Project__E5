@@ -447,6 +447,12 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 if (IsObjectBlocked())
                 {
+                    //stateMachine.SetWaitForNewPath(true);
+                    //curWayNode = GetNearWalkableNode(curWayNode);
+                    //yield return new WaitForSeconds(0.1f);
+                    //hasTargetNode = true;
+                    //stateMachine.SetWaitForNewPath(false);
+
                     curWayNode = null;
                     stateMachine.SetWaitForNewPath(true);
                     RequestPath(transform.position, targetPos);
@@ -454,20 +460,13 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     while (curWayNode == null)
                         yield return new WaitForSeconds(0.05f);
 
+                    //hasTargetNode = true;
                     stateMachine.SetWaitForNewPath(false);
 
                     //stateMachine.SetWaitForNewPath(true);
                     //yield return new WaitForSeconds(0.5f);
                     //stateMachine.SetWaitForNewPath(false);
 
-                    //curWayNode = null;
-                    //stateMachine.SetWaitForNewPath(true);
-                    //RequestPath(transform.position, targetPos);
-
-                    //while (curWayNode == null)
-                    //    yield return new WaitForSeconds(0.05f);
-
-                    //stateMachine.SetWaitForNewPath(false);
                 }
             }
 
@@ -744,11 +743,8 @@ public class FriendlyObject : SelectableObject, ISubscriber
         //curPos.y += 1;
         //targetPos = curWayNode.worldPos;
         //targetPos.y += 1;
-        if(Physics.BoxCast(curPos, Vector3.one * 0.5f, transform.forward, transform.rotation, Vector3.Distance(curPos, curWayNode.worldPos), friendlyLayerMask))
-        //if (Physics.Linecast(curPos, targetPos, friendlyLayerMask))
-            return true;
-
-        return false;
+        //if(Physics.BoxCast(curPos, Vector3.one * 0.5f, transform.forward, transform.rotation, Vector3.Distance(curPos, curWayNode.worldPos), blockCheckLayerMask))
+        return Physics.Linecast(curPos, curWayNode.worldPos, blockCheckLayerMask);
     }
     #endregion
 
