@@ -51,7 +51,7 @@ MonoBehaviour:
   initialSpeed: 7
   gravity: 10
   attackRange: 3
-  attackDmg: 1
+  attackDmg: 30
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 1048576

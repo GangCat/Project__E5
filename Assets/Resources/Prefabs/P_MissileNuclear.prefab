@@ -128,9 +128,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 20
   launchSpeed: 10
+  attDmg: 300
   visibleAreaGo: {fileID: 8213927142963990536, guid: 281dfab7014b36e408324d59385b1e34,
     type: 3}
-  explosionGo: {fileID: 7952273457394397089}
   targetMask:
     serializedVersion: 2
     m_Bits: 1573888
@@ -295,7 +295,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 6579650716074355406}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7952273457394397089}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5bb6217f38471c4183f7aac65803302, type: 3}
@@ -304,12 +304,6 @@ MonoBehaviour:
 --- !u!4 &2861096376946858921 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9005856236684620135, guid: a7ad84ebad4e7c1418eaed9be3305bec,
-    type: 3}
-  m_PrefabInstance: {fileID: 6579650716074355406}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7952273457394397089 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3824607099263059311, guid: a7ad84ebad4e7c1418eaed9be3305bec,
     type: 3}
   m_PrefabInstance: {fileID: 6579650716074355406}
   m_PrefabAsset: {fileID: 0}

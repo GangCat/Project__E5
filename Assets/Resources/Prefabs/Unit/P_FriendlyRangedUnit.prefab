@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  maxHp: 100
+  maxHp: 150
 --- !u!114 &3650822248373926283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
     effectCtrl: {fileID: 0}
     moveSpeed: 3
     attRate: 0.5
-    attDmg: 1.5
+    attDmg: 3
     objectType: 1
     ProjectileGo: {fileID: 1523153560657062, guid: a666e0cb0d0dc2344b3c4f8ad627d501,
       type: 3}
@@ -391,6 +391,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_PickFriendlyDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 2618410652004385338, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618410652004385338, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3309632986339933209, guid: d02d8a447130d5d4bbc9d60ffde1d811,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -440,6 +450,27 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8183894116637407984, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8183894116637407984, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8183894116637407984, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 848117813, guid: d724102e469a0e946bae8185231500df,
+        type: 3}
+    - target: {fileID: 8183894116637407984, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_DrawMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8183894116637407984, guid: d02d8a447130d5d4bbc9d60ffde1d811,
         type: 3}

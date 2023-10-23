@@ -288,20 +288,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_PickEnemyDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 2618410652004385338, guid: 58ef200a9ea84df48a81a49db5dc2f39,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618410652004385338, guid: 58ef200a9ea84df48a81a49db5dc2f39,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3309632986339933209, guid: 58ef200a9ea84df48a81a49db5dc2f39,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3309632986339933209, guid: 58ef200a9ea84df48a81a49db5dc2f39,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3309632986339933209, guid: 58ef200a9ea84df48a81a49db5dc2f39,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3309632986339933209, guid: 58ef200a9ea84df48a81a49db5dc2f39,
         type: 3}
@@ -356,6 +366,17 @@ PrefabInstance:
     - target: {fileID: 3309632986339933209, guid: 58ef200a9ea84df48a81a49db5dc2f39,
         type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8183894116637407984, guid: 58ef200a9ea84df48a81a49db5dc2f39,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1400962614, guid: 24a35383bdebe9f439b1aa15ddd397ee,
+        type: 3}
+    - target: {fileID: 8183894116637407984, guid: 58ef200a9ea84df48a81a49db5dc2f39,
+        type: 3}
+      propertyPath: m_DrawMode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8183894116637407984, guid: 58ef200a9ea84df48a81a49db5dc2f39,

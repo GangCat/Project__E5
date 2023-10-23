@@ -347,23 +347,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
             if (arrCollider.Length > 0)
             {
-                //if (targetTr != null)
-                //{
-                //    Debug.Log("1");
-                //    for (int i = arrCollider.Length - 1; i > -1; --i)
-                //    {
-                //        if (arrCollider[i].transform.Equals(targetTr))
-                //        {
-                //            prevMoveCondition = curMoveCondition;
-                //            curMoveCondition = EMoveState.CHASE;
-                //            PushState();
-                //            StateMove();
-                //            yield break;
-                //        }
-                //    }
-                //}
-                //else
-                //{
                 float closeDistance = 999f;
                 Collider tempCol = null;
 
@@ -464,10 +447,13 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 if (IsObjectBlocked())
                 {
+                    curWayNode = null;
                     stateMachine.SetWaitForNewPath(true);
-                    curWayNode = GetNearWalkableNode(curWayNode);
-                    yield return new WaitForSeconds(0.1f);
-                    hasTargetNode = true;
+                    RequestPath(transform.position, targetPos);
+
+                    while (curWayNode == null)
+                        yield return new WaitForSeconds(0.05f);
+
                     stateMachine.SetWaitForNewPath(false);
 
                     //stateMachine.SetWaitForNewPath(true);
@@ -508,16 +494,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
                 hasTargetNode = false;
                 ++targetIdx;
                 UpdateCurNode();
-
-
-                //curWayNode = null;
-                //stateMachine.SetWaitForNewPath(true);
-                //RequestPath(transform.position, targetPos);
-
-                //while (curWayNode == null)
-                //    yield return new WaitForSeconds(0.05f);
-
-                //stateMachine.SetWaitForNewPath(false);
 
                 if (isAttack)
                     CheckIsTargetInAttackRange();
@@ -569,13 +545,20 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     //yield return new WaitForSeconds(0.5f);
                     //stateMachine.SetWaitForNewPath(false);
 
+                    //stateMachine.SetWaitForNewPath(true);
+                    //curWayNode = GetNearWalkableNode(curWayNode);
+                    //yield return new WaitForSeconds(0.1f);
+                    //hasTargetNode = true;
+                    //stateMachine.SetWaitForNewPath(false);
+
+                    curWayNode = null;
                     stateMachine.SetWaitForNewPath(true);
-                    curWayNode = GetNearWalkableNode(curWayNode);
-                    yield return new WaitForSeconds(0.1f);
-                    hasTargetNode = true;
+                    RequestPath(transform.position, targetPos);
+
+                    while (curWayNode == null)
+                        yield return new WaitForSeconds(0.05f);
+
                     stateMachine.SetWaitForNewPath(false);
-
-
                 }
             }
 
@@ -758,11 +741,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
         if (curWayNode == null) return false;
 
         curPos = transform.position;
-        curPos.y += 1;
-        targetPos = curWayNode.worldPos;
-        targetPos.y += 1;
-        //if(Physics.BoxCast(curPos, Vector3.one * 0.5f, transform.forward, transform.rotation, Vector3.Distance(curPos, curWayNode.worldPos), friendlyLayerMask))
-        if (Physics.Linecast(curPos, targetPos, friendlyLayerMask))
+        //curPos.y += 1;
+        //targetPos = curWayNode.worldPos;
+        //targetPos.y += 1;
+        if(Physics.BoxCast(curPos, Vector3.one * 0.5f, transform.forward, transform.rotation, Vector3.Distance(curPos, curWayNode.worldPos), friendlyLayerMask))
+        //if (Physics.Linecast(curPos, targetPos, friendlyLayerMask))
             return true;
 
         return false;

@@ -11,7 +11,6 @@ public class CanvasMainMenu : MonoBehaviour
             () =>
             {
                 AudioManager.instance.PlayAudio_UI(objectType);
-
                 LoadSceneManager.ChangeScene("ProgrammingScene");
             });
 

@@ -222,7 +222,7 @@ MonoBehaviour:
     isPause: 0
     effectCtrl: {fileID: 0}
     moveSpeed: 0
-    attRate: 1.5
+    attRate: 5
     attDmg: 0
     objectType: 4
     ProjectileGo: {fileID: 3865807368766108358, guid: 6b29ddb4969f467459c9090eacc547a5,
@@ -897,6 +897,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_VisibleArea
+      objectReference: {fileID: 0}
+    - target: {fileID: 8213927142963990536, guid: 281dfab7014b36e408324d59385b1e34,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9079034941289010944, guid: 281dfab7014b36e408324d59385b1e34,
         type: 3}
@@ -1582,15 +1587,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_PickFriendlyDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 2618410652004385338, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618410652004385338, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3309632986339933209, guid: d02d8a447130d5d4bbc9d60ffde1d811,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3309632986339933209, guid: d02d8a447130d5d4bbc9d60ffde1d811,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3309632986339933209, guid: d02d8a447130d5d4bbc9d60ffde1d811,
         type: 3}
@@ -1641,6 +1656,27 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8183894116637407984, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8183894116637407984, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8183894116637407984, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 848117813, guid: d724102e469a0e946bae8185231500df,
+        type: 3}
+    - target: {fileID: 8183894116637407984, guid: d02d8a447130d5d4bbc9d60ffde1d811,
+        type: 3}
+      propertyPath: m_DrawMode
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

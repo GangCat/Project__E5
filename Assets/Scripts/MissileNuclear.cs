@@ -57,7 +57,7 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
 
         Collider[] arrCol = Physics.OverlapSphere(transform.position, attackRange, targetMask);
         for(int i = 0; i < arrCol.Length; ++i)
-            arrCol[i].gameObject.GetComponent<SelectableObject>().GetDmg(150);
+            arrCol[i].gameObject.GetComponent<SelectableObject>().GetDmg(attDmg);
 
         // Nuclear Explosion Audio
         AudioManager.instance.PlayAudio_Misc(EAudioType_Misc.NUCLEAR_EXPLOSION);
@@ -77,6 +77,8 @@ public class MissileNuclear : MonoBehaviour, IPauseObserver
     private float attackRange = 0f;
     [SerializeField]
     private float launchSpeed = 0f;
+    [SerializeField]
+    private float attDmg = 0f;
     [SerializeField]
     private GameObject visibleAreaGo = null;
 
