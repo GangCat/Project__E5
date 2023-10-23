@@ -38,6 +38,16 @@ public class StateMachine : MonoBehaviour
 
     public float AttRate => unitStateInfo.attRate;
     public float AttDmg => unitStateInfo.attDmg;
+    public Animator GetAnimator => unitStateInfo.animator;
+    //{ 
+    //    get
+    //    {
+    //        if (unitStateInfo.animator)
+    //            return unitStateInfo.animator;
+    //        else
+    //            return null;
+    //    } 
+    //}
 
     public void SetIsPause(bool _isPause)
     {

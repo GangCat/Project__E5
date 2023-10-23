@@ -17,7 +17,7 @@ public class EffectUnitDead : EffectBase
         Invoke("DisableObject", activeTime);
     }
 
-    protected override void DisableObject()
+    public override void DisableObject()
     {
         deactivateCallback?.Invoke(transform);
     }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -12,6 +12,8 @@ public class CameraMovement : MonoBehaviour
 
         oriCullingLayer = mainCamera.cullingMask;
         oriQuaternion = transform.rotation;
+
+        cameraData = mainCamera.GetUniversalAdditionalCameraData();
     }
 
     public void WarpCameraWithPos(Vector3 _pos)
@@ -118,6 +120,7 @@ public class CameraMovement : MonoBehaviour
         mainCamera.orthographicSize = fogCamSize;
         mainCamera.targetTexture = fogRenderTexture;
         mainCamera.cullingMask = visibleLayer;
+        cameraData.renderPostProcessing = false;
         mainCamera.Render();
         
         mainCamera.targetTexture = mapRenderTexture;
@@ -129,6 +132,7 @@ public class CameraMovement : MonoBehaviour
         mainCamera.targetTexture = null;
         mainCamera.cullingMask = oriCullingLayer;
         mainCamera.orthographicSize = curSize;
+        cameraData.renderPostProcessing = true;
         //mainCamera.Render();
     }
 
@@ -179,4 +183,5 @@ public class CameraMovement : MonoBehaviour
     private float curSize = 0f;
     private Quaternion oriQuaternion;
 
+    private UniversalAdditionalCameraData cameraData;
 }

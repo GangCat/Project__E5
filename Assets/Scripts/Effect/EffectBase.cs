@@ -30,10 +30,13 @@ public class EffectBase : MonoBehaviour
         }
     }
 
-    protected virtual void DisableObject()
+    public virtual void DisableObject()
     {
-        isActive = false;
-        gameObject.SetActive(false);
+        if (isActive)
+        {
+            isActive = false;
+            gameObject.SetActive(false);
+        }
     }
 
     [SerializeField]

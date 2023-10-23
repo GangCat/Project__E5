@@ -21,6 +21,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
         if (stateMachine != null)
         {
+            anim = stateMachine.GetAnimator;
             oriAttRange = attackRange;
             stateMachine.Init(GetCurState, effectCtrl);
             ResetStateStack();
@@ -60,6 +61,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
     public EUnitType GetUnitType => unitType;
     public int NodeIdx => nodeIdx;
     public bool IsSelect => isSelect;
+    public EffectController EffectCtrl => effectCtrl;
     public int CrowdIdx
     {
         get => crowdIdx;
@@ -97,7 +99,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     public void GetDmg(float _dmg, Vector3 _pos)
     {
-        effectCtrl.EffectOn(2, _pos);
+        effectCtrl.EffectOn(1, _pos);
         GetDmg(_dmg);
     }
 
@@ -113,6 +115,28 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
             // Unit Dead Audio
             AudioManager.instance.PlayAudio_Destroy(objectType);
+
+            if (anim)
+            {
+                // 정수 파라미터 초기화
+                foreach (AnimatorControllerParameter parameter in anim.parameters)
+                {
+                    if (parameter.type == AnimatorControllerParameterType.Bool)
+                    {
+                        anim.SetBool(parameter.name, false);
+                    }
+                    else if (parameter.type == AnimatorControllerParameterType.Int)
+                    {
+                        anim.SetInteger(parameter.name, 0);
+                    }
+                    // 부동 소수점 파라미터 초기화
+                    else if (parameter.type == AnimatorControllerParameterType.Float)
+                    {
+                        anim.SetFloat(parameter.name, 0f);
+                    }
+                    // 불리언 파라미터 초기화
+                }
+            }
 
             if (objectType.Equals(EObjectType.UNIT_01) || objectType.Equals(EObjectType.UNIT_02))
             {
@@ -154,7 +178,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
             if (isSelect)
                 SelectableObjectManager.UpdateHp(listIdx);
 
-            if (effectCtrl)
+            if (effectCtrl && !unitType.Equals(EUnitType.NONE))
                 effectCtrl.EffectOn(0);
         }
     }
@@ -882,6 +906,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
     private float oriAttRange = 0f;
     private bool isAttack = false;
 
-
     private List<EffectController> listEffectCtrl = null;
+    private Animator anim = null;
 }

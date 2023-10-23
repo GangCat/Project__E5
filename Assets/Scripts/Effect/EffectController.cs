@@ -20,6 +20,11 @@ public class EffectController : MonoBehaviour
         arrEffect[_idx].DisplayEffect(_pos);
     }
 
+    public virtual void EffectOff(int _idx)
+    {
+        arrEffect[_idx].DisableObject();
+    }
+
     [SerializeField]
     protected EffectBase[] arrEffect = null;
 }

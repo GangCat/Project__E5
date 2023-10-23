@@ -191,6 +191,8 @@ public class Structure : MonoBehaviour, IPauseObserver
         isBuildable = true;
         SetColor();
         isProcessingConstruct = true;
+        myObj.EffectCtrl.EffectOn(0);
+        
         if (myObj.IsSelect)
         {
             UpdateConstructInfo();
@@ -225,6 +227,7 @@ public class Structure : MonoBehaviour, IPauseObserver
 
     protected virtual void BuildComplete()
     {
+        myObj.EffectCtrl.EffectOff(0);
         isProcessingConstruct = false;
         HideHBeam();
         ShowModel();

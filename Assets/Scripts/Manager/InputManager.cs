@@ -253,6 +253,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
         if (SelectableObjectManager.IsListEmpty) return;
         if (SelectableObjectManager.IsEnemyUnitInList) return;
+        if (!SelectableObjectManager.GetFirstSelectedObjectInList()) return;
         
         EObjectType objType = SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType();
         switch (objType)
