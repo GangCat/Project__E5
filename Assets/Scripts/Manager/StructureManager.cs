@@ -302,6 +302,11 @@ public class StructureManager : MonoBehaviour
         listNuclearStructure.Add(_nuclear);
     }
 
+    public void RemoveNuclearAtList(StructureNuclear _removeNuclear)
+    {
+        listNuclearStructure.Remove(_removeNuclear);
+    }
+
     public void LaunchNuclear(Vector3 _destPos)
     {
         if (listNuclearStructure.Count > 0)

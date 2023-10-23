@@ -181,6 +181,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
         ArrayNuclearCommand.Add(ENuclearCommand.SPAWN_NUCLEAR, new CommandSpawnNuclear(structureMng, currencyMng));
         ArrayNuclearCommand.Add(ENuclearCommand.LAUNCH_NUCLEAR, new CommandLaunchNuclear(structureMng));
+        ArrayNuclearCommand.Add(ENuclearCommand.REMOVE_NUCELAR_FROM_LIST, new CommandRemoveNuclearFromList(structureMng));
 
         ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.DEMOLISH, new CommandDemolition(currencyMng));
         ArrayStructureFuncButtonCommand.Add(EStructureButtonCommand.UPGRADE, new CommandUpgrade(structureMng, currencyMng));
