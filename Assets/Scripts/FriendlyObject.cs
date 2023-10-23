@@ -105,6 +105,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
     {
         ArrayAlertCommand.Use(EAlertCommand.UNDER_ATTACK);
         ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.ATTACK_SIGNAL, transform.position);
+        AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UNDERATTACK);
 
         if (statusHp.DecreaseHpAndCheckIsDead(_dmg))
         {
@@ -129,6 +130,11 @@ public class FriendlyObject : SelectableObject, ISubscriber
             else if (objectType.Equals(EObjectType.BUNKER))
             {
                 GetComponent<StructureBunker>().OutAllUnit();
+                ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
+            }
+            else if (objectType.Equals(EObjectType.NUCLEAR))
+            {
+                ArrayNuclearCommand.Use(ENuclearCommand.REMOVE_NUCELAR_FROM_LIST, GetComponent<StructureNuclear>());
                 ArrayFriendlyObjectCommand.Use(EFriendlyObjectCommand.DESTROY, gameObject);
             }
             else if (objectType.Equals(EObjectType.MAIN_BASE))

@@ -190,6 +190,16 @@ public class AudioManager : MonoBehaviour
     
     public void PlayAudio_Advisor(EAudioType_Advisor _audioType)
     {
+        // 반복재생시간 설정(5초)
+        float currentTime = Time.time;
+
+        if (lastPlayedTimes.ContainsKey(_audioType))
+        {
+            if (currentTime - lastPlayedTimes[_audioType] < COOLDOWN_TIME)
+                return;
+        }
+
+        // Audio Play 조건 시작
         int Idx = UnityEngine.Random.Range(0, 3); // Generates 0, 1, 2, or 3
 
         switch (_audioType)
@@ -232,6 +242,8 @@ public class AudioManager : MonoBehaviour
             default:
                 break;
         }
+
+        lastPlayedTimes[_audioType] = currentTime; // 재생 시간 업데이트
     }
     
     
@@ -425,6 +437,10 @@ public class AudioManager : MonoBehaviour
     private float curMasterValue = 10;
     private float curEffectValue = 10;
     private float curBGMValue = 10;
+
+    private Dictionary<EAudioType_Advisor, float> lastPlayedTimes = new Dictionary<EAudioType_Advisor, float>();
+    private const float COOLDOWN_TIME = 5.0f; // 예: 5초 간격으로 재생
+
 
 
     /*
