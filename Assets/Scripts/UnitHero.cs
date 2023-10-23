@@ -25,7 +25,7 @@ public class UnitHero : MonoBehaviour
         gameObject.SetActive(true);
         myObj.SetIdleState();
         statusHp.Init();
-        effectCtrl.EffectOn(3);
+        //effectCtrl.EffectOn(3);
     }
 
     private FriendlyObject myObj = null;

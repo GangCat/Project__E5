@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dfc50d2aa70938e418a9b1c277076b99
+guid: f955ef41d97b3b64e94dcba3eb1910b9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -95,13 +95,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MeleeUnitPortrait_0
+      name: 1610_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 415
         y: 0
-        width: 150
-        height: 150
+        width: 1728
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -109,8 +109,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b39bd808654cd9c4a95a50e1241d3f1c
-      internalID: 684631041
+      spriteID: 117e6ee2e9a89614aac2b87063f6282a
+      internalID: -1510446625
       vertices: []
       indices: 
       edges: []
@@ -118,7 +118,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 51c8fb38003a83444bdc25d316765b21
+    spriteID: 1deb076199249df4d8e8ae9eda3ba06c
     internalID: 0
     vertices: []
     indices: 
@@ -126,7 +126,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MeleeUnitPortrait_0: 684631041
+      1610_0: -1510446625
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

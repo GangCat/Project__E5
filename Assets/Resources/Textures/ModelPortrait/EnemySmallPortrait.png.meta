@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ff47d0b6fbe93654b9369fcec84e64d8
+guid: b7e98ba80e956554e92a9cd86fbadea1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -98,10 +98,10 @@ TextureImporter:
       name: EnemySmallPortrait_0
       rect:
         serializedVersion: 2
-        x: 66
-        y: 46
-        width: 700
-        height: 700
+        x: 0
+        y: 0
+        width: 636
+        height: 621
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -109,8 +109,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19ef594f80bc00d498a1a5f2b33b3827
-      internalID: 58298563
+      spriteID: c2fad6bd161993a4c98c6746556441c5
+      internalID: 2043644852
       vertices: []
       indices: 
       edges: []
@@ -118,7 +118,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 41e7869d79c07ac4694d33e2d7a808f3
+    spriteID: dd744e9e5effbef4ea81687f28c635a8
     internalID: 0
     vertices: []
     indices: 
@@ -126,7 +126,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      EnemySmallPortrait_0: 58298563
+      EnemySmallPortrait_0: 2043644852
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

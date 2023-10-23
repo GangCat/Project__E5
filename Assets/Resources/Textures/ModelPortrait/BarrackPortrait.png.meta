@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dfc50d2aa70938e418a9b1c277076b99
+guid: 4424887a8f69673429bf4d6b7ace3212
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -95,7 +95,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MeleeUnitPortrait_0
+      name: BarrackPortrait_0
       rect:
         serializedVersion: 2
         x: 0
@@ -109,8 +109,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b39bd808654cd9c4a95a50e1241d3f1c
-      internalID: 684631041
+      spriteID: da0342cfed34aeb4881027b3cfd0585f
+      internalID: -577051333
       vertices: []
       indices: 
       edges: []
@@ -118,7 +118,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 51c8fb38003a83444bdc25d316765b21
+    spriteID: d30d0a6c6a144e14c97de07696828237
     internalID: 0
     vertices: []
     indices: 
@@ -126,7 +126,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MeleeUnitPortrait_0: 684631041
+      BarrackPortrait_0: -577051333
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

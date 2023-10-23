@@ -6,7 +6,6 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
 {
     public void Init()
     {
-        arrImageModel = GetComponentsInChildren<ImageModelSpawnQueue>();
         foreach (ImageModelSpawnQueue image in arrImageModel)
             image.Init();
         imageProgressbar.Init();
@@ -49,6 +48,6 @@ public class CanvasSpawnUnitInfo : MonoBehaviour
     private Sprite[] arrUnitSprite = null;
     [SerializeField]
     private ImageProgressbar imageProgressbar = null;
-
+    [SerializeField]
     private ImageModelSpawnQueue[] arrImageModel = null;
 }
