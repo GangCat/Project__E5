@@ -100,7 +100,7 @@ MonoBehaviour:
     effectCtrl: {fileID: 0}
     moveSpeed: 3
     attRate: 0.2
-    attDmg: 1
+    attDmg: 4
     objectType: 0
     ProjectileGo: {fileID: 0}
     projectileSpawnTr: {fileID: 0}
