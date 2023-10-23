@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoDestroy : MonoBehaviour
+public class MyAutoDestroyObstacle : MonoBehaviour
 {
     private void Start()
     {

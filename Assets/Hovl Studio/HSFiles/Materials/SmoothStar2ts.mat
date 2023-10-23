@@ -28,8 +28,7 @@ Material:
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _ALPHATEST_ON
+  m_ValidKeywords: []
   m_InvalidKeywords:
   - _DOUBLESIDED_ON
   - _USEBACKFRESNEL_ON
@@ -40,7 +39,6 @@ Material:
   m_CustomRenderQueue: 2450
   stringTagMap:
     MotionVector: User
-    RenderType: TransparentCutout
   disabledShaderPasses:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
