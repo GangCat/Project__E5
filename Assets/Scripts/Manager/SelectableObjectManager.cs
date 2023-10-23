@@ -599,8 +599,16 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public static void UpdateHp(int _listIdx = -2)
     {
+        if (_listIdx.Equals(-3))
+        {
+            unitInfoContainer.curHpPercent = enemyCurSelected.GetCurHpPercent;
+            return;
+        }
         if (_listIdx.Equals(-2))
+        {
             unitInfoContainer.curHpPercent = listSelectedFriendlyObject[0].GetCurHpPercent;
+            return;
+        }
         else if (_listIdx.Equals(-1))
             return;
         else if (listSelectedFriendlyObject[_listIdx] != null)
@@ -882,7 +890,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     private List<FriendlyObject>[] arrCrowd = null;
 
-    private SelectableObject enemyCurSelected = null;
+    private static SelectableObject enemyCurSelected = null;
     
     private EObjectType objectType;
     private EAudioType_Advisor audioType;
