@@ -6168,7 +6168,7 @@ MonoBehaviour:
   arrFriendlyUnitSprite:
   - {fileID: 684631041, guid: dfc50d2aa70938e418a9b1c277076b99, type: 3}
   - {fileID: 1074756008, guid: a0c2608d07de9f54380b8cca4f4b80c3, type: 3}
-  - {fileID: 1447527712, guid: 5ee7be194c9b5884da68d4c17a0f291e, type: 3}
+  - {fileID: 223186547, guid: 1eae2c7b3fdd8f247b002c7be89b1d00, type: 3}
 --- !u!1 &357329358
 GameObject:
   m_ObjectHideFlags: 0
@@ -9294,14 +9294,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.2784314}
+  m_Color: {r: 0.5896226, g: 1, b: 0.9025945, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1288879292, guid: bf1b8575a2a8d8741a8a65324e52edc7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9518,7 +9518,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &518477693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20870,12 +20870,12 @@ MonoBehaviour:
   - {fileID: -2054738182, guid: 680722ce6b128e040bf781308eff6861, type: 3}
   - {fileID: -577051333, guid: 4424887a8f69673429bf4d6b7ace3212, type: 3}
   - {fileID: -1292284121, guid: 4cbe81f8fa5a02649a3c491652a16bb5, type: 3}
-  - {fileID: 2043644852, guid: b7e98ba80e956554e92a9cd86fbadea1, type: 3}
-  - {fileID: -1839862348, guid: bbc256668161118439d22ddbfe522387, type: 3}
+  - {fileID: 1359577092, guid: 10ce5679e776fe546a61d43b94b895b8, type: 3}
+  - {fileID: -258359280, guid: 821515b906dbb554d9927ba6e5b764e3, type: 3}
   arrFriendlyUnitSprite:
   - {fileID: 684631041, guid: dfc50d2aa70938e418a9b1c277076b99, type: 3}
   - {fileID: 1074756008, guid: a0c2608d07de9f54380b8cca4f4b80c3, type: 3}
-  - {fileID: 1447527712, guid: 5ee7be194c9b5884da68d4c17a0f291e, type: 3}
+  - {fileID: 223186547, guid: 1eae2c7b3fdd8f247b002c7be89b1d00, type: 3}
   statInfo: {fileID: 1011625380}
   textInfoUnitName: {fileID: 1370953564}
   textInfoUnitDescription: {fileID: 846680180}
@@ -27495,7 +27495,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 754fa75fc78074e4882e0a9d9c29f4bb, type: 3}
+  m_Sprite: {fileID: 223186547, guid: 1eae2c7b3fdd8f247b002c7be89b1d00, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
