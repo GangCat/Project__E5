@@ -275,7 +275,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void AddSelectedObject(SelectableObject _object)
     {
-        if (_object.IsTempSelect) return;
+        if (!_object || _object.IsTempSelect) return;
 
         tempListSelectableObject.Add(_object);
         _object.IsTempSelect = true;

@@ -10,6 +10,7 @@ public class CanvasWaveInfo : MonoBehaviour
     {
         imageWaveProgressbar.Init();
         wheel.Init();
+        textRemainEnemyCnt.Init();
     }
 
     public void Init(float _ttlBigWaveTime)
@@ -24,12 +25,29 @@ public class CanvasWaveInfo : MonoBehaviour
         imageWaveProgressbar.UpdateLength((ttlBigWaveTime - _bigWaveTime_sec) / ttlBigWaveTime);
     }
 
+    public void WaveStart(int _count)
+    {
+        textRemainEnemyCnt.WaveStart(_count);
+    }
+
+    public void UpdateRemainEnemyCnt(int _count)
+    {
+        textRemainEnemyCnt.UpdateText(_count);
+    }
+
+    public void WaveEnd()
+    {
+        textRemainEnemyCnt.WaveEnd();
+    }
+
     [SerializeField]
     private ImageProgressbar imageWaveProgressbar = null;
     [SerializeField]
     private TMP_Text textBigWaveTime = null;
     [SerializeField]
     private ImageWaveWheel wheel = null;
+    [SerializeField]
+    private TextRemainEnemyCnt textRemainEnemyCnt = null;
 
     private float ttlBigWaveTime = 0f;
 }

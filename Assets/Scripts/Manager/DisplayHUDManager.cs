@@ -46,6 +46,9 @@ public class DisplayHUDManager : MonoBehaviour
         ArrayHUDCommand.Add(EHUDCommand.HIDE_ALL_INFO, new CommandHideAllInfo(this));
         ArrayHUDCommand.Add(EHUDCommand.DISPLAY_TOOLTIP, new CommandDisplayTooltip(canvasTooltip));
         ArrayHUDCommand.Add(EHUDCommand.HIDE_TOOLTIP, new CommandHideTooltip(canvasTooltip));
+        ArrayHUDCommand.Add(EHUDCommand.INIT_REMAIN_ENEMY_CNT, new CommandInitRemainEnemyCnt(canvasWaveInfo));
+        ArrayHUDCommand.Add(EHUDCommand.UPDATE_REMAIN_ENEMY_CNT, new CommandUpdateRemainEnemyCnt(canvasWaveInfo));
+        ArrayHUDCommand.Add(EHUDCommand.WAVE_FINISH, new CommandWaveFinish(canvasWaveInfo));
 
         ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.DISPLAY_UPGRADE_INFO, new CommandDisplayUpgradeInfo(canvasUpgradeInfo));
         ArrayHUDUpgradeCommand.Add(EHUDUpgradeCommand.UPDATE_UPGRADE_TIME, new CommandUpdateUpgradeTime(canvasUpgradeInfo));

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class TextBase : MonoBehaviour
 {
-    public void Init()
+    public virtual void Init()
     {
         myText = GetComponent<TMP_Text>();
     }

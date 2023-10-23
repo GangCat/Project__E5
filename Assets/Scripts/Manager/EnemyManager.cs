@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         grid = _grid;
         mainBasePos = _mainBasePos;
         waitDotZeroOne = new WaitForSeconds(0.05f);
+        waitOneSecond = new WaitForSeconds(1f);
 
         waveEnemyHolder = GetComponentInChildren<WaveEnemyHolder>().GetTransform();
         mapEnemyHolder = GetComponentInChildren<MapEnemyHolder>().GetTransform();
@@ -82,9 +83,27 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
                 enemyObj.MoveAttack(mainBasePos);
                 arrBigEnemyTr[i] = bigGo.transform;
+
             }
+
+            StartCoroutine("UpdateEnemyCntCoroutine");
             ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.BIG_ENEMY_SIGNAL, arrBigEnemyTr);
         }
+    }
+
+    private IEnumerator UpdateEnemyCntCoroutine()
+    {
+        ArrayHUDCommand.Use(EHUDCommand.INIT_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt);
+
+        yield return waitOneSecond;
+
+        while (memoryPoolWave.ActiveCnt > 1)
+        {
+            ArrayHUDCommand.Use(EHUDCommand.UPDATE_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt);
+            yield return waitOneSecond;
+        }
+
+        ArrayHUDCommand.Use(EHUDCommand.WAVE_FINISH);
     }
 
     private EnemyObject[] arrAllMapEnemy = null;
@@ -119,15 +138,20 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 
     private IEnumerator CheckIsGameClearCoroutine()
     {
+        ArrayHUDCommand.Use(EHUDCommand.INIT_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt);
+        yield return waitOneSecond;
+
         while (true)
         {
+            ArrayHUDCommand.Use(EHUDCommand.UPDATE_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt);
+
             if (memoryPoolMap.ActiveCnt < 1 && memoryPoolWave.ActiveCnt < 1)
             {
                 UIManager.GameClear();
                 yield break;
             }
 
-            yield return new WaitForSeconds(5f);
+            yield return waitOneSecond;
         }
     }
 
@@ -277,8 +301,8 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private PF_Grid grid = null;
 
     private MemoryPool memoryPoolEnemyDeadEffect = null;
-    Transform[] arrBigEnemyTr = null;
-
+    private Transform[] arrBigEnemyTr = null;
+    private WaitForSeconds waitOneSecond = null;
 
     private AudioManager audioMng = null;
     // private AudioPlayer_BGM audioType;
