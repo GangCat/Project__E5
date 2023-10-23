@@ -371,7 +371,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         if( tempObj != null)
         {
             // AudioManager.instance.PlayAudio_Select(/*tempObj.GetObjectType()*/EObjectType.UNIT_01);     // Select Audio(Unit)
-            AudioManager.instance.PlayAudio_Select(tempObj.GetObjectType());     // Select Audio(Unit)
+             AudioManager.instance.PlayAudio_Select(tempObj.GetObjectType());     // Select Audio(Unit)
         }
         else
         {
