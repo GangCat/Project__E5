@@ -138,12 +138,12 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 
     private IEnumerator CheckIsGameClearCoroutine()
     {
-        ArrayHUDCommand.Use(EHUDCommand.INIT_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt);
+        ArrayHUDCommand.Use(EHUDCommand.INIT_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt + memoryPoolMap.ActiveCnt);
         yield return waitOneSecond;
 
         while (true)
         {
-            ArrayHUDCommand.Use(EHUDCommand.UPDATE_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt);
+            ArrayHUDCommand.Use(EHUDCommand.UPDATE_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt + memoryPoolMap.ActiveCnt);
 
             if (memoryPoolMap.ActiveCnt < 1 && memoryPoolWave.ActiveCnt < 1)
             {
