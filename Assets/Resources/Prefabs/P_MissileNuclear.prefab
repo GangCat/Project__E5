@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bea3b52dae34c84589e7f1b86306465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 20
+  attackRange: 15
   launchSpeed: 10
   attDmg: 300
   visibleAreaGo: {fileID: 8213927142963990536, guid: 281dfab7014b36e408324d59385b1e34,

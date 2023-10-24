@@ -28,6 +28,24 @@ public class UnitHero : MonoBehaviour
         //effectCtrl.EffectOn(3);
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine("HealCoroutine");
+    }
+
+    private IEnumerator HealCoroutine()
+    {
+        while (true)
+        {
+            statusHp.IncreaseCurHp(healAmount);
+
+            yield return new WaitForSeconds(5f);
+        }
+    }
+
+    [SerializeField]
+    private float healAmount = 0f;
+
     private FriendlyObject myObj = null;
     private StatusHp statusHp = null;
     private EffectController effectCtrl = null;
