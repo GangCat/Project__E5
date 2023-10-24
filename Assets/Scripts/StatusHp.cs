@@ -25,8 +25,7 @@ public class StatusHp : MonoBehaviour
 
     public void IncreaseCurHp(float _heal)
     {
-        curHp += _heal;
-        if (curHp > maxHp) curHp = maxHp;
+        curHp = Mathf.Min(curHp + _heal, maxHp);
     }
 
     public void UpgradeHp(float _increaseHp)
