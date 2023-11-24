@@ -689,13 +689,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 1
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: 8cf9f6b9b93cc094c843bfa8e5628fef, type: 3}
   - {fileID: 8300000, guid: 54c4415444b9703478a2cad5cd8e63e8, type: 3}
   - {fileID: 8300000, guid: 4349813ae17f5004787099f1f79c81c6, type: 3}
   - {fileID: 8300000, guid: e66fcf1e6c4ae574295e3601b4f8e919, type: 3}
   - {fileID: 8300000, guid: 9f0a2a60abfbed54cab858cffc9b338f, type: 3}
-  audioChannels: 6
 --- !u!1 &288047955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,10 +1302,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 1
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: e2705faa9ce581a4da8d9baca8ea6dce, type: 3}
   - {fileID: 8300000, guid: 331dfe9590b31f64195f3ed61596b24b, type: 3}
-  audioChannels: 2
 --- !u!1 &368226123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1780,7 +1778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 1
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: 2dbe95555e965ce4eb2a8ae19a18ce6d, type: 3}
   - {fileID: 8300000, guid: 73a880f17f4b4f549bcb433fb027fa59, type: 3}
   - {fileID: 8300000, guid: 58809fd530ae5d442880486df3ba1309, type: 3}
@@ -1791,7 +1789,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d261cca615e9a4a459cc4fc2626e2494, type: 3}
   - {fileID: 8300000, guid: 0aba39f4b9c3c1042b2ffce72d476844, type: 3}
   - {fileID: 8300000, guid: ef91791bc07aaf34fb5ccbe6001e55d7, type: 3}
-  audioChannels: 11
 --- !u!1 &455127934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,9 +1834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 1
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: 17e3c4b86b22e124a9bf17de33e6f668, type: 3}
-  audioChannels: 4
 --- !u!1 &469379911
 GameObject:
   m_ObjectHideFlags: 0
@@ -2544,9 +2540,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 1
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: 8bb2deae15673b946b0fd4954fbdd4ea, type: 3}
-  audioChannels: 4
 --- !u!1 &693124117
 GameObject:
   m_ObjectHideFlags: 0
@@ -4258,11 +4253,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 0
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: 767ed7b4b292e12478147dfaeb8a8948, type: 3}
   - {fileID: 8300000, guid: 61542349e6685bf41a4ed937d5437a6c, type: 3}
   - {fileID: 8300000, guid: fbfdcbca3a9ef694590a8ac52818a418, type: 3}
-  audioChannels: 5
 --- !u!1 &1246350287
 GameObject:
   m_ObjectHideFlags: 0
@@ -4759,7 +4753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 1
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: b0a305f43eb27234dbae1ad47460b91e, type: 3}
   - {fileID: 8300000, guid: 855c580ffa3537742bc6990d4fd171af, type: 3}
   - {fileID: 8300000, guid: 4545efe954b0b3944a48717b2ec0ab61, type: 3}
@@ -4773,7 +4767,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c35dc3fdd48da8147bc0f0e562d2b668, type: 3}
   - {fileID: 8300000, guid: 1d396b0f53ef699468263f22586e5129, type: 3}
   - {fileID: 8300000, guid: 33e775a14004cc74990839c3b97e45a4, type: 3}
-  audioChannels: 13
 --- !u!1 &1467793472
 GameObject:
   m_ObjectHideFlags: 0
@@ -5394,7 +5387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 1
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: 061a8b4d1b7b11c4686662c24ac0102c, type: 3}
   - {fileID: 8300000, guid: 840a0bc451b2a4245a24690da01078b2, type: 3}
   - {fileID: 8300000, guid: 04c60b843f913f24ab0d28b96c1e0a66, type: 3}
@@ -5405,7 +5398,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b88ddd15e680beb48ad3c7b9cee51666, type: 3}
   - {fileID: 8300000, guid: 41cc59e21ecd7df4db9bcd1fba9d38e6, type: 3}
   - {fileID: 8300000, guid: 7cbfc690e078e8647a5079d9532ced0b, type: 3}
-  audioChannels: 10
 --- !u!1 &1535496123
 GameObject:
   m_ObjectHideFlags: 0
@@ -5451,7 +5443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 1
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: aca97dd82caf56146a7b8c56f1729a48, type: 3}
   - {fileID: 8300000, guid: 8cf9f6b9b93cc094c843bfa8e5628fef, type: 3}
   - {fileID: 8300000, guid: 54c4415444b9703478a2cad5cd8e63e8, type: 3}
@@ -5462,7 +5454,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: db542d9edbcb20644a835011f1c2c63b, type: 3}
   - {fileID: 8300000, guid: 0950bee326b2be748a310411e6c6038d, type: 3}
   - {fileID: 8300000, guid: e64eba4d0ef1d234eaa3a115e8d6da2b, type: 3}
-  audioChannels: 11
 --- !u!1 &1540601325
 GameObject:
   m_ObjectHideFlags: 0
@@ -6996,7 +6987,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 10
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7131,7 +7122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 1
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: 665008ebf44c27c468fd2209c1e18f56, type: 3}
   - {fileID: 8300000, guid: 0c3407d6021bf884aabce0e31ca3158a, type: 3}
   - {fileID: 8300000, guid: 8c0580e9379e75d4e8550ef762177dd7, type: 3}
@@ -7140,7 +7131,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 614158c2be2d1634a9516399f9e8c494, type: 3}
   - {fileID: 8300000, guid: 841c0f67cbf477b46b546fc1d59cbbdb, type: 3}
   - {fileID: 8300000, guid: d672f92f53437f1448b9e945ad1789e7, type: 3}
-  audioChannels: 8
 --- !u!1 &2079488975
 GameObject:
   m_ObjectHideFlags: 0
@@ -7186,14 +7176,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioType: 0
-  audioClips:
+  myAudioClips:
   - {fileID: 8300000, guid: e50ed2c4a4502a24b868c43df2174ed6, type: 3}
   - {fileID: 8300000, guid: e97e6a5c7f10d304f946d789757d88ef, type: 3}
   - {fileID: 8300000, guid: 383d99b32653739408be42a83360fe28, type: 3}
   - {fileID: 8300000, guid: 8c976c83782a750458d72b77a0c76abf, type: 3}
   - {fileID: 8300000, guid: 2df88a1e78231ef4eaa6af8abe7055f4, type: 3}
   - {fileID: 8300000, guid: 27391fec2e39e344daa84b6769375c63, type: 3}
-  audioChannels: 7
 --- !u!1 &2104816623
 GameObject:
   m_ObjectHideFlags: 0

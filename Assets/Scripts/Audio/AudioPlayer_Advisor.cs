@@ -1,37 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.HighDefinition.CameraSettings;
 
 public class AudioPlayer_Advisor : AudioPlayerBase
 {
     public override void Init()
     {
+        base.Init();
         instance = this;
-
-        audioPlayers = new AudioSource();
-        AudioManager.AudioVolumes volumes = AudioManager.instance.Volumes;
-
-        audioPlayers = gameObject.AddComponent<AudioSource>();
-        audioPlayers.playOnAwake = false;
-        audioPlayers.volume = volumes.Effect;
     }
-
-    public override void SetVolume(float _volume)
-    {
-        base.SetVolume(_volume);
-        audioPlayers.volume = _volume;
-    }
-
-    public void PlayAudio(EAudioType_Advisor _audioType)
-    {
-        audioPlayers.clip = audioClips[(int)_audioType];
-        audioPlayers.Play();
-    }
-    
-    [Header("#AdvisorAudio")]
-    [SerializeField] private AudioClip[] audioClips;
-    
-    private AudioSource audioPlayers;
 
     public static AudioPlayer_Advisor instance;
     public enum EAudioType_Advisor 
