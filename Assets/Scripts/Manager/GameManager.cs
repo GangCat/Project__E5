@@ -233,7 +233,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArraySelectCommand.Add(ESelectCommand.SELECT_FINISH, new CommandSelectFinish(selectMng));
         ArraySelectCommand.Add(ESelectCommand.SELECT_START, new CommandSelectStart(selectMng));
         ArraySelectCommand.Add(ESelectCommand.REMOVE_FROM_LIST, new CommandRemoveFromList(selectMng));
-        ArraySelectCommand.Add(ESelectCommand.SET_LIST_TO_CROWD, new CommandSetListToCrowd(selectMng));
+        ArraySelectCommand.Add(ESelectCommand.SAVE_LIST_TO_CROWD, new CommandSetListToCrowd(selectMng));
         ArraySelectCommand.Add(ESelectCommand.LOAD_CROWD_WITH_IDX, new CommandLoadCrowdWithIdx(selectMng));
         ArraySelectCommand.Add(ESelectCommand.ADD_TO_LIST, new CommandAddToList(selectMng));
 

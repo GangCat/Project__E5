@@ -244,7 +244,6 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private IEnumerator SpawnWaveEnemyCoroutine(Vector3 _spawnPos, int _count)
     {
         int unitCnt = 0;
-        //List<EnemyObject> tempList = new List<EnemyObject>();
 
         // 한마리씩 소환하게 해서 부하를 줄임.
         while (unitCnt < _count)
@@ -259,15 +258,11 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             enemyObj.Position = spawnPos;
             enemyObj.Init();
             enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
-            //tempList.Add(enemyObj);
             enemyObj.MoveAttack(mainBasePos);
             ++waveEnemyIdx;
             ++unitCnt;
             yield return waitDotZeroFiveSecond;
         }
-
-        //SelectableObjectManager.MoveWaveEnemy(wayPoint.position, tempList.ToArray());
-        //tempList.Clear();
     }
 
    

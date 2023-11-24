@@ -13,21 +13,25 @@ public class PopulationManager : MonoBehaviour, IPublisher
 
     public uint CurPopulation => curPopulation;
 
-    public bool CanSpawnUnit(EUnitType _unitType)
-    {
-        return curPopulation + unitPopulation[(int)_unitType] < curMaxPopulation;
-    }
-
-    private bool CanSpawnUnit()
-    {
-        return curPopulation < curMaxPopulation;
-    }
+    ///// <summary>
+    ///// 현재 유닛 생산이 가능한지 예상해서 반환해주는 함수.
+    ///// </summary>
+    ///// <param name="_unitType"></param>
+    ///// <returns></returns>
+    //public bool CanSpawnUnit(EUnitType _unitType)
+    //{
+    //    return curPopulation + unitPopulation[(int)_unitType] < curMaxPopulation;
+    //}
 
     public bool CanUpgradePopulation()
     {
         return curMaxPopulation < maxPopulation;
     }
 
+    /// <summary>
+    /// 유닛 생성이 끝나서 실제로 게임에 나올 때 호출, 현재인구수를 증가시킴.
+    /// </summary>
+    /// <param name="_unitType"></param>
     public void SpawnUnit(EUnitType _unitType)
     {
         IncreaseCurPopulation(unitPopulation[(int)_unitType]);
@@ -38,14 +42,6 @@ public class PopulationManager : MonoBehaviour, IPublisher
         DecreasePopulation(unitPopulation[(int)_unitType]);
     }
 
-    private void IncreaseCurPopulation(uint _increaseAmount)
-    {
-        curPopulation += _increaseAmount;
-        ArrayPopulationCommand.Use(EPopulationCommand.UPDATE_CURRENT_POPULATION_HUD, curPopulation);
-        if (!CanSpawnUnit())
-            PushMessageToBroker(EMessageType.STOP_SPAWN);
-    }
-
     public void DecreasePopulation(uint _decreaseAmount)
     {
         curPopulation -= _decreaseAmount;
@@ -53,7 +49,7 @@ public class PopulationManager : MonoBehaviour, IPublisher
         if (CanSpawnUnit())
             PushMessageToBroker(EMessageType.START_SPAWN);
     }
-    
+
     public void UpgradeMaxPopulation()
     {
         curMaxPopulation += 20;
@@ -71,6 +67,21 @@ public class PopulationManager : MonoBehaviour, IPublisher
     {
         Broker.AlertMessageToSub(_message, EPublisherType.POPULATION_MANAGER);
     }
+
+    private bool CanSpawnUnit()
+    {
+        return curPopulation < curMaxPopulation;
+    }
+
+    private void IncreaseCurPopulation(uint _increaseAmount)
+    {
+        curPopulation += _increaseAmount;
+        ArrayPopulationCommand.Use(EPopulationCommand.UPDATE_CURRENT_POPULATION_HUD, curPopulation);
+        if (!CanSpawnUnit())
+            PushMessageToBroker(EMessageType.STOP_SPAWN);
+    }
+
+    
 
     [SerializeField]
     private uint maxPopulation = 0;

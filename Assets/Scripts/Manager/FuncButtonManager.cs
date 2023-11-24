@@ -16,6 +16,11 @@ public class FuncButtonManager : MonoBehaviour
         canvasBuildFunc.Init();
         canvasBarrackFunc.Init();
 
+        RegistCommand();
+    }
+
+    private void RegistCommand()
+    {
         ArrayHUDCommand.Add(EHUDCommand.UPDATE_TOOLTIP_UPGRADE_COST, new CommandUpdateTooltipUpgradeCost(canvasStructureBaseFunc));
 
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON, new CommandDisplayUnitCancleButton(canvasUnitBaseFunc));
@@ -27,6 +32,10 @@ public class FuncButtonManager : MonoBehaviour
         ArrayChangeHotkeyCommand.Add(EChangeHotkeyCommand.CONFIRM_UNIT_FUNC_BUTTON, new CommandConfirmChangeUnitFuncHotkey(canvasUnitBaseFunc));
     }
 
+    /// <summary>
+    /// 매개변수로 들어온 타입에 따른 펑션버튼을 표시
+    /// </summary>
+    /// <param name="_selectObjectType"></param>
     public void ShowFuncButton(EObjectType _selectObjectType)
     {
         HideFuncButton();
@@ -74,6 +83,9 @@ public class FuncButtonManager : MonoBehaviour
         curActiveBtnFunc = _selectObjectType;
     }
 
+    /// <summary>
+    /// 이전에 활성화시켰던 버튼만 찾아서 비활성화
+    /// </summary>
     private void HideFuncButton()
     {
         canvasStructureBaseFunc.HideCanvas();

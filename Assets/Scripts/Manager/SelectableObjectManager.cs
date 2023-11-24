@@ -38,6 +38,10 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         StartCoroutine("CheckNodeBuildableCoroutine");
     }
 
+    /// <summary>
+    /// 매 주기마다 현재 생성되어있는 모든 유닛들의 주위를 검사해 그 주위를 건설가능구역으로 변경해주는 함수.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator CheckNodeBuildableCoroutine()
     {
         while (true)
@@ -824,7 +828,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     {
         Broker.AlertMessageToSub(_message, EPublisherType.SELECTABLE_MANAGER);
     }
-
+    #region UnitUpgradeComplete
     public void CompleteUpgradeRangedUnitDmg()
     {
         ++levelRangedUnitDmgUpgrade;
@@ -852,11 +856,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         PushMessageToBroker(EMessageType.UPGRADE_MELEE_HP);
         AudioManager.instance.PlayAudio_Advisor(EAudioType_Advisor.UPGRADE);      // Advisor Audio
     }
+    #endregion
 
-    [Header("-Melee/Ranged")]
+    [Header("-Melee/Ranged Prefabs")]
     [SerializeField]
     private GameObject[] arrUnitPrefab = null;
-
     [SerializeField]
     private float rangeGroupLimitDist = 5f;
     [SerializeField]
@@ -874,12 +878,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     private static bool isFriendlyStructureInList = false;
     private static bool isEnemyObjectInList = false;
 
-    private List<SelectableObject> tempListSelectableObject = null;
     private static List<FriendlyObject> listSelectedFriendlyObject = null;
-
-    private VoidSelectObjectTypeDelegate selectObjectCallback = null;
-
-    private StructureBunker curBunker = null;
 
     private static PF_Grid grid = null;
     private static Dictionary<int, PF_Node> dicNodeUnderFriendlyUnit = null;
@@ -889,13 +888,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     private static UnitInfoContainer unitInfoContainer = null;
     private static List<SFriendlyUnitInfo> listFriendlyUnitInfo = null;
-
-    private MemoryPool[] arrMemoryPool = null;
-
-    private List<FriendlyObject>[] arrCrowd = null;
-
     private static SelectableObject enemyCurSelected = null;
-    
-    private EObjectType objectType;
-    private EAudioType_Advisor audioType;
+
+    private List<SelectableObject> tempListSelectableObject = null;
+    private MemoryPool[] arrMemoryPool = null;
+    private List<FriendlyObject>[] arrCrowd = null;
+    private EObjectType objectType = EObjectType.NONE;
+    private VoidSelectObjectTypeDelegate selectObjectCallback = null;
+    private StructureBunker curBunker = null;
 }

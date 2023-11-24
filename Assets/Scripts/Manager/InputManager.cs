@@ -15,6 +15,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         onDebugModeCallback = _onDebugModeCallback;
         isInGame = true;
     }
+
+
     public bool IsBuildOperation
     {
         get => isBuildOperation;
@@ -34,57 +36,53 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     #region OnClickMethods
     public void OnClickMoveButton()
     {
-        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
-
         if (isMoveClick) return;
-        ClearCurFunc();
-        pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isMoveClick = true;
-        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
+
+        OnClickUnitCtrlButton();
     }
 
     public void OnClickAttackButton()
     {
-        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
-
         if (isAttackClick) return;
-        ClearCurFunc();
-        pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isAttackClick = true;
-        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
+
+        OnClickUnitCtrlButton();
     }
 
     public void OnClickPatrolButton()
     {
-        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
-
         if (isPatrolClick) return;
+        isPatrolClick = true;
+
+        OnClickUnitCtrlButton();
+    }
+
+    public void OnClickLaunchNuclearButton()
+    {
+        if (isLaunchNuclearClick) return;
+        isLaunchNuclearClick = true;
+
+        OnClickUnitCtrlButton();
+    }
+
+    private void OnClickUnitCtrlButton()
+    {
+        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
-        isPatrolClick = true;
         ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
 
     public void OnClickRallyPointButton()
     {
-        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
-
         if (isRallyPointClick) return;
-        ClearCurFunc();
-        pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         isRallyPointClick = true;
-        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
-    }
 
-    public void OnClickLaunchNuclearButton()
-    {
         AudioManager.instance.PlayAudio_UI(); // CLICK Audio
-
-        if (isLaunchNuclearClick) return;
         ClearCurFunc();
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
-        isLaunchNuclearClick = true;
-        ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
+        ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
     #endregion
 
@@ -132,6 +130,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     {
         if (isPause) return;
 
+        // 키 변경하는 기능 넣으려고 작성했지만 시간이 부족해 넣지 못함.
         if (isDetectingChangeKey)
         {
             DetectChangeKey();
@@ -139,9 +138,10 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
         elapsedTime += Time.deltaTime;
 
+        // 더블클릭 확인
         if (isCheckDoubleClick)
         {
-            if (leftClickElapsedTime > 0.5f)
+            if (leftClickElapsedTime > doubleClickDelay)
             {
                 isCheckDoubleClick = false;
                 leftClickElapsedTime = 0f;
@@ -156,8 +156,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 leftClickElapsedTime += Time.deltaTime;
         }
 
-        RaycastHit hit;
-        if (pickPosDisplayGo != null && Functions.Picking(out hit))
+        if (pickPosDisplayGo != null && Functions.Picking(out var hit))
             pickPosDisplayGo.transform.position = hit.point;
 
 
@@ -169,7 +168,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
 
-            if (IsBuildOperation)
+            if (isBuildOperation)
             {
                 ArrayMainbaseCommand.Use(EMainbaseCommnad.CONFIRM);
                 return;
@@ -202,28 +201,23 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            if (IsBuildOperation)
+            if (isBuildOperation)
             {
                 ArrayMainbaseCommand.Use(EMainbaseCommnad.CANCLE);
                 return;
             }
 
             if (SelectableObjectManager.GetFirstSelectedObjectInList() == null)
-            {
                 return;
-            }
 
             if (SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType().Equals(EObjectType.ENEMY_SMALL))
-            {
                 return;
-            }
 
             if (SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType().Equals(EObjectType.BARRACK))
             {
                 if (isRallyPointClick)
                     ClearCurFunc();
             }
-
 
             if (isAttackClick || isMoveClick || isPatrolClick || isRallyPointClick || isLaunchNuclearClick)
                 ClearCurFunc();
@@ -254,7 +248,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         }
 
         if (Input.GetKey(arrDebugModeHotkey[(int)EDeveloperMenuKey.COMMAND_KEY]))
-            if (DeveloperMenuHotkeyActione())
+            if (DeveloperMenuHotkeyAction())
                 return;
 
 
@@ -273,19 +267,14 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             case EObjectType.UNIT_HERO:
                 if (UnitDefaultHotkeyAction())
                     break;
-                if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncKey.LAUNCH_NUCLEAR]))
-                    ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.LAUNCH_NUCLEAR);
+                else
+                    HeroHotkeyAction();
                 break;
             case EObjectType.MAIN_BASE:
                 if (StructureDefaultHotkeyAction())
                     break;
-                if (MainbaseBuildHotkeyAction())
-                    break;
-                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE_ENERGY_SUPPLY]))
-                    ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY);
-                else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE_POPULATION_MAX]))
-                    ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_MAX_POPULATION);
-
+                else
+                    MainbaseBuildHotkeyAction();
                 break;
             case EObjectType.TURRET:
                 StructureDefaultHotkeyAction();
@@ -293,12 +282,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             case EObjectType.BUNKER:
                 if (StructureDefaultHotkeyAction())
                     break;
-                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.OUT_ONE_UNIT]))
-                    ArrayBunkerCommand.Use(EBunkerCommand.OUT_ONE_UNIT);
-                else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.OUT_ALL_UNIT]))
-                    ArrayBunkerCommand.Use(EBunkerCommand.OUT_ALL_UNIT);
-                else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncKey.WALL]))
-                    ArrayBunkerCommand.Use(EBunkerCommand.EXPAND_WALL);
+                else
+                    BunkerHotkeyAction();
                 break;
             case EObjectType.WALL:
                 StructureDefaultHotkeyAction();
@@ -306,35 +291,53 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             case EObjectType.BARRACK:
                 if (StructureDefaultHotkeyAction())
                     break;
-                if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.SPAWN_MELEE]))
-                    ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.MELEE);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.SPAWN_RANGED]))
-                    ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.RANGED);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.SET_RALLYPOINT]))
-                    ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_RANGED_DMG]))
-                    ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.RANGED_UNIT_DMG);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_RANGED_HP]))
-                    ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.RANGED_UNIT_HP);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_MELEE_DMG]))
-                    ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.MELEE_UNIT_DMG);
-                else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_MELEE_HP]))
-                    ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.MELEE_UNIT_HP);
+                else
+                    BarrackHotkeyAction();
                 break;
             case EObjectType.NUCLEAR:
                 if (StructureDefaultHotkeyAction())
                     break;
-                if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.SPAWN_NUCLEAR]))
-                    ArrayNuclearCommand.Use(ENuclearCommand.SPAWN_NUCLEAR);
+                else
+                    NuclearHotkeyAction();
                 break;
             default:
                 break;
         }
+    }
+    #region HotkeyActions
+    private void CrowdHotkeyAction(bool _isCrowdCommandReady)
+    {
+        for (int i = (int)ECrowdFuncKey.NUM1; i <= (int)ECrowdFuncKey.NUM9; ++i)
+        {
+            if (!Input.GetKeyDown(arrCrowdFuncHotkey[i]))
+                continue;
 
-
+            if (_isCrowdCommandReady)
+            {
+                ArraySelectCommand.Use(ESelectCommand.SAVE_LIST_TO_CROWD, i);
+                return;
+            }
+            else
+            {
+                ArraySelectCommand.Use(ESelectCommand.LOAD_CROWD_WITH_IDX, i);
+                return;
+            }
+        }
     }
 
-    private bool DeveloperMenuHotkeyActione()
+    private void NuclearHotkeyAction()
+    {
+        if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.SPAWN_NUCLEAR]))
+            ArrayNuclearCommand.Use(ENuclearCommand.SPAWN_NUCLEAR);
+    }
+
+    private void HeroHotkeyAction()
+    {
+        if (Input.GetKeyDown(arrUnitFuncHotkey[(int)EUnitFuncKey.LAUNCH_NUCLEAR]))
+            ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.LAUNCH_NUCLEAR);
+    }
+
+    private bool DeveloperMenuHotkeyAction()
     {
         if (Input.GetKeyDown(arrDebugModeHotkey[(int)EDeveloperMenuKey.DISPLAY_STATE_AND_FOGTEXTURE]))
             onDebugModeCallback?.Invoke();
@@ -350,24 +353,32 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         return true;
     }
 
-    private void CrowdHotkeyAction(bool _isCrowdCommandReady)
+    private void BunkerHotkeyAction()
     {
-        for (int i = (int)ECrowdFuncKey.NUM1; i <= (int)ECrowdFuncKey.NUM9; ++i)
-        {
-            if (Input.GetKeyDown(arrCrowdFuncHotkey[i]))
-            {
-                if (_isCrowdCommandReady)
-                {
-                    ArraySelectCommand.Use(ESelectCommand.SET_LIST_TO_CROWD, i);
-                    return;
-                }
-                else
-                {
-                    ArraySelectCommand.Use(ESelectCommand.LOAD_CROWD_WITH_IDX, i);
-                    return;
-                }
-            }
-        }
+        if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.OUT_ONE_UNIT]))
+            ArrayBunkerCommand.Use(EBunkerCommand.OUT_ONE_UNIT);
+        else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.OUT_ALL_UNIT]))
+            ArrayBunkerCommand.Use(EBunkerCommand.OUT_ALL_UNIT);
+        else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncKey.WALL]))
+            ArrayBunkerCommand.Use(EBunkerCommand.EXPAND_WALL);
+    }
+
+    private void BarrackHotkeyAction()
+    {
+        if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.SPAWN_MELEE]))
+            ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.MELEE);
+        else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.SPAWN_RANGED]))
+            ArrayBarrackCommand.Use(EBarrackCommand.SPAWN_UNIT, EUnitType.RANGED);
+        else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.SET_RALLYPOINT]))
+            ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT);
+        else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_RANGED_DMG]))
+            ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.RANGED_UNIT_DMG);
+        else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_RANGED_HP]))
+            ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.RANGED_UNIT_HP);
+        else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_MELEE_DMG]))
+            ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.MELEE_UNIT_DMG);
+        else if (Input.GetKeyDown(arrBarrackFuncHotkey[(int)EBarrackFuncKey.UPGRADE_MELEE_HP]))
+            ArrayBarrackCommand.Use(EBarrackCommand.UPGRADE_UNIT, EUnitUpgradeType.MELEE_UNIT_HP);
     }
 
     private bool StructureDefaultHotkeyAction()
@@ -402,8 +413,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         return true;
     }
 
-
-    private bool MainbaseBuildHotkeyAction()
+    private void MainbaseBuildHotkeyAction()
     {
         if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncKey.TURRET]))
             ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.TURRET);
@@ -413,21 +423,23 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.BARRACK);
         else if (Input.GetKeyDown(arrBuildFuncHotkey[(int)EBuildFuncKey.NUCLEAR]))
             ArrayMainbaseCommand.Use(EMainbaseCommnad.BUILD_STRUCTURE, EObjectType.NUCLEAR);
-        else
-            return false;
-        return true;
+        else if(Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE_ENERGY_SUPPLY]))
+            ArrayCurrencyCommand.Use(ECurrencyCommand.UPGRADE_ENERGY_SUPPLY);
+        else if (Input.GetKeyDown(arrStructureFuncHotkey[(int)EStructureFuncKey.UPGRADE_POPULATION_MAX]))
+            ArrayPopulationCommand.Use(EPopulationCommand.UPGRADE_MAX_POPULATION);
     }
+    #endregion
 
-
-
+    /// <summary>
+    /// 피킹한 위치를 배럭의 랠리포인트로 설정
+    /// </summary>
     private void SetRallyPoint()
     {
         Vector3 pickPos = Vector3.zero;
-        RaycastHit hit;
 
-        if (Functions.Picking(selectableLayer, out hit))
+        if (Functions.Picking(selectableLayer, out var hit))
             ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT_CONFIRM_TR, hit.transform);
-        else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
+        else if (Functions.Picking("StageFloor", floorLayer, ref pickPos)) // ref는 변수를 참조하는 것이기 때문에 사전에 자료형을 정해줘야함.
             ArrayBarrackCommand.Use(EBarrackCommand.RALLYPOINT_CONFIRM_POS, pickPos);
 
         GameObject pickPosDisplayGo = Instantiate(pickPosPrefab, pickPos, Quaternion.identity, transform);
@@ -452,8 +464,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             return;
 
         Vector3 pickPos = Vector3.zero;
-        RaycastHit hit;
-        if (Functions.Picking(selectableLayer, out hit))
+        if (Functions.Picking(selectableLayer, out var hit))
         {
             ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
         }
@@ -469,17 +480,18 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     private void AttackMoveWithMouseClick()
     {
+        // 0.2초 안에 또 우클릭을 할때는 코드가 호출되지 않도록, 너무 빠른 입력을 받지 않도록 예외처리
         if (elapsedTime < 0.2f)
             return;
         else
             elapsedTime = 0f;
 
+        // UI 위를 우클릭할때는 이동하지 못하도록 예외처리
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
         Vector3 pickPos = Vector3.zero;
-        RaycastHit hit;
-        if (Functions.Picking(selectableLayer, out hit))
+        if (Functions.Picking(selectableLayer, out var hit))
             ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
         else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
@@ -502,8 +514,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             return;
 
         Vector3 pickPos = Vector3.zero;
-        RaycastHit hit;
-        if (Functions.Picking(selectableLayer, out hit))
+        if (Functions.Picking(selectableLayer, out var hit))
             ArrayUnitActionCommand.Use(EUnitActionCommand.FOLLOW_OBJECT, hit.transform);
         else if (Functions.Picking("StageFloor", floorLayer, ref pickPos))
         {
@@ -526,22 +537,26 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         if (SelectableObjectManager.IsListEmpty) return;
 
         EUnitType curUnitType = SelectableObjectManager.GetFirstSelectedObjectInList().GetUnitType;
+        // 건물일 경우 예외처리
         if (curUnitType.Equals(EUnitType.NONE)) return;
-
-        RaycastHit hit;
-        FriendlyObject tempFriendlyObj = null;
 
         ArraySelectCommand.Use(ESelectCommand.REMOVE_FROM_LIST, SelectableObjectManager.GetFirstSelectedObjectInList());
 
-        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 1000f, floorLayer);
+        // 카메라의 위치에서 바라보는 방향으로 오버랩 박스를 해서 충돌하는 모든 선택가능한 오브젝트를 불러옴.
+        Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hit, 1000f, floorLayer);
         Collider[] arrCol = Physics.OverlapBox(
             hit.point, 
-            new Vector3(Camera.main.orthographicSize * Camera.main.aspect, 0f, Camera.main.orthographicSize / Mathf.Cos(90 - rotAngleXForDoubleClick * Mathf.Deg2Rad)), 
+            new Vector3(
+                Camera.main.orthographicSize * Camera.main.aspect, 
+                0f, 
+                Camera.main.orthographicSize / Mathf.Cos(90 - rotAngleXForDoubleClick * Mathf.Deg2Rad)), 
             Quaternion.Euler(new Vector3(0f, 45f, 0f)), 
             friendlyLayer
         );
 
-        for(int i = 0; i < arrCol.Length; ++i)
+        FriendlyObject tempFriendlyObj = null;
+
+        for (int i = 0; i < arrCol.Length; ++i)
         {
             tempFriendlyObj = arrCol[i].GetComponent<FriendlyObject>();
 
@@ -554,6 +569,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     }
 
+    /// <summary>
+    /// 시프트 클릭으로 여러마리 지정할 때 리스트에 넣을지 뺄지 결정하는 코드
+    /// </summary>
     private void SelectUnitWithCommand()
     {
         if (SelectableObjectManager.GetFirstSelectedObjectInList().GetUnitType.Equals(EUnitType.NONE)) return;
@@ -570,6 +588,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 ArraySelectCommand.Use(ESelectCommand.ADD_TO_LIST, tempFObj);
         }
     }
+
 
     private void DragOperateWithMouseClick()
     {
@@ -612,6 +631,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         ArrayCameraMoveCommand.Use(ECameraCommand.ZOOM, Input.GetAxisRaw("Mouse ScrollWheel"));
     }
 
+    /// <summary>
+    /// 방향키, 키보드로 카메라 조작
+    /// </summary>
     private void MoveCamera()
     {
         if (Input.GetKey(KeyCode.Space))
@@ -628,11 +650,19 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
                 );
     }
 
+    /// <summary>
+    /// 미니맵 우클릭으로 이동시키는 경우
+    /// </summary>
+    /// <param name="_pos"></param>
     public void GetUnitTargetPos(Vector3 _pos)
     {
         ArrayUnitActionCommand.Use(EUnitActionCommand.MOVE_WITH_POS, _pos);
     }
 
+    /// <summary>
+    /// 미니맵 좌클릭으로 카메라 이동시키는 경우
+    /// </summary>
+    /// <param name="_pos"></param>
     public void GetCameraTargetPos(Vector3 _pos)
     {
         ArrayCameraMoveCommand.Use(ECameraCommand.WARP_WITH_POS, _pos);
@@ -642,7 +672,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     {
         isPause = _isPause;
     }
-
+    #region ChangeHotkey
     public void ChangeUnitHotkey(EUnitFuncKey _targetHotkey)
     {
         isDetectingChangeKey = true;
@@ -673,6 +703,12 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         SetCurChangeHotKey(arrStructureFuncHotkey, _targetHotkey);
     }
 
+    /// <summary>
+    /// 자료형이 Enum형인 T만 받는 함수.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="_curChangeHotKey"></param>
+    /// <param name="_unitHotkeyIdx"></param>
     private void SetCurChangeHotKey<T>(KeyCode[] _curChangeHotKey, T _unitHotkeyIdx) where T : Enum
     {
         curChangeKeyCode = _curChangeHotKey;
@@ -710,7 +746,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     {
         foreach (KeyCode keyCode in System.Enum.GetValues(typeof(KeyCode)))
         {
-            // �ش� Ű�� ���ȴ��� Ȯ���մϴ�.
+            // 모든 키코드를 전부 다 확인해서 동일한거 나오면 해당 키코드 반환.
             if (Input.GetKeyDown(keyCode))
             {
                 return keyCode;
@@ -723,82 +759,36 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     {
         if (_changeKey.Equals(KeyCode.None))
             return false;
-
-        for (int i = 0; i < arrUnitFuncHotkey.Length; ++i)
-        {
-            if (_changeKey.Equals(arrUnitFuncHotkey[i]))
-                return false;
-        }
-
-        for (int i = 0; i < arrBuildFuncHotkey.Length; ++i)
-        {
-            if (_changeKey.Equals(arrBuildFuncHotkey[i]))
-                return false;
-        }
-
-        for (int i = 0; i < arrBarrackFuncHotkey.Length; ++i)
-        {
-            if (_changeKey.Equals(arrBarrackFuncHotkey[i]))
-                return false;
-        }
-
-        for (int i = 0; i < arrStructureFuncHotkey.Length; ++i)
-        {
-            if (_changeKey.Equals(arrStructureFuncHotkey[i]))
-                return false;
-        }
-
-        for (int i = 0; i < arrCrowdFuncHotkey.Length; ++i)
-        {
-            if (_changeKey.Equals(arrCrowdFuncHotkey[i]))
-                return false;
-        }
-
-        for (int i = 0; i < arrOtherFuncHotkey.Length; ++i)
-        {
-            if (_changeKey.Equals(arrOtherFuncHotkey[i]))
-                return false;
-        }
-
-        for (int i = 0; i < arrDebugModeHotkey.Length; ++i)
-        {
-            if (_changeKey.Equals(arrDebugModeHotkey[i]))
-                return false;
-        }
-
+        if (!CheckIsChangable(_changeKey, arrUnitFuncHotkey))
+            return false;
+        if (!CheckIsChangable(_changeKey, arrBuildFuncHotkey))
+            return false;
+        if (!CheckIsChangable(_changeKey, arrBarrackFuncHotkey))
+            return false;
+        if (!CheckIsChangable(_changeKey, arrStructureFuncHotkey))
+            return false;
+        if (!CheckIsChangable(_changeKey, arrCrowdFuncHotkey))
+            return false;
+        if (!CheckIsChangable(_changeKey, arrOtherFuncHotkey))
+            return false;
+        if (!CheckIsChangable(_changeKey, arrDebugModeHotkey))
+            return false;
         if (_changeKey.Equals(cancleKey))
             return false;
 
         return true;
     }
 
-    //public void OnDrawGizmos()
-    //{
-    //    Vector3 boxSize = new Vector3(Camera.main.orthographicSize * Camera.main.aspect, 0f, Camera.main.orthographicSize);
-    //    Vector3[] points = new Vector3[8];
-
-    //    // Calculate the 8 corner points of the rotated box
-    //    for (int i = 0; i < 8; ++i)
-    //    {
-    //        Vector3 offset = new Vector3(
-    //            ((i & 1) == 0 ? -1 : 1) * boxSize.x,
-    //            ((i & 2) == 0 ? -1 : 1) * boxSize.y,
-    //            ((i & 4) == 0 ? -1 : 1) * boxSize.z
-    //        );
-
-    //        points[i] = transform.position + tempCenter + offset;
-    //        points[i] = Quaternion.Euler(new Vector3(0f, 70f, 0f)) * points[i];
-    //    }
-
-    //    // Draw lines between the points to form the rotated box
-    //    Gizmos.color = Color.red;
-    //    for (int i = 0; i < 4; ++i)
-    //    {
-    //        Gizmos.DrawLine(points[i], points[(i + 1) % 2]);
-    //        Gizmos.DrawLine(points[i + 4], points[(i + 1) % 2 + 4]);
-    //        Gizmos.DrawLine(points[i], points[i + 4]);
-    //    }
-    //}
+    private bool CheckIsChangable(KeyCode _changeKey, KeyCode[] _targetKeyArray)
+    {
+        for(int i = 0; i < _targetKeyArray.Length; ++i)
+        {
+            if (_changeKey.Equals(_targetKeyArray[i]))
+                return false;
+        }
+        return true;
+    }
+    #endregion
 
     [SerializeField]
     private GameObject pickPosPrefab = null;
@@ -812,6 +802,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private LayerMask friendlyLayer;
     [SerializeField]
     private float rotAngleXForDoubleClick = 0f;
+    [SerializeField]
+    private float doubleClickDelay = 0.3f;
 
     [Header("-Hotkeys")]
     [SerializeField]
@@ -830,6 +822,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private KeyCode cancleKey = KeyCode.Escape;
     [SerializeField]
     private KeyCode UnitSelectComandKey = KeyCode.LeftShift;
+    [SerializeField]
+    private bool isDetectingChangeKey = false;
 
     [Header("-Debug Mode Hotkey")]
     [SerializeField]
@@ -846,23 +840,16 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     private bool isLaunchNuclearClick = false;
     private bool isCheckDoubleClick = false;
     private bool isPause = false;
+    private bool isInGame = false;
 
     private GameObject pickPosDisplayGo = null;
-
     private Vector3 dragStartPos = Vector3.zero;
     private Vector3 dragEndPos = Vector3.zero;
-
     private SelectArea selectArea = null;
-
-    private EObjectType objectType = EObjectType.NONE;
     private SelectableObject mainbaseObejct = null;
     private VoidVoidDelegate onDebugModeCallback = null;
-
-    [SerializeField]
-    private bool isDetectingChangeKey = false;
 
     private KeyCode[] curChangeKeyCode = null;
     private int curChangeKeyIdx = -1;
 
-    private bool isInGame = false;
 }

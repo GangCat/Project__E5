@@ -16,6 +16,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         ArrayPauseCommand.Use(EPauseCommand.REGIST,this);
         imageMinimap = GetComponent<Image>();
         tex2d = new Texture2D(256, 256);
+        // 보이는 영역만 미니맵에 그리려고 만든 텍스쳐, 하지만 작동을 제대로 하지 않음..
         visibleAreaTexture = new Texture2D(256, 256);
         //tex2d.name = "Set Pixel";
         texW = tex2d.width;
@@ -26,6 +27,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
         int idx = 0;
 
+        // 딱 한번 모든 픽셀을 검은색으로 초기화
         while (idx < texW * texH)
         {
             tex2d.SetPixel(idx % texW, idx / texH, Color.black);
@@ -40,24 +42,26 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         StartCoroutine("UpdateMinimap");
     }
 
-    public static void SetVisibleTexture(Texture2D _tex)
-    {
-        RenderTexture rt = new RenderTexture(256, 256, 0);
-        Graphics.Blit(_tex, rt);
-
-        RenderTexture.active = rt;
-        visibleAreaTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
-        visibleAreaTexture.Apply();
-
-        // 더 이상 RenderTexture를 사용하지 않을 때 메모리에서 해제.
-        RenderTexture.active = null;
-        Destroy(rt);
-    }
-
     public void Init(float _worldSizeX, float _worldSizeY)
     {
         worldSizeX = _worldSizeX;
         worldSizeY = _worldSizeY;
+    }
+
+    public static void SetVisibleTexture(Texture2D _tex)
+    {
+        RenderTexture rt = new RenderTexture(256, 256, 0);
+        // 전달받은 텍스쳐 2D의 내용을 rt에 복제
+        Graphics.Blit(_tex, rt);
+
+        // 렌더 텍스쳐를 사용할때는 이렇게 사용할 ㅇ렌더 텍스쳐를 설정해야함
+        RenderTexture.active = rt;
+        visibleAreaTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
+        visibleAreaTexture.Apply();
+
+        // 렌더 텍스쳐 사용 후에는 해제해야함.
+        RenderTexture.active = null;
+        Destroy(rt);
     }
 
     public void AddStructureNodeToMinimap(PF_Node _node)
@@ -85,8 +89,14 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         }
     }
 
+    /// <summary>
+    /// 미니맵을 갱신하는 함수
+    /// </summary>
+    /// <param name="tex2d"></param>
     private void UpdateTexture(ref Texture2D tex2d)
     {
+        // 이전에 적군, 아군 위치를 모두 검은색으로 초기화
+        // 이렇게 하지 않으면 모든 픽셀을 검사해야 하기 때문에 부하가 매우 심함.
         for(int i = 0; i < tempFriendlyNodeList.Count; ++i) 
             tex2d.SetPixel(tempFriendlyNodeList[i].gridX, tempFriendlyNodeList[i].gridY, Color.black);
 
@@ -137,10 +147,14 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
                     arrImageBigEnemySignal[i].gameObject.SetActive(false);
             }
         }
-
+        // 다 수정한 텍스쳐를 실제로 적용
         tex2d.Apply();
     }
 
+    /// <summary>
+    /// 빅 웨이브에서 적 대형유닛 위치 표시
+    /// </summary>
+    /// <param name="_arrTr"></param>
     public void BigEnemySignal(Transform[] _arrTr)
     {
         isBigEnemySignalDisplay = true;
@@ -150,16 +164,14 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
             arrImageBigEnemySignal[i].gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// 아군 유닛 생성시 표시
+    /// </summary>
+    /// <param name="_worldPos"></param>
     public void FriendlySignal(Vector3 _worldPos)
     {
         if (!isFriendlySignalDisplay)
             StartCoroutine(FriendlySignalAutoDisable(_worldPos));
-    }
-
-    public void AttackSignal(Vector3 _worldPos)
-    {
-        if (!isAttackSignalDisplay)
-            StartCoroutine(AttackSignalAutoDisable(_worldPos));
     }
 
     private IEnumerator FriendlySignalAutoDisable(Vector3 _worldPos)
@@ -173,6 +185,16 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         isFriendlySignalDisplay = false;
     }
 
+    /// <summary>
+    /// 공격당할 때 미니맵에 표시
+    /// </summary>
+    /// <param name="_worldPos"></param>
+    public void AttackSignal(Vector3 _worldPos)
+    {
+        if (!isAttackSignalDisplay)
+            StartCoroutine(AttackSignalAutoDisable(_worldPos));
+    }
+
     private IEnumerator AttackSignalAutoDisable(Vector3 _worldPos)
     {
         imageAttackSignal.gameObject.SetActive(true);
@@ -184,6 +206,11 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         isAttackSignalDisplay = false;
     }
 
+    /// <summary>
+    /// 마우스로 UI 클릭하면 호출, 포인터클릭핸들러
+    /// 매일 호출되는 함수는 아니기에 지역변수 사용
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
@@ -211,24 +238,24 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     private Vector2 WorldToMinimapPosition(Vector3 worldPosition, RectTransform minimapRectTransform, float worldSizeX, float worldSizeY)
     {
         // 월드 좌표를 미니맵상의 상대 좌표로 변환.
-        float relativeX = (worldPosition.x / worldSizeX) + 0.5f;
-        float relativeY = (worldPosition.z / worldSizeY) + 0.5f;
+        relativeX = (worldPosition.x / worldSizeX) + 0.5f;
+        relativeY = (worldPosition.z / worldSizeY) + 0.5f;
 
         // 미니맵 RectTransform의 크기를 고려하여 실제 화면 좌표로 변환.
-        float minX = minimapRectTransform.rect.xMin + minimapRectTransform.anchoredPosition.x;
-        float maxX = minimapRectTransform.rect.xMax + minimapRectTransform.anchoredPosition.x;
-        float minY = minimapRectTransform.rect.yMin + minimapRectTransform.anchoredPosition.y;
-        float maxY = minimapRectTransform.rect.yMax + minimapRectTransform.anchoredPosition.y;
+        minX = minimapRectTransform.rect.xMin + minimapRectTransform.anchoredPosition.x;
+        maxX = minimapRectTransform.rect.xMax + minimapRectTransform.anchoredPosition.x;
+        minY = minimapRectTransform.rect.yMin + minimapRectTransform.anchoredPosition.y;
+        maxY = minimapRectTransform.rect.yMax + minimapRectTransform.anchoredPosition.y;
 
         // 미니맵상의 상대 좌표를 실제 화면 좌표로 매핑.
-        float mappedX = Mathf.Lerp(minX, maxX, relativeX);
-        float mappedY = Mathf.Lerp(minY, maxY, relativeY);
+        mappedX = Mathf.Lerp(minX, maxX, relativeX);
+        mappedY = Mathf.Lerp(minY, maxY, relativeY);
 
         // 실제 화면 좌표로 변환해서 반환.
         return RotatePointAroundPivot(new Vector2(mappedX, mappedY), minimapRectTransform.rect.center, 45f);
     }
 
-    public Vector2 RotatePointAroundPivot(Vector2 point, Vector2 pivot, float angle)
+    private Vector2 RotatePointAroundPivot(Vector2 point, Vector2 pivot, float angle)
     {
         // 앵커를 중심으로 회전하는 Quaternion을 생성.
         // 현재는 45도 고정이긴 함.
@@ -286,4 +313,12 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     private bool isAttackSignalDisplay = false;
     private bool isBigEnemySignalDisplay = false;
 
+    private float relativeX = 0f;
+    private float relativeY = 0f;
+    private float minX = 0f;
+    private float maxX = 0f;
+    private float minY = 0f;
+    private float maxY = 0f;
+    private float mappedX = 0f;
+    private float mappedY = 0f;
 }

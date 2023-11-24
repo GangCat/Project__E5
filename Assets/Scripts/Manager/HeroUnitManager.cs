@@ -11,18 +11,24 @@ public class HeroUnitManager : MonoBehaviour
         resurrectionPos = hero.transform.position;
     }
 
+    public static void UpdateCurState(EState _state)
+    {
+        curState = _state;
+    }
+
+    public void Dead()
+    {
+        hero.Dead();
+
+        StartCoroutine("HeroResurrectionTimeCalcCoroutine");
+    }
+
     public void DebugMode(bool _isDebugMode)
     {
         if (_isDebugMode)
             StartCoroutine("DisplayHeroStateCoroutine");
         else
             StopCoroutine("DisplayHeroStateCoroutine");
-    }
-
-
-    public static void UpdateCurState(EState _state)
-    {
-        curState = _state;
     }
 
     private IEnumerator DisplayHeroStateCoroutine()
@@ -34,13 +40,6 @@ public class HeroUnitManager : MonoBehaviour
 
             yield return null;
         }
-    }
-
-    public void Dead()
-    {
-        hero.Dead();
-        
-        StartCoroutine("HeroResurrectionTimeCalcCoroutine");
     }
 
     private IEnumerator HeroResurrectionTimeCalcCoroutine()
