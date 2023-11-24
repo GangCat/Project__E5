@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 01bb41cf2e2da644b8aa8e76864293ad
-timeCreated: 1469628754
+guid: 5fbd0987174baf44ebc675ebf135a508
+timeCreated: 1469624871
 licenseType: Store
 NativeFormatImporter:
   userData: 
@@ -11,5 +11,5 @@ AssetOrigin:
   productId: 68246
   packageName: DL Fantasy RPG Effects
   packageVersion: 1.0
-  assetPath: Assets/DL_Fantasy_RPG_Effects/material/DL_star.mat
+  assetPath: Assets/DL_Fantasy_RPG_Effects/material/wind01.mat
   uploadId: 130654
