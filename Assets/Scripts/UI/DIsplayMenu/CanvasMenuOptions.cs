@@ -10,7 +10,7 @@ public class CanvasMenuOptions : CanvasBase
         buttonGraphic.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 HideAllOption();
                 DisplayGraphicOption();
             });
@@ -18,7 +18,7 @@ public class CanvasMenuOptions : CanvasBase
         buttonSound.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 HideAllOption();
                 DisplaySoundOption();
             });
@@ -32,7 +32,7 @@ public class CanvasMenuOptions : CanvasBase
         buttonReturnMenu.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 ArrayMenuCommand.Use(EMenuCommand.RETURN_MENU);
             });
 

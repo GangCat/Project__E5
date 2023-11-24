@@ -31,9 +31,10 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
 
+    #region OnClickMethods
     public void OnClickMoveButton()
     {
-        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
 
         if (isMoveClick) return;
         ClearCurFunc();
@@ -44,7 +45,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     public void OnClickAttackButton()
     {
-        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
 
         if (isAttackClick) return;
         ClearCurFunc();
@@ -55,7 +56,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     public void OnClickPatrolButton()
     {
-        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
 
         if (isPatrolClick) return;
         ClearCurFunc();
@@ -66,7 +67,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     public void OnClickRallyPointButton()
     {
-        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
 
         if (isRallyPointClick) return;
         ClearCurFunc();
@@ -77,7 +78,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     public void OnClickLaunchNuclearButton()
     {
-        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
 
         if (isLaunchNuclearClick) return;
         ClearCurFunc();
@@ -85,7 +86,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         isLaunchNuclearClick = true;
         ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
+    #endregion
 
+    #region CancleMethods
     public void CancleFunc()
     {
         isMoveClick = false;
@@ -106,7 +109,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.HIDE_CANCLE_BUTTON);
         }
     }
+    #endregion
 
+    /// <summary>
+    /// 모든 bool값 초기화 및 버튼 숨기기
+    /// </summary>
     private void ClearCurFunc()
     {
         isMoveClick = false;
@@ -116,11 +123,11 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         isBuildOperation = false;
         isLaunchNuclearClick = false;
         Destroy(pickPosDisplayGo);
-        // ��� ��ɰ� ���õ� bool�� ��� �ʱ�ȭ
         ArrayUnitFuncButtonCommand.Use(EUnitFuncButtonCommand.HIDE_CANCLE_BUTTON);
         ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.HIDE_CANCLE_BUTTON);
     }
 
+    
     private void Update()
     {
         if (isPause) return;

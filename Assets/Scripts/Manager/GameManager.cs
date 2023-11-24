@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
 {
     private void Awake()
     {
+        // 씬을 로드해서 다른 게임메니저가 있을 경우 자신을 파괴
         if (FindObjectsByType<GameManager>(FindObjectsSortMode.None).Length > 1)
             Destroy(gameObject);
         else
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     private void Start()
     {
+        // 마우스 가두기
         Cursor.lockState = CursorLockMode.Confined;
         //Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.ForceSoftware);
         //#if UNITY_EDITOR
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         isFullHD = true;
         isFullScreen = true;
 
+        // 씬이 로드될 때 호출될 함수를 추가
         SceneManager.sceneLoaded += OnSceneLoaded;
         InitMenu();
         AudioManager.instance.PlayAudio_BGM_MainMenu();
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     private void OnSceneLoaded(Scene _scene, LoadSceneMode _mode)
     {
+        // 씬 이름에 따라 호출되는 함수 구분
         if (_scene.name.Equals("ProgrammingScene"))
         {
             InitInGame();
@@ -63,6 +67,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
         }
     }
 
+    /// <summary>
+    /// 메인 메뉴에서 초기화
+    /// </summary>
     private void InitMenu()
     {
         audioMng = FindFirstObjectByType<AudioManager>();
@@ -71,6 +78,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
         InitMenuManager();
     }
 
+    /// <summary>
+    /// 게임 씬에서 초기화
+    /// </summary>
     private void InitInGame()
     {
         selectMng = FindFirstObjectByType<SelectableObjectManager>();
@@ -92,6 +102,10 @@ public class GameManager : MonoBehaviour, IPauseSubject
         RegistObserver();
     }
 
+    /// <summary>
+    /// 화면 비율 전환하는 함수
+    /// </summary>
+    /// <param name="_isFullHD"></param>
     public static void ChangeDisplayFullHD(bool _isFullHD)
     {
         isFullHD = _isFullHD;
@@ -101,6 +115,10 @@ public class GameManager : MonoBehaviour, IPauseSubject
             Screen.SetResolution(1600, 1000, isFullScreen);
     }
 
+    /// <summary>
+    /// 전체화면 전환시키는 함수
+    /// </summary>
+    /// <param name="_isFullScreen"></param>
     public static void ToggleFullscreen(bool _isFullScreen)
     {
         isFullScreen = _isFullScreen;
@@ -110,12 +128,19 @@ public class GameManager : MonoBehaviour, IPauseSubject
             Screen.SetResolution(1600, 1000, isFullScreen);
     }
 
+    /// <summary>
+    /// 메인메뉴 씬에서 매니저들 초기화
+    /// </summary>
     private void InitMenuManager()
     {
         audioMng.Init();
         loadSceneMng.Init();
         mainMenuMng.Init(isFullHD, isFullScreen);
     }
+
+    /// <summary>
+    /// 게임 씬에서 매니저들 초기화
+    /// </summary>
     private void InitInGameManager()
     {
         cameraMng.Init();
@@ -139,6 +164,9 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     }
 
+    /// <summary>
+    /// 각 커맨드 배열에 커맨드 할당
+    /// </summary>
     private void InitCommandList()
     {
         ArrayUnitFuncButtonCommand.Add(EUnitFuncButtonCommand.CANCLE, new CommandUnitCancle(inputMng));
@@ -237,6 +265,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
         ArrayCheckNodeBuildableCommand.Add(ECheckNodeBuildable.CHECK_NODE_BUILDABLE_UNIT, new CommandCheckNodeBuildable(pathMng));
     }
 
+
     private void TriggerDebugMode()
     {
         isDebugMode = !isDebugMode;
@@ -259,6 +288,11 @@ public class GameManager : MonoBehaviour, IPauseSubject
         mainBase.Init(0);
         return mainBase;
     }
+
+    /// <summary>
+    /// 유닛 선택시 해당 유닛의 정보 호출
+    /// </summary>
+    /// <param name="_selectObjectType"></param>
     private void UnitSelect(EObjectType _selectObjectType)
     {
         uiMng.ShowFuncButton(_selectObjectType);
@@ -281,10 +315,11 @@ public class GameManager : MonoBehaviour, IPauseSubject
             pauseObserverList[i].CheckPause(isPause);
     }
 
+
     [SerializeField]
-    private float worldSizeX = 100f; // ???????????? ?????????????????
+    private float worldSizeX = 100f;
     [SerializeField]
-    private float worldSizeY = 100f; // ???????????? ??????????????????
+    private float worldSizeY = 100f; 
     [SerializeField]
     private Texture2D customCursor = null;
 
@@ -303,7 +338,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private AudioManager audioMng = null;
     private MainMenuManager mainMenuMng = null;
     private LoadSceneManager loadSceneMng = null;
-    private EAudioType_BGM audioType;
 
     private PF_Grid grid = null;
     private Transform mainBaseTr = null;

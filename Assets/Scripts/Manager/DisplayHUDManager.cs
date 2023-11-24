@@ -32,6 +32,11 @@ public class DisplayHUDManager : MonoBehaviour
         canvasTooltip.Init();
         canvasAlert.Init();
 
+        AddCommand();
+    }
+
+    private void AddCommand()
+    {
         ArrayHUDCommand.Add(EHUDCommand.INIT_WAVE_TIME, new CommandInitWaveTime(canvasWaveInfo));
         ArrayHUDCommand.Add(EHUDCommand.UPDATE_WAVE_TIME, new CommandUpdateWaveTime(canvasWaveInfo));
 

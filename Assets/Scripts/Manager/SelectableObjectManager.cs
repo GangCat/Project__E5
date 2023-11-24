@@ -706,14 +706,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void Stop()
     {
-        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Stop();
     }
 
     public void Hold()
     {
-        AudioManager.instance.PlayAudio_UI(objectType); // CLICK Audio
+        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Hold();
     }

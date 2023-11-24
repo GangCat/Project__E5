@@ -18,7 +18,7 @@ public class CommandBuildConfirm : Command
             inputMng.IsBuildOperation = false;
             curMng.BuildStructure(buildMng.CurStructureType());
     
-            AudioManager.instance.PlayAudio_Build(objectType);
+            AudioManager.instance.PlayAudio_Build();
         }
     }
 

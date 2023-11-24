@@ -446,12 +446,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
             {
                 if (IsObjectBlocked())
                 {
-                    //stateMachine.SetWaitForNewPath(true);
-                    //curWayNode = GetNearWalkableNode(curWayNode);
-                    //yield return new WaitForSeconds(0.1f);
-                    //hasTargetNode = true;
-                    //stateMachine.SetWaitForNewPath(false);
-
                     curWayNode = null;
                     stateMachine.SetWaitForNewPath(true);
                     RequestPath(transform.position, targetPos);
@@ -459,13 +453,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     while (curWayNode == null)
                         yield return new WaitForSeconds(0.05f);
 
-                    //hasTargetNode = true;
                     stateMachine.SetWaitForNewPath(false);
-
-                    //stateMachine.SetWaitForNewPath(true);
-                    //yield return new WaitForSeconds(0.5f);
-                    //stateMachine.SetWaitForNewPath(false);
-
                 }
             }
 
@@ -479,11 +467,6 @@ public class FriendlyObject : SelectableObject, ISubscriber
                     yield return new WaitForSeconds(0.05f);
 
                 stateMachine.SetWaitForNewPath(false);
-
-                //stateMachine.SetWaitForNewPath(true);
-                //curWayNode = GetNearWalkableNode(curWayNode);
-                //yield return new WaitForSeconds(0.1f);
-                //stateMachine.SetWaitForNewPath(false);
             }
 
 

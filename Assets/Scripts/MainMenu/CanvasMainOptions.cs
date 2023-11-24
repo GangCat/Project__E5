@@ -9,7 +9,7 @@ public class CanvasMainOptions : CanvasMenuOptions
         buttonGraphic.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 HideAllOption();
                 DisplayGraphicOption();
             });
@@ -17,7 +17,7 @@ public class CanvasMainOptions : CanvasMenuOptions
         buttonSound.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 HideAllOption();
                 DisplaySoundOption();
             });
@@ -25,7 +25,7 @@ public class CanvasMainOptions : CanvasMenuOptions
         buttonReturnMenu.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 SetActive(false);
             });
 

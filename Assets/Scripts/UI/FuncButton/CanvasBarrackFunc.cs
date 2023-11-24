@@ -30,10 +30,10 @@ public class CanvasBarrackFunc : CanvasBase
 
     public override void DisplayCanvas()
     {
-        arrBarrackFuncBtn[(int)EBarrackFuncKey.UPGRADE_RANGED_DMG].SetCost((int)CurrencyManager.UpgradeUnitCost(EUnitUpgradeType.RANGED_UNIT_DMG));
-        arrBarrackFuncBtn[(int)EBarrackFuncKey.UPGRADE_RANGED_HP].SetCost((int)CurrencyManager.UpgradeUnitCost(EUnitUpgradeType.RANGED_UNIT_HP));
-        arrBarrackFuncBtn[(int)EBarrackFuncKey.UPGRADE_MELEE_DMG].SetCost((int)CurrencyManager.UpgradeUnitCost(EUnitUpgradeType.MELEE_UNIT_DMG));
-        arrBarrackFuncBtn[(int)EBarrackFuncKey.UPGRADE_MELEE_HP].SetCost((int)CurrencyManager.UpgradeUnitCost(EUnitUpgradeType.MELEE_UNIT_HP));
+        arrBarrackFuncBtn[(int)EBarrackFuncKey.UPGRADE_RANGED_DMG].SetCost((int)CurrencyManager.GetUpgradeUnitCost(EUnitUpgradeType.RANGED_UNIT_DMG));
+        arrBarrackFuncBtn[(int)EBarrackFuncKey.UPGRADE_RANGED_HP].SetCost((int)CurrencyManager.GetUpgradeUnitCost(EUnitUpgradeType.RANGED_UNIT_HP));
+        arrBarrackFuncBtn[(int)EBarrackFuncKey.UPGRADE_MELEE_DMG].SetCost((int)CurrencyManager.GetUpgradeUnitCost(EUnitUpgradeType.MELEE_UNIT_DMG));
+        arrBarrackFuncBtn[(int)EBarrackFuncKey.UPGRADE_MELEE_HP].SetCost((int)CurrencyManager.GetUpgradeUnitCost(EUnitUpgradeType.MELEE_UNIT_HP));
         base.DisplayCanvas();
     }
 

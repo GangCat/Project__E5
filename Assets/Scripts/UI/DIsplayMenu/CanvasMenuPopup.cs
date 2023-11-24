@@ -10,28 +10,28 @@ public class CanvasMenuPopup : CanvasBase
         btnPause.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 ArrayPauseCommand.Use(EPauseCommand.TOGGLE_PAUSE);
             });
 
         btnOptions.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 ArrayMenuCommand.Use(EMenuCommand.DISPLAY_OPTION);
             });
 
         btnGameExit.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 reCheckGo.SetActive(true);
             });
 
         btnGameReturn.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 ArrayMenuCommand.Use(EMenuCommand.HIDE_MENU);
             });
 
@@ -45,7 +45,7 @@ public class CanvasMenuPopup : CanvasBase
         btnGameExitCancle.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 reCheckGo.SetActive(false);
             });
 

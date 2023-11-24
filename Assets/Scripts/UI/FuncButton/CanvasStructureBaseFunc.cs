@@ -43,7 +43,7 @@ public class CanvasStructureBaseFunc : CanvasBase
     {
         SetActive(true);
         buttonUpgradeStructure.SetCost(
-            (int)CurrencyManager.UpgradeCost(SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType()) * 
+            (int)CurrencyManager.GetUpgradeCost(SelectableObjectManager.GetFirstSelectedObjectInList().GetObjectType()) * 
             SelectableObjectManager.GetFirstSelectedObjectInList().GetComponent<Structure>().UpgradeLevel
         );
         HideCancleButton();
@@ -63,8 +63,8 @@ public class CanvasStructureBaseFunc : CanvasBase
 
     public void DisplayMainbaseFunc()
     {
-        arrStructureFuncBtn[(int)EStructureFuncKey.UPGRADE_ENERGY_SUPPLY].SetCost((int)CurrencyManager.UpgradeETCCost(EUpgradeETCType.ENERGY_SUPPLY));
-        arrStructureFuncBtn[(int)EStructureFuncKey.UPGRADE_POPULATION_MAX].SetCost((int)CurrencyManager.UpgradeETCCost(EUpgradeETCType.CURRENT_MAX_POPULATION));
+        arrStructureFuncBtn[(int)EStructureFuncKey.UPGRADE_ENERGY_SUPPLY].SetCost((int)CurrencyManager.GetUpgradeETCCost(EUpgradeETCType.ENERGY_SUPPLY));
+        arrStructureFuncBtn[(int)EStructureFuncKey.UPGRADE_POPULATION_MAX].SetCost((int)CurrencyManager.GetUpgradeETCCost(EUpgradeETCType.CURRENT_MAX_POPULATION));
 
         arrStructureFuncBtn[(int)EStructureFuncKey.UPGRADE_ENERGY_SUPPLY].SetActive(true);
         arrStructureFuncBtn[(int)EStructureFuncKey.UPGRADE_POPULATION_MAX].SetActive(true);

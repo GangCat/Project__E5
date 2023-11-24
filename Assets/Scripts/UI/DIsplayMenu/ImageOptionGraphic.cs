@@ -12,7 +12,7 @@ public class ImageOptionGraphic : MenuImageBase
             {
                 if (_value.Equals(GameManager.IsFullHD))
                     return;
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 GameManager.ChangeDisplayFullHD(_value);
             });
 
@@ -21,7 +21,7 @@ public class ImageOptionGraphic : MenuImageBase
             {
                 if (_value.Equals(GameManager.IsFullScreen))
                     return;
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 GameManager.ToggleFullscreen(_value);
             });
 

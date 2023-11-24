@@ -12,6 +12,7 @@ public class UnitHero : MonoBehaviour
         col = GetComponentInChildren<CollectCoreCollider>();
         myObj.Init();
         col.Init(effectCtrl);
+        statusHp.Init();
     }
 
     public void Dead()
@@ -25,16 +26,14 @@ public class UnitHero : MonoBehaviour
         gameObject.SetActive(true);
         myObj.SetIdleState();
         statusHp.Init();
-        //effectCtrl.EffectOn(3);
-    }
-
-    private void OnEnable()
-    {
         StartCoroutine("HealCoroutine");
+        //effectCtrl.EffectOn(3);
     }
 
     private IEnumerator HealCoroutine()
     {
+        yield return null;
+
         while (true)
         {
             statusHp.IncreaseCurHp(healAmount);

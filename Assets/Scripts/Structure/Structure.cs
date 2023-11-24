@@ -289,7 +289,7 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected virtual void UpdateInfo()
     {
         ArrayUICommand.Use(EUICommand.UPDATE_INFO_UI);
-        ArrayHUDCommand.Use(EHUDCommand.UPDATE_TOOLTIP_UPGRADE_COST, (int)CurrencyManager.UpgradeCost(myObj.GetObjectType()) * upgradeLevel);
+        ArrayHUDCommand.Use(EHUDCommand.UPDATE_TOOLTIP_UPGRADE_COST, (int)CurrencyManager.GetUpgradeCost(myObj.GetObjectType()) * upgradeLevel);
     }
 
     protected virtual IEnumerator CheckBuildableCoroutine()

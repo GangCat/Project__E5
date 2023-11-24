@@ -200,7 +200,7 @@ public class AudioManager : MonoBehaviour
         }
 
         // Audio Play 조건 시작
-        int Idx = UnityEngine.Random.Range(0, 3); // Generates 0, 1, 2, or 3
+        int Idx = UnityEngine.Random.Range(0, 3); // Generates 0, 1, 2
 
         switch (_audioType)
         {
@@ -247,14 +247,9 @@ public class AudioManager : MonoBehaviour
     }
     
     
-    public void PlayAudio_Build(EObjectType _objectType)
+    public void PlayAudio_Build()
     {
         AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.BUILD);
-    }
-    
-    public void PlayAudio_Destroy2(EObjectType _objectType)
-    {
-        AudioPlayer_Struct.instance.PlayAudio(AudioPlayer_Struct.EAudioType_Struct.DESTROY);
     }
     
     public void PlayAudio_Destroy(EObjectType _objectType)
@@ -298,8 +293,6 @@ public class AudioManager : MonoBehaviour
     
     public void PlayAudio_Misc(EAudioType_Misc _audioType)
     {
-        int Idx = UnityEngine.Random.Range(0, 3); // Generates 0, 1, 2, or 3
-
         switch (_audioType)
         {
             case EAudioType_Misc.NUCLEAR_EXPLOSION:
@@ -314,24 +307,9 @@ public class AudioManager : MonoBehaviour
     }
     
         
-    public void PlayAudio_UI(EObjectType _objectType)
+    public void PlayAudio_UI()
     {
         AudioPlayer_UI.instance.PlayAudio(AudioPlayer_UI.EAudioType_UI.CLICK);
-    }
-    
-    public void PlayAudio_BGM()
-    {
-        AudioPlayer_BGM.instance.PlayAudio();
-    }
-
-    public void PlayAudio_BGM_WithFade(float _fadeDuration = 1.0f)
-    {
-        AudioPlayer_BGM.instance.PlayAudio();
-    }
-    
-    public void StopAudio_BGM()
-    {
-        AudioPlayer_BGM.instance.StopAudio();
     }
     
     public void StopAudio_BGM_WithFade(float _fadeDuration = 1.0f)
@@ -339,24 +317,9 @@ public class AudioManager : MonoBehaviour
         AudioPlayer_BGM.instance.StopAudioWithFade(_fadeDuration);
     }
     
-    public void PlayAudio_WaveBGM()
-    {
-        AudioPlayer_WaveBGM.instance.PlayAudio();
-    }
-
     public void PlayAudio_WaveBGM_WithDelay(float delay = 1.0f)
     {
         AudioPlayer_WaveBGM.instance.PlayAudioWithDelay(delay);
-    }
-    
-    public void StopAudio_WaveBGM()
-    {
-        AudioPlayer_WaveBGM.instance.StopAudio();
-    }
-    
-    public void StopAudio_WaveBGM_WithFade(float _fadeDuration = 1.0f)
-    {
-        AudioPlayer_WaveBGM.instance.StopAudioWithFade(_fadeDuration);
     }
 
     public void PlayAudio_BGM_MainMenu()
@@ -366,8 +329,6 @@ public class AudioManager : MonoBehaviour
     
     private void OnSceneLoaded(Scene _scene, LoadSceneMode _mode)
     {
-
-
         if (_scene.name.Equals("ProgrammingScene"))
         {
             // 메인메뉴 BGM STOP
@@ -382,21 +343,7 @@ public class AudioManager : MonoBehaviour
             AudioPlayer_BGM.instance.StopAudio();
 
             AudioPlayer_BGM.instance.PlayAudio_MainMenu();
-
-
-            //if (instance != null)
-            //{
-            //    // 게임화면 BGM 끄고
-            //    AudioManager.instance.StopAudio_BGM();
-            //}
-
-            // if (instance == null) return;
-            // 메인메뉴 BGM ON
-            // Debug.Log("11");
-            // AudioManager.instance.PlayAudio_BGM();
-
         }
-
     }
     
     public struct AudioVolumes
@@ -440,14 +387,5 @@ public class AudioManager : MonoBehaviour
 
     private Dictionary<EAudioType_Advisor, float> lastPlayedTimes = new Dictionary<EAudioType_Advisor, float>();
     private const float COOLDOWN_TIME = 5.0f; // 예: 5초 간격으로 재생
-
-
-
-    /*
-    [Header("#BGM")]
-    [SerializeField] private AudioClip bgmClip;
-    [SerializeField] private float bgmVolume;
-    private AudioSource bgmPlayer;
-    */
 
 }

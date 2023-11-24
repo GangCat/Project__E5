@@ -12,6 +12,9 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         StartCoroutine("SupplyEnergyCoroutine");
     }
 
+    /// <summary>
+    /// 코어, 에너지 무한
+    /// </summary>
     public void MoneyInflation()
     {
         curCore = maxCore;
@@ -21,7 +24,8 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         UpdateEnergy();
     }
 
-    public static uint UpgradeCost(EObjectType _type)
+    
+    public static uint GetUpgradeCost(EObjectType _type)
     {
         switch (_type)
         {
@@ -40,7 +44,7 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
-    public static uint UpgradeUnitCost(EUnitUpgradeType _type)
+    public static uint GetUpgradeUnitCost(EUnitUpgradeType _type)
     {
         switch (_type)
         {
@@ -57,7 +61,7 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
-    public static uint UpgradeETCCost(EUpgradeETCType _type)
+    public static uint GetUpgradeETCCost(EUpgradeETCType _type)
     {
         switch (_type)
         {
@@ -70,6 +74,10 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
+    /// <summary>
+    /// 에너지 자동수급 코루틴
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator SupplyEnergyCoroutine()
     {
         float energySupplyDelay = 0f;
@@ -166,6 +174,11 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
     }
 
     #region BuildStructure
+    /// <summary>
+    /// 건설가능여부 확인
+    /// </summary>
+    /// <param name="_objType"></param>
+    /// <returns></returns>
     public bool CanBuildStructure(EObjectType _objType)
     {
         switch (_objType)
@@ -185,6 +198,10 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
+    /// <summary>
+    /// 건물 건설 시작시 호출, 에너지 소모
+    /// </summary>
+    /// <param name="_objType"></param>
     public void BuildStructure(EObjectType _objType)
     {
         switch (_objType)
@@ -209,6 +226,10 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         }
     }
 
+    /// <summary>
+    /// 건설 취소시 에너지 반환
+    /// </summary>
+    /// <param name="_objType"></param>
     public void CancleBuildStructure(EObjectType _objType)
     {
         switch (_objType)
@@ -477,6 +498,7 @@ public class CurrencyManager : MonoBehaviour, IPublisher, IPauseObserver
         isPause = _isPause;
     }
 
+    [Header("-Information")]
     [SerializeField]
     private uint energySupplyAmount = 0;
     [SerializeField]

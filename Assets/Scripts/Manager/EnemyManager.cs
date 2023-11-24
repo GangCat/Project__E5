@@ -304,7 +304,4 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private Transform[] arrBigEnemyTr = null;
     private WaitForSeconds waitOneSecond = null;
 
-    private AudioManager audioMng = null;
-    // private AudioPlayer_BGM audioType;
-    
 }

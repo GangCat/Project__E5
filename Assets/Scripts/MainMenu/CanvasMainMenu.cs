@@ -10,21 +10,21 @@ public class CanvasMainMenu : MonoBehaviour
         buttonStartGame.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 LoadSceneManager.ChangeScene("ProgrammingScene");
             });
 
         buttonOption.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 _displayOptionCallback?.Invoke();
             });
 
         buttonExit.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 DisplayExitRecheckButton();
             });
 
@@ -37,7 +37,7 @@ public class CanvasMainMenu : MonoBehaviour
         buttonExitCancle.onClick.AddListener(
             () =>
             {
-                AudioManager.instance.PlayAudio_UI(objectType);
+                AudioManager.instance.PlayAudio_UI();
                 exitReCheckGo.SetActive(false);
             });
 
