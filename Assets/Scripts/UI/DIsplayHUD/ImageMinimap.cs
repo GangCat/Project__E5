@@ -49,7 +49,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         visibleAreaTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
         visibleAreaTexture.Apply();
 
-        // 더 이상 RenderTexture를 사용하지 않을 때 메모리에서 해제합니다.
+        // 더 이상 RenderTexture를 사용하지 않을 때 메모리에서 해제.
         RenderTexture.active = null;
         Destroy(rt);
     }
@@ -188,19 +188,14 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
 
-        // ���콺 Ŭ�� ��ġ�� RectTransform�� ���� ��ǥ��� ��ȯ�մϴ�.
-        Vector2 localMousePosition = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, null, out localMousePosition);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, null, out var localMousePosition);
 
-        // �̴ϸ��� ũ���� ���� ����մϴ�.
         float halfWidth = rectTransform.rect.width * 0.5f;
         float halfHeight = rectTransform.rect.height * 0.5f;
 
-        // �߽��� (0,0)���� �ϰ� ���ϴ�(-0.5, -0.5), �ֿ���(0.5, -0.5), �ֻ��(0.5, 0.5), ������(-0.5, 0.5)�� ���� ������� ��ǥ�� ����մϴ�.
         float relativeX = (localMousePosition.x + halfWidth) / rectTransform.rect.width - 0.5f;
         float relativeY = (localMousePosition.y + halfHeight) / rectTransform.rect.height - 0.5f;
 
-        // ��� ���� (0,0)�� ���ϴ�, (1,1)�� �����̶�� �����ϰ� ����մϴ�.
         if (eventData.button.Equals(PointerEventData.InputButton.Left))
         {
             foreach (IMinimapObserver ob in listObserver)
@@ -215,34 +210,34 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
     private Vector2 WorldToMinimapPosition(Vector3 worldPosition, RectTransform minimapRectTransform, float worldSizeX, float worldSizeY)
     {
-        // 월드 좌표를 미니맵상의 상대 좌표로 변환합니다.
+        // 월드 좌표를 미니맵상의 상대 좌표로 변환.
         float relativeX = (worldPosition.x / worldSizeX) + 0.5f;
         float relativeY = (worldPosition.z / worldSizeY) + 0.5f;
 
-        // 미니맵 RectTransform의 크기를 고려하여 실제 화면 좌표로 변환합니다.
+        // 미니맵 RectTransform의 크기를 고려하여 실제 화면 좌표로 변환.
         float minX = minimapRectTransform.rect.xMin + minimapRectTransform.anchoredPosition.x;
         float maxX = minimapRectTransform.rect.xMax + minimapRectTransform.anchoredPosition.x;
         float minY = minimapRectTransform.rect.yMin + minimapRectTransform.anchoredPosition.y;
         float maxY = minimapRectTransform.rect.yMax + minimapRectTransform.anchoredPosition.y;
 
-        // 미니맵상의 상대 좌표를 실제 화면 좌표로 매핑합니다.
+        // 미니맵상의 상대 좌표를 실제 화면 좌표로 매핑.
         float mappedX = Mathf.Lerp(minX, maxX, relativeX);
         float mappedY = Mathf.Lerp(minY, maxY, relativeY);
 
-        // 실제 화면 좌표를 반환합니다.
-        //return new Vector2(mappedX, mappedY);
+        // 실제 화면 좌표로 변환해서 반환.
         return RotatePointAroundPivot(new Vector2(mappedX, mappedY), minimapRectTransform.rect.center, 45f);
     }
 
     public Vector2 RotatePointAroundPivot(Vector2 point, Vector2 pivot, float angle)
     {
-        // 앵커를 중심으로 회전하는 Quaternion을 생성합니다.
+        // 앵커를 중심으로 회전하는 Quaternion을 생성.
+        // 현재는 45도 고정이긴 함.
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
 
-        // 포인트를 앵커를 중심으로 회전합니다.
+        // 해당 위치를 앵커를 중심으로 회전.
         Vector2 rotatedPoint = rotation * (point - pivot);
 
-        // 회전된 포인트를 반환합니다.
+        // 회전된 위치 반환.
         return rotatedPoint + pivot;
     }
 

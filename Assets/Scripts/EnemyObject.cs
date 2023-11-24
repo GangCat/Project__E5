@@ -31,7 +31,7 @@ public class EnemyObject : SelectableObject
             effectCtrl.EffectOn(0);
 
         if (isSelect)
-            SelectableObjectManager.UpdateHp(-3);
+            SelectableObjectManager.UpdateUnitHp(-3);
         //else if (isSelect)
         //{
         //    SelectableObjectManager.UpdateHp(listIdx);

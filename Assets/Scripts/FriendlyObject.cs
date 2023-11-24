@@ -176,7 +176,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
         else
         {
             if (isSelect)
-                SelectableObjectManager.UpdateHp(listIdx);
+                SelectableObjectManager.UpdateUnitHp(listIdx);
 
             if (effectCtrl && !unitType.Equals(EUnitType.NONE))
                 effectCtrl.EffectOn(0);

@@ -14,6 +14,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
         stateMachine = GetComponent<StateMachine>();
         statusHp = GetComponent<StatusHp>();
+
         // 이거 메모리풀이라서 애들 비활성화될 때 unselect당하고 비활성화해서 다시 활성화할 때 못찾아서 에러나는거임.
         if (!displayCircleObject)
             displayCircleObject = GetComponentInChildren<PickObjectDisplay>();
@@ -38,6 +39,7 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
     public int MaxHp => statusHp.MaxHp;
     public float AttRange => attackRange;
     public float GetCurHpPercent => statusHp.GetCurHpPercent;
+    // 드래그할 때 마우스 좌클릭을 아직 떼지 않은 채로 선택되었을 경우 true
     public bool IsTempSelect { get; set; }
     public float AttDmg
     {
@@ -74,16 +76,18 @@ public class SelectableObject : MonoBehaviour, IDamageable, IGetObjectType, IPau
 
     public void ActivateCircle()
     {
+        if (displayCircleObject == null)
+            return;
+
         displayCircleObject.SetActive(true);
-        //if(displayCircleObject == null)
-        //    displayCircleObject = Instantiate(selectDisplayCircle, transform.position, Quaternion.identity, transform);
     }
 
     public void DeActivateCircle()
     {
+        if (displayCircleObject == null)
+            return;
+
         displayCircleObject.SetActive(false);
-        //if (displayCircleObject != null)
-        //    Destroy(displayCircleObject);
     }
 
     public EObjectType GetObjectType()

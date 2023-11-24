@@ -9,7 +9,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         grid = _grid;
         mainBasePos = _mainBasePos;
-        waitDotZeroOne = new WaitForSeconds(0.05f);
+        waitDotZeroFiveSecond = new WaitForSeconds(0.05f);
         waitOneSecond = new WaitForSeconds(1f);
 
         waveEnemyHolder = GetComponentInChildren<WaveEnemyHolder>().GetTransform();
@@ -22,7 +22,7 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
 
         ArrayHUDCommand.Use(EHUDCommand.INIT_WAVE_TIME, bigWaveDelay_sec);
         SpawnMapEnemy();
-        StartCoroutine("WaveControll");
+        StartCoroutine("WaveControl");
         
     }
 
@@ -31,66 +31,106 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         bigWaveTimeDelay = bigWaveDelay_sec;
     }
 
-    private IEnumerator WaveControll()
+    public void SpawnWaveEnemy(Vector3 _targetPos, int _count)
+    {
+        StartCoroutine(SpawnWaveEnemyCoroutine(_targetPos, _count));
+    }
+
+    // 적 유닛이 사망할 경우 이펙트 출력 후 비활성화, Wave
+    public void DeactivateWaveEnemy(GameObject _removeGo, int _waveEnemyIdx)
+    {
+        DisplayEnemyDeadEffect(_removeGo.transform.position);
+        memoryPoolWave.DeactivatePoolItemWithIdx(_removeGo, _waveEnemyIdx);
+    }
+
+    // 적 유닛이 사망할 경우 이펙트 출력 후 비활성화, Map
+    public void DeactivateMapEnemy(GameObject _removeGo, int _mapEnemyIdx)
+    {
+        DisplayEnemyDeadEffect(_removeGo.transform.position);
+        memoryPoolMap.DeactivatePoolItemWithIdx(_removeGo, _mapEnemyIdx);
+    }
+
+    public void CheckPause(bool _isPause)
+    {
+        isPause = _isPause;
+    }
+
+
+    private IEnumerator WaveControl()
     {
         bigWaveCnt = 0;
         bigWaveTimeDelay = 0f;
         smallWaveTimeDelay = 0f;
-        
 
         while (bigWaveCnt < totalBigWaveCnt)
         {
+            // 빅 웨이브 시간되기 전까지 반복할 코루틴
             while (bigWaveTimeDelay <= bigWaveDelay_sec)
             {
+                // 일시정지일 경우 대기
                 while (isPause)
                     yield return null;
 
                 ArrayHUDCommand.Use(EHUDCommand.UPDATE_WAVE_TIME, bigWaveDelay_sec - bigWaveTimeDelay);
-                if (smallWaveCnt < 2 && smallWaveTimeDelay >= smallWaveDelay_sec)
-                {
-                    SpawnWaveEnemy(arrWaveStartPoint[bigWaveCnt].GetPos, 20 + bigWaveCnt * 10);
-                    smallWaveTimeDelay = 0f;
+                SpawnSmallWave();
 
-                    ++smallWaveCnt;
-                }
-
-                yield return new WaitForSeconds(1f);
+                yield return waitOneSecond;
                 bigWaveTimeDelay += 1f;
                 smallWaveTimeDelay += 1f;
             }
 
+            // 빅 웨이브 시작
             ++bigWaveCnt;
-            ArrayAlertCommand.Use(EAlertCommand.WAVE_START);
             // 웨이브 사운드 출력
+            ArrayAlertCommand.Use(EAlertCommand.WAVE_START);
 
+            // 마지막 웨이브일 경우 코루틴 탈출
             if (bigWaveCnt.Equals(totalBigWaveCnt))
             {
                 FinalWaveStart();
                 yield break;
             }
 
-            for (int i = 0; i < bigWaveCnt; ++i)
-            {
-                SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, /*bigWaveCnt * */100);
-                bigWaveTimeDelay = 0f;
-                smallWaveTimeDelay = 0f;
-                smallWaveCnt = 0;
-
-
-                GameObject bigGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
-                EnemyObject enemyObj = bigGo.GetComponent<EnemyObject>();
-                enemyObj.Init();
-                enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
-                enemyObj.MoveAttack(mainBasePos);
-                arrBigEnemyTr[i] = bigGo.transform;
-
-            }
-
+            SpawnBigWave();
             StartCoroutine("UpdateEnemyCntCoroutine");
             ArrayHUDMinimapCommand.Use(EHUDMinimapCommand.BIG_ENEMY_SIGNAL, arrBigEnemyTr);
         }
     }
 
+    private void SpawnSmallWave()
+    {
+        if (smallWaveCnt < 2 && smallWaveTimeDelay >= smallWaveDelay_sec)
+        {
+            SpawnWaveEnemy(arrWaveStartPoint[bigWaveCnt].GetPos, 20 + bigWaveCnt * 10);
+            smallWaveTimeDelay = 0f;
+
+            ++smallWaveCnt;
+        }
+    }
+
+    private void SpawnBigWave()
+    {
+        for (int i = 0; i < bigWaveCnt; ++i)
+        {
+            SpawnWaveEnemy(arrWaveStartPoint[i].GetPos, /*bigWaveCnt * */100);
+            bigWaveTimeDelay = 0f;
+            smallWaveTimeDelay = 0f;
+            smallWaveCnt = 0;
+
+
+            GameObject bigEnemyGo = Instantiate(enemyBigPrefab, arrWaveStartPoint[i].GetPos, Quaternion.identity);
+            EnemyObject enemyObj = bigEnemyGo.GetComponent<EnemyObject>();
+            enemyObj.Init();
+            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
+            enemyObj.MoveAttack(mainBasePos);
+            arrBigEnemyTr[i] = bigEnemyGo.transform;
+        }
+    }
+
+    /// <summary>
+    /// 빅 웨이브 남은 적 수를 알려주기 위한 코루틴
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator UpdateEnemyCntCoroutine()
     {
         ArrayHUDCommand.Use(EHUDCommand.INIT_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt + arrBigEnemyTr.Length);
@@ -106,8 +146,9 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         ArrayHUDCommand.Use(EHUDCommand.WAVE_FINISH);
     }
 
-    private EnemyObject[] arrAllMapEnemy = null;
-
+    /// <summary>
+    /// 최종 웨이브 시작, 맵에 있는 적들도 모두 아군 기지로 몰려옴
+    /// </summary>
     private void FinalWaveStart()
     {
         AudioManager.instance.StopAudio_BGM_WithFade(3.0f);
@@ -136,6 +177,10 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         StartCoroutine("CheckIsGameClearCoroutine");
     }
 
+    /// <summary>
+    /// 메모리 풀에 한 마리도 활성화된 적이 남아있지 않으면 승리
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator CheckIsGameClearCoroutine()
     {
         ArrayHUDCommand.Use(EHUDCommand.INIT_REMAIN_ENEMY_CNT, memoryPoolWave.ActiveCnt + memoryPoolMap.ActiveCnt + arrBigEnemyTr.Length);
@@ -155,65 +200,10 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
         }
     }
 
-    public void SpawnWaveEnemy(Vector3 _targetPos, int _count)
-    {
-        StartCoroutine(SpawnWaveEnemyCoroutine(_targetPos, _count));
-    }
 
     private void SpawnMapEnemy()
     {
         StartCoroutine("SpawnMapEnemyCoroutine");
-    }
-
-    public void DeactivateWaveEnemy(GameObject _removeGo, int _waveEnemyIdx)
-    {
-        DisplayEnemyDeadEffect(_removeGo.transform.position);
-        memoryPoolWave.DeactivatePoolItemWithIdx(_removeGo, _waveEnemyIdx);
-    }
-
-    public void DeactivateMapEnemy(GameObject _removeGo, int _mapEnemyIdx)
-    {
-        DisplayEnemyDeadEffect(_removeGo.transform.position);
-        memoryPoolMap.DeactivatePoolItemWithIdx(_removeGo, _mapEnemyIdx);
-    }
-
-    private void DisplayEnemyDeadEffect(Vector3 _enemyPos)
-    {
-        GameObject effectGo = memoryPoolEnemyDeadEffect.ActivatePoolItem(5, transform);
-        effectGo.GetComponent<EffectUnitDead>().Init(new Vector3(_enemyPos.x, _enemyPos.y + 1f, _enemyPos.z), DeactivateEffect);
-    }
-
-    private void DeactivateEffect(Transform _tr)
-    {
-        memoryPoolEnemyDeadEffect.DeactivatePoolItem(_tr.gameObject);
-    }
-
-    private IEnumerator SpawnWaveEnemyCoroutine(Vector3 _spawnPos, int _count)
-    {
-        int unitCnt = 0;
-        //List<EnemyObject> tempList = new List<EnemyObject>();
-
-        while (unitCnt < _count)
-        {
-            Vector3 spawnPos = _spawnPos + Functions.GetRandomPosition(WaveOuterCircleRad, WaveInnerCircleRad);
-            PF_Node spawnNode = grid.GetNodeFromWorldPoint(spawnPos);
-            if (!spawnNode.walkable)
-                continue;
-
-            GameObject enemyGo = memoryPoolWave.ActivatePoolItemWithIdx(waveEnemyIdx, 5, waveEnemyHolder);
-            EnemyObject enemyObj = enemyGo.GetComponent<EnemyObject>();
-            enemyObj.Position = spawnPos;
-            enemyObj.Init();
-            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
-            //tempList.Add(enemyObj);
-            enemyObj.MoveAttack(mainBasePos);
-            ++waveEnemyIdx;
-            ++unitCnt;
-            yield return waitDotZeroOne;
-        }
-
-        //SelectableObjectManager.MoveWaveEnemy(wayPoint.position, tempList.ToArray());
-        //tempList.Clear();
     }
 
     private IEnumerator SpawnMapEnemyCoroutine()
@@ -236,15 +226,55 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
                 ++mapEnemyIdx;
                 ++unitCnt;
             }
-            yield return waitDotZeroOne;
+            yield return waitDotZeroFiveSecond;
         }
     }
 
-    public void CheckPause(bool _isPause)
+    private void DisplayEnemyDeadEffect(Vector3 _enemyPos)
     {
-        isPause = _isPause;
+        GameObject effectGo = memoryPoolEnemyDeadEffect.ActivatePoolItem(5, transform);
+        effectGo.GetComponent<EffectUnitDead>().Init(new Vector3(_enemyPos.x, _enemyPos.y + 1f, _enemyPos.z), DeactivateEffect);
     }
 
+    private void DeactivateEffect(Transform _tr)
+    {
+        memoryPoolEnemyDeadEffect.DeactivatePoolItem(_tr.gameObject);
+    }
+
+    private IEnumerator SpawnWaveEnemyCoroutine(Vector3 _spawnPos, int _count)
+    {
+        int unitCnt = 0;
+        //List<EnemyObject> tempList = new List<EnemyObject>();
+
+        // 한마리씩 소환하게 해서 부하를 줄임.
+        while (unitCnt < _count)
+        {
+            Vector3 spawnPos = _spawnPos + Functions.GetRandomPosition(WaveOuterCircleRad, WaveInnerCircleRad);
+            PF_Node spawnNode = grid.GetNodeFromWorldPoint(spawnPos);
+            if (!spawnNode.walkable)
+                continue;
+
+            GameObject enemyGo = memoryPoolWave.ActivatePoolItemWithIdx(waveEnemyIdx, 5, waveEnemyHolder);
+            EnemyObject enemyObj = enemyGo.GetComponent<EnemyObject>();
+            enemyObj.Position = spawnPos;
+            enemyObj.Init();
+            enemyObj.Init(EnemyObject.EEnemySpawnType.WAVE_SPAWN, waveEnemyIdx, mainBasePos);
+            //tempList.Add(enemyObj);
+            enemyObj.MoveAttack(mainBasePos);
+            ++waveEnemyIdx;
+            ++unitCnt;
+            yield return waitDotZeroFiveSecond;
+        }
+
+        //SelectableObjectManager.MoveWaveEnemy(wayPoint.position, tempList.ToArray());
+        //tempList.Clear();
+    }
+
+   
+
+ 
+
+    [Header("-Information")]
     [SerializeField]
     private GameObject enemySmallPrefab = null;
     [SerializeField]
@@ -256,7 +286,6 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     [SerializeField]
     private Transform wayPoint = null;
 
-    private WaitForSeconds waitDotZeroOne = null;
 
     [Header("-Enemy Map Random Spawn(outer > inner)")]
     [SerializeField]
@@ -303,5 +332,6 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private MemoryPool memoryPoolEnemyDeadEffect = null;
     private Transform[] arrBigEnemyTr = null;
     private WaitForSeconds waitOneSecond = null;
-
+    private WaitForSeconds waitDotZeroFiveSecond = null;
+    private EnemyObject[] arrAllMapEnemy = null;
 }

@@ -4079,7 +4079,7 @@ GameObject:
   - component: {fileID: 264638033}
   - component: {fileID: 264638034}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ImageFog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19252,7 +19252,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1068185601}
   - component: {fileID: 1068185600}
-  - component: {fileID: 1068185602}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -19292,27 +19291,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1068185602
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068185599}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1071011503
 GameObject:
   m_ObjectHideFlags: 0
@@ -19459,7 +19437,7 @@ GameObject:
   - component: {fileID: 1076908859}
   - component: {fileID: 1076908862}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Canvas_StateIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32641,7 +32619,7 @@ GameObject:
   - component: {fileID: 1856281169}
   - component: {fileID: 1856281168}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ImageBuffer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

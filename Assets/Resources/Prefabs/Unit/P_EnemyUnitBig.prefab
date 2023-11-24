@@ -101,7 +101,7 @@ MonoBehaviour:
     moveSpeed: 1
     attRate: 10
     attDmg: 100
-    objectType: 9
+    objectType: 10
     ProjectileGo: {fileID: 1238843893459588, guid: 439348f1665ce9140a707440dfbec58e,
       type: 3}
     projectileSpawnTr: {fileID: 4360270758247271003}

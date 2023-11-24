@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  maxHp: 200
+  maxHp: 80
 --- !u!114 &4815547369824481657
 MonoBehaviour:
   m_ObjectHideFlags: 0

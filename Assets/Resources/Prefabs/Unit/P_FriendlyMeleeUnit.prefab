@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  maxHp: 200
+  maxHp: 160
 --- !u!114 &3650822248373926283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
     effectCtrl: {fileID: 0}
     moveSpeed: 3
     attRate: 0.2
-    attDmg: 4
+    attDmg: 8
     objectType: 0
     ProjectileGo: {fileID: 0}
     projectileSpawnTr: {fileID: 0}

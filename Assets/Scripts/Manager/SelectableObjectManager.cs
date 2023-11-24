@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -301,7 +302,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         foreach (SelectableObject obj in listSelectedFriendlyObject)
             obj.unSelect();
 
-        if (enemyCurSelected)
+        if (enemyCurSelected != null)
         {
             enemyCurSelected.unSelect();
             enemyCurSelected = null;
@@ -487,6 +488,9 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         return;
     }
 
+    // 다른 오브젝트를 선택할 경우 해당 오브젝트의 상태에 따라 UI 갱신
+    // 추후에 시간되면 기능별로(UpdateStructureInfo, UpdateUnitInfo) 함수 만들어서 구분할 것.
+    // SelectFinish에 넣을 수 있도록 수정해 볼 것
     public void UpdateInfo()
     {
         ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
@@ -597,14 +601,14 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_STRUCTURE_INFO, tempObj.GetObjectName, tempObj.GetObjectDescription, _structure.UpgradeLevel);
     }
 
-    public static void UpdateHp(int _listIdx = -2)
+    public static void UpdateUnitHp(int _listIdx)
     {
         if (_listIdx.Equals(-3))
         {
             unitInfoContainer.curHpPercent = enemyCurSelected.GetCurHpPercent;
             return;
         }
-        if (_listIdx.Equals(-2))
+        else if (_listIdx.Equals(-2))
         {
             unitInfoContainer.curHpPercent = listSelectedFriendlyObject[0].GetCurHpPercent;
             return;

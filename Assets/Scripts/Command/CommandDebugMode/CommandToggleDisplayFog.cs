@@ -11,7 +11,7 @@ public class CommandToggleDisplayFog : Command
 
     public override void Execute(params object[] _objects)
     {
-        fogMng.ToggleFogCombineVisible();
+        fogMng.ToggleFogVisible();
     }
 
     private FogManager fogMng = null;
