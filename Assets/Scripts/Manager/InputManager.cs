@@ -37,33 +37,33 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     public void OnClickMoveButton()
     {
         if (isMoveClick) return;
-        isMoveClick = true;
-
         OnClickUnitCtrlButton();
+
+        isMoveClick = true;
     }
 
     public void OnClickAttackButton()
     {
         if (isAttackClick) return;
-        isAttackClick = true;
-
         OnClickUnitCtrlButton();
+
+        isAttackClick = true;
     }
 
     public void OnClickPatrolButton()
     {
         if (isPatrolClick) return;
-        isPatrolClick = true;
-
         OnClickUnitCtrlButton();
+
+        isPatrolClick = true;
     }
 
     public void OnClickLaunchNuclearButton()
     {
         if (isLaunchNuclearClick) return;
-        isLaunchNuclearClick = true;
-
         OnClickUnitCtrlButton();
+
+        isLaunchNuclearClick = true;
     }
 
     private void OnClickUnitCtrlButton()
@@ -77,10 +77,10 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     public void OnClickRallyPointButton()
     {
         if (isRallyPointClick) return;
-        isRallyPointClick = true;
-
-        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
         ClearCurFunc();
+
+        isRallyPointClick = true;
+        AudioManager.instance.PlayAudio_UI(); // CLICK Audio
         pickPosDisplayGo = Instantiate(pickPosPrefab, transform);
         ArrayStructureFuncButtonCommand.Use(EStructureButtonCommand.DISPLAY_CANCLE_BUTTON);
     }
