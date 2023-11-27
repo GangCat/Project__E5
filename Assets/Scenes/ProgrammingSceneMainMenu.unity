@@ -4578,7 +4578,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldSizeX: 128
   worldSizeY: 128
-  customCursor: {fileID: 2800000, guid: c169812d5d34873469949f2e47465473, type: 3}
 --- !u!4 &1368464823
 Transform:
   m_ObjectHideFlags: 0
