@@ -3738,7 +3738,7 @@ namespace FORGE3D
             int i;
             for (i = 0; i < editors.Length; i++)
             {
-                editors[i].needUpdateListOfTemplates = true; 
+                editors[i].needUpdateListOfTemplates = true;
             }
         }
     }

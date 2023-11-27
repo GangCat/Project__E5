@@ -136,8 +136,6 @@ public class FogManager : MonoBehaviour, IPauseObserver
     [SerializeField]
     private bool isDebugMode = false;
 
-    [SerializeField] private Image testImage = null;
-
     private Texture2D curFogTexture = null;
     private Texture2D backBufftexture = null;
 

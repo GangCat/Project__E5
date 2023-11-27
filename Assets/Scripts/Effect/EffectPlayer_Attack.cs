@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.HighDefinition;
 
 public class EffectPlayer_Attack : EffectPlayerBase
 {
-
-
     // 필요한 경우 추가 이펙트 프리팹들을 여기에 선언
 
     public override void Init()  // 이펙트 프리팹 초기화

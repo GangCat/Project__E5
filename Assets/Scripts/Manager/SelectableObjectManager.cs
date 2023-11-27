@@ -8,6 +8,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 {
     public void Init(VoidSelectObjectTypeDelegate _selectObjectCallback, PF_Grid _grid)
     {
+        // 현재 선택한 오브젝트가 무엇인지 반환하는 콜백
         selectObjectCallback = _selectObjectCallback;
         grid = _grid;
         RegisterBroker();
@@ -31,7 +32,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         for (int i = 0; i < arrCrowd.Length; ++i)
             arrCrowd[i] = new List<FriendlyObject>();
 
-
         ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_GROUP_INFO, listFriendlyUnitInfo);
         ArrayHUDCommand.Use(EHUDCommand.INIT_DISPLAY_SINGLE_INFO, unitInfoContainer);
 
@@ -44,11 +44,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     /// <returns></returns>
     private IEnumerator CheckNodeBuildableCoroutine()
     {
+        WaitForSeconds wait = new WaitForSeconds(0.5f);
         while (true)
         {
             ArrayCheckNodeBuildableCommand.Use(ECheckNodeBuildable.CHECK_NODE_BUILDABLE_UNIT, dicNodeUnderFriendlyUnit.Values.ToArray<PF_Node>());
 
-            yield return new WaitForSeconds(0.5f);
+            yield return wait;
         }
     }
 
@@ -72,73 +73,78 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         else
             return null;
     }
-
+    #region 유닛 노드 인덱스 초기화
+    // 아군 유닛들의 노드 인덱스를 지정해주는 함수.
     public static void InitNodeFriendly(Vector3 _pos, out int _idx)
     {
         dicNodeUnderFriendlyUnit.Add(dicFriendlyIdx, grid.GetNodeFromWorldPoint(_pos));
         _idx = dicFriendlyIdx;
         ++dicFriendlyIdx;
     }
-
     public static void InitNodeEnemy(Vector3 _pos, out int _idx)
     {
         dicNodeUnderEnemyUnit.Add(dicEnemyIdx, grid.GetNodeFromWorldPoint(_pos));
         _idx = dicEnemyIdx;
         ++dicEnemyIdx;
     }
+    #endregion
 
+    #region 유닛 노드 워커블 갱신
+    // 유닛들의 walkable을 갱신해주는 함수.
     public static void UpdateFriendlyNodeWalkable(Vector3 _pos, int _idx)
     {
-        PF_Node prevNode = null;
-        if (dicNodeUnderFriendlyUnit.TryGetValue(_idx, out prevNode))
+        if (dicNodeUnderFriendlyUnit.TryGetValue(_idx, out var prevNode))
             prevNode.walkable = true;
 
         PF_Node curNode = grid.GetNodeFromWorldPoint(_pos);
         curNode.walkable = false;
         dicNodeUnderFriendlyUnit[_idx] = curNode;
     }
-
     public static void UpdateEnemyNodeWalkable(Vector3 _pos, int _idx)
     {
-        PF_Node prevNode = null;
-        if (dicNodeUnderEnemyUnit.TryGetValue(_idx, out prevNode))
+        if (dicNodeUnderEnemyUnit.TryGetValue(_idx, out var prevNode))
             prevNode.walkable = true;
 
         PF_Node curNode = grid.GetNodeFromWorldPoint(_pos);
         curNode.walkable = false;
         dicNodeUnderEnemyUnit[_idx] = curNode;
     }
+    #endregion
 
+    #region 유닛 사망시 노드 워커블 초기화
+    // 유닛 사망시 해당 위치의 walkable을 true로 만들어주는 함수.
     public static void ResetHeroUnitNode(Vector3 _pos)
     {
         dicNodeUnderFriendlyUnit[0].walkable = true;
         grid.GetNodeFromWorldPoint(_pos).walkable = true;
     }
-
     public static void ResetFriendlyNodeWalkable(Vector3 _pos, int _idx)
     {
         dicNodeUnderFriendlyUnit[_idx].walkable = true;
         grid.GetNodeFromWorldPoint(_pos).walkable = true;
         dicNodeUnderFriendlyUnit.Remove(_idx);
     }
-
     public static void ResetEnemyNodeWalkable(Vector3 _pos, int _idx)
     {
         dicNodeUnderEnemyUnit[_idx].walkable = true;
         grid.GetNodeFromWorldPoint(_pos).walkable = true;
         dicNodeUnderEnemyUnit.Remove(_idx);
     }
+    #endregion
 
+    // 매개변수로 받은 벡터위치를 노드 위치로 변환하여 유닛의 위치를 조정해줌.
+    // 주로 최초 생성시 사용함.
     public static Vector3 ResetPosition(Vector3 _pos)
     {
         PF_Node unitNode = grid.GetNodeFromWorldPoint(_pos);
 
+        // walkable이 아닐 경우 주위의 walkable인 노드를 찾아 반환해줌.
         if (!grid.GetNodeFromWorldPoint(_pos).walkable)
             return grid.GetAccessibleNodeWithoutTargetNode(unitNode).worldPos;
 
         return unitNode.worldPos;
     }
-
+    #region crowd(부대지정)관련
     public void SetListToCrowd(int _arrIdx)
     {
         if (isEnemyObjectInList || listSelectedFriendlyObject.Count < 1) return;
@@ -151,7 +157,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         for (int i = 0; i < arrCrowd[_arrIdx].Count; ++i)
             arrCrowd[_arrIdx][i].CrowdIdx = _arrIdx;
     }
-
     public void LoadCrowdWithIdx(int _arrIdx)
     {
         tempListSelectableObject.AddRange(arrCrowd[_arrIdx].ToArray());
@@ -163,18 +168,21 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         else
             SelectFinish();
     }
-
     public void RemoveAtCrowd(int _arrIdx, FriendlyObject _removeObj)
     {
         arrCrowd[_arrIdx].Remove(_removeObj);
     }
+    #endregion
 
+    // 유닛 선택 시작시 1번 호출, 이전에 선택한 오브젝트들의 선택을 알리는 표시 제거.
     public void SelectStart()
     {
         for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
             listSelectedFriendlyObject[i].DeActivateCircle();
     }
 
+    // 선택한 리스트에서 유닛을 제외하는 함수
+    // 시프트 + 클릭시 리스트에 존재하면 제외시키는 등의 역할
     public void RemoveUnitAtList(FriendlyObject _removeObj)
     {
         if (!_removeObj) return;
@@ -198,6 +206,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         UpdateInfo();
     }
 
+    // 시프트+ 클릭으로 부대에 추가하는 경우 사용.
     public void AddToList(FriendlyObject _addObj)
     {
         if (_addObj == null) return;
@@ -212,23 +221,31 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         UpdateInfo();
     }
 
+    #region 벙커 관련
     public void InUnit(FriendlyObject _friObj)
     {
         curBunker.InUnit(_friObj);
     }
-
     public void OutOneUnit()
     {
         if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BUNKER))
             listSelectedFriendlyObject[0].GetComponent<StructureBunker>().OutOneUnit();
     }
-
     public void OutAllUnit()
     {
         if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BUNKER))
             listSelectedFriendlyObject[0].GetComponent<StructureBunker>().OutAllUnit();
     }
 
+    // 벙커에 유닛이 들어가는 순간 다른 유닛이 벙커에 들어가려는 행위를 막는 함수.
+    public void ResetTargetBunker()
+    {
+        foreach (FriendlyObject obj in listSelectedFriendlyObject)
+            obj.ResetTargetBunker();
+    }
+    #endregion
+
+    #region 배럭 관련
     public bool CanSpawnunit()
     {
         if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BARRACK))
@@ -236,13 +253,11 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         else
             return false;
     }
-
     public void RequestSpawnUnit(EUnitType _unitType)
     {
         if (listSelectedFriendlyObject[0].GetObjectType().Equals(EObjectType.BARRACK))
             listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().StartSpawnUnit(_unitType);
     }
-
     public void SpawnUnit(EUnitType _unitType, Vector3 _spawnPos, Vector3 _rallyPoint, Transform _rallyTr = null)
     {
         FriendlyObject tempObj = arrMemoryPool[(int)_unitType].ActivatePoolItem(_spawnPos, 5, transform).GetComponent<FriendlyObject>();
@@ -254,20 +269,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         else if (!_rallyPoint.Equals(_spawnPos))
             tempObj.MoveByPos(_rallyPoint);
     }
-
-    public void DeactivateUnit(GameObject _removeGo, EUnitType _unitType, FriendlyObject _fObj)
-    {
-        GameObject deadEffectGo = deadEffectMemoryPool.ActivatePoolItem(5, transform);
-        deadEffectGo.GetComponent<EffectUnitDead>().Init(_removeGo.transform.position, DeactivateEffectDead);
-        arrMemoryPool[(int)_unitType].DeactivatePoolItem(_removeGo);
-        RemoveUnitAtList(_fObj);
-    }
-
-    public void DeactivateEffectDead(Transform _tr)
-    {
-        deadEffectMemoryPool.DeactivatePoolItem(_tr.gameObject);
-    }
-
     public void SetRallyPoint(Vector3 _pos)
     {
         listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().SetRallyPoint(_pos);
@@ -277,7 +278,22 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
     {
         listSelectedFriendlyObject[0].GetComponent<StructureBarrack>().SetRallyPoint(_targetTr);
     }
+    #endregion
 
+    // 아군유닛 사망시 호출
+    public void DeactivateUnit(GameObject _removeGo, EUnitType _unitType, FriendlyObject _fObj)
+    {
+        GameObject deadEffectGo = deadEffectMemoryPool.ActivatePoolItem(5, transform);
+        deadEffectGo.GetComponent<EffectUnitDead>().Init(_removeGo.transform.position, DeactivateEffectDead);
+        arrMemoryPool[(int)_unitType].DeactivatePoolItem(_removeGo);
+        RemoveUnitAtList(_fObj);
+    }
+    public void DeactivateEffectDead(Transform _tr)
+    {
+        deadEffectMemoryPool.DeactivatePoolItem(_tr.gameObject);
+    }
+
+#region 드래그 선택 관련
     public void AddSelectedObject(SelectableObject _object)
     {
         if (!_object || _object.IsTempSelect) return;
@@ -296,6 +312,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
     public void SelectFinish()
     {
+        // 선택한 유닛이 없을 경우
         if (tempListSelectableObject.Count < 1)
         {
             for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
@@ -303,21 +320,25 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             return;
         }
 
+        // 이미 선택되었던 유닛들 선택해제
         foreach (SelectableObject obj in listSelectedFriendlyObject)
             obj.unSelect();
 
+        // 이미 선택된 유닛이 적 유닛이었을 경우
         if (enemyCurSelected != null)
         {
             enemyCurSelected.unSelect();
             enemyCurSelected = null;
         }
 
-
+        // 드래그해서 선택된 모든 유닛들의 경우 임시 선택 상태를 해제(false)
+        // 선택되었음을 나타내는 서클도 보이지않도록 함수 호출
         for (int i = 0; i < tempListSelectableObject.Count; ++i)
         {
             tempListSelectableObject[i].IsTempSelect = false;
             tempListSelectableObject[i].DeActivateCircle();
         }
+
 
         listSelectedFriendlyObject.Clear();
         ArrayHUDCommand.Use(EHUDCommand.HIDE_ALL_INFO);
@@ -375,18 +396,16 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         
         if( tempObj != null)
         {
-            // AudioManager.instance.PlayAudio_Select(/*tempObj.GetObjectType()*/EObjectType.UNIT_01);     // Select Audio(Unit)
-             AudioManager.instance.PlayAudio_Select(tempObj.GetObjectType());     // Select Audio(Unit)
+             AudioManager.instance.PlayAudio_Select(tempObj.GetObjectType());
         }
         else
         {
-            AudioManager.instance.PlayAudio_Select(listSelectedFriendlyObject[0].GetObjectType());     // Select Audio(Struct)
+            AudioManager.instance.PlayAudio_Select(listSelectedFriendlyObject[0].GetObjectType());
         }
         
         // 임시 리스트에 적 유닛만 있을 경우
         if (isEnemyObjectInList)
         {
-            //tempObj.ActivateCircle();
             selectObjectCallback?.Invoke(tempObj.GetObjectType());
             InputOtherUnitInfo(tempObj);
             enemyCurSelected = tempObj;
@@ -396,7 +415,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         // 임시 리스트에 아군 건물만 있을 경우
         else if (isFriendlyStructureInList)
         {
-            //tempObj.ActivateCircle();
             InputOtherUnitInfo(tempObj);
             listSelectedFriendlyObject.Add(tempObj.GetComponent<FriendlyObject>());
             Structure structureInList = tempObj.GetComponent<Structure>();
@@ -473,8 +491,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         else if (isFriendlyUnitInList)
         {
             selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
-            //for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
-            //    listSelectedFriendlyObject[i].ActivateCircle();
             // 아군 유닛 1마리만 존재할 경우
             if (listSelectedFriendlyObject.Count < 2)
             {
@@ -491,6 +507,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         tempListSelectableObject.Clear();
         return;
     }
+    #endregion
 
     // 다른 오브젝트를 선택할 경우 해당 오브젝트의 상태에 따라 UI 갱신
     // 추후에 시간되면 기능별로(UpdateStructureInfo, UpdateUnitInfo) 함수 만들어서 구분할 것.
@@ -574,8 +591,6 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 }
                 selectObjectCallback?.Invoke(listSelectedFriendlyObject[0].GetObjectType());
             }
-            // 리스트에 아군 건물이 존재할 경우
-
         }
         // 리스트가 비어있거나 적 유닛만 존재할 경우
         else
@@ -589,6 +604,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
     }
 
+    // 하나의 유닛만 선택되었을 경우 호출
     private void DisplaySingleUnitInfo(Structure _structure = null)
     {
         if (listSelectedFriendlyObject.Count < 1)
@@ -605,6 +621,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             ArrayHUDCommand.Use(EHUDCommand.DISPLAY_SINGLE_STRUCTURE_INFO, tempObj.GetObjectName, tempObj.GetObjectDescription, _structure.UpgradeLevel);
     }
 
+    // 유닛이 어떤 인덱스를 지니고 있냐에 따라 HP를 업데이트.
     public static void UpdateUnitHp(int _listIdx)
     {
         if (_listIdx.Equals(-3))
@@ -634,6 +651,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
     }
 
+    // 아군 유닛의 정보를 구조체에 입력
     private void InputFriendlyUnitInfo()
     {
         for (int i = 0; i < listSelectedFriendlyObject.Count; ++i)
@@ -646,6 +664,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
     }
 
+    // 아군 유닛 외의 유닛의 정보를 UI에 표시하기 위한 컨테이너 클래스에 입력
     private void InputOtherUnitInfo(SelectableObject _obj)
     {
         unitInfoContainer.objectType = _obj.GetObjectType();
@@ -668,12 +687,15 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
             
     }
 
-    public void ResetTargetBunker()
+    // wave때 몰려오는 적들의 이동을 시키는 함수.
+    public static void MoveWaveEnemy(Vector3 _targetPos, SelectableObject[] _arrEnemy)
     {
-        foreach (FriendlyObject obj in listSelectedFriendlyObject)
-            obj.ResetTargetBunker();
+        Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
+        foreach (SelectableObject obj in _arrEnemy)
+            obj.MoveAttack(_targetPos + CalcPosInFormation(obj.Position, centerPos));
     }
-
+    #region 아군유닛 조작관련
+    // 선택한 유닛들을 바닥 우클릭으로 이동시키는 함수.
     public void MoveUnitByPicking(Vector3 _targetPos, bool isAttackMove = false)
     {
         if (IsListEmpty) return;
@@ -704,12 +726,26 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
                 obj.MoveByPos(_targetPos + CalcPosInFormation(obj.Position, centerPos));
         }
     }
-
-    public static void MoveWaveEnemy(Vector3 _targetPos, SelectableObject[] _arrEnemy)
+    public void MoveUnitByPicking(Transform _targetTr)
     {
-        Vector3 centerPos = CalcFormationCenterPos(_targetPos.y);
-        foreach (SelectableObject obj in _arrEnemy)
-            obj.MoveAttack(_targetPos + CalcPosInFormation(obj.Position, centerPos));
+        if (IsListEmpty) return;
+        if (isFriendlyStructureInList) return;
+        if (isEnemyObjectInList) return;
+
+        // Click Move Order Audio
+        AudioManager.instance.PlayAudio_Order(objectType);
+
+        if (_targetTr.GetComponent<IGetObjectType>().GetObjectType().Equals(EObjectType.BUNKER))
+        {
+            curBunker = _targetTr.GetComponent<StructureBunker>();
+            foreach (FriendlyObject obj in listSelectedFriendlyObject)
+                obj.FollowTarget(_targetTr, true);
+        }
+        else
+        {
+            foreach (FriendlyObject obj in listSelectedFriendlyObject)
+                obj.FollowTarget(_targetTr);
+        }
     }
 
     public void Stop()
@@ -718,14 +754,12 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Stop();
     }
-
     public void Hold()
     {
         AudioManager.instance.PlayAudio_UI(); // CLICK Audio
         foreach (FriendlyObject obj in listSelectedFriendlyObject)
             obj.Hold();
     }
-
     public void Patrol(Vector3 _wayPointTo)
     {
         CalcNewFormation(_wayPointTo, true);
@@ -796,28 +830,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
 
         return Mathf.Abs(maxX - minX) > rangeGroupLimitDist || Mathf.Abs(maxZ - minZ) > rangeGroupLimitDist;
     }
-
-    public void MoveUnitByPicking(Transform _targetTr)
-    {
-        if (IsListEmpty) return;
-        if (isFriendlyStructureInList) return;
-        if (isEnemyObjectInList) return;
-        
-        // Click Move Order Audio
-        AudioManager.instance.PlayAudio_Order(objectType);
-
-        if (_targetTr.GetComponent<IGetObjectType>().GetObjectType().Equals(EObjectType.BUNKER))
-        {
-            curBunker = _targetTr.GetComponent<StructureBunker>();
-            foreach (FriendlyObject obj in listSelectedFriendlyObject)
-                obj.FollowTarget(_targetTr, true);
-        }
-        else
-        {
-            foreach (FriendlyObject obj in listSelectedFriendlyObject)
-                obj.FollowTarget(_targetTr);
-        }
-    }
+    #endregion
 
     public void RegisterBroker()
     {
@@ -829,6 +842,7 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         Broker.AlertMessageToSub(_message, EPublisherType.SELECTABLE_MANAGER);
     }
     #region UnitUpgradeComplete
+    // 업그레이드 완료시 호출되는 함수.
     public void CompleteUpgradeRangedUnitDmg()
     {
         ++levelRangedUnitDmgUpgrade;

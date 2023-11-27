@@ -251,7 +251,6 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             if (DeveloperMenuHotkeyAction())
                 return;
 
-
         if (SelectableObjectManager.IsListEmpty) return;
         if (SelectableObjectManager.IsEnemyUnitInList) return;
         if (!SelectableObjectManager.GetFirstSelectedObjectInList()) return;
@@ -672,6 +671,9 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
     {
         isPause = _isPause;
     }
+
+    // UI에서 핫키 바꾸는 버튼을 누르면 호출됨.
+    // 이 때 어떤 키를 바꿀지는 UI에서 누른 버튼마다 다름. 
     #region ChangeHotkey
     public void ChangeUnitHotkey(EUnitFuncKey _targetHotkey)
     {
@@ -705,6 +707,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
 
     /// <summary>
     /// 자료형이 Enum형인 T만 받는 함수.
+    /// 현재 바꾸기 원하는 키가 어떤 키인지 확인.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="_curChangeHotKey"></param>
@@ -715,8 +718,7 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
         curChangeKeyIdx = Convert.ToInt32(_unitHotkeyIdx);
     }
 
-    // 실제로 키를 바꿀 때
-    // 바꾸는 준비는 버튼 눌리면
+    // 바꾸기 원하는 키에 해당하는 키 변경 버튼을 누린 뒤 여기로 들어옴.
     private void DetectChangeKey()
     {
         if (Input.anyKey)
@@ -725,6 +727,8 @@ public class InputManager : MonoBehaviour, IMinimapObserver, IPauseObserver
             if (CheckIsChangable(curKey))
             {
                 curChangeKeyCode[curChangeKeyIdx] = curKey;
+
+                // 배열을 먼저 확인하고 해당하는 키를 변경하도록 커맨드 사용
                 if (curChangeKeyCode.Equals(arrUnitFuncHotkey))
                     ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.CONFIRM_UNIT_FUNC_BUTTON, curChangeKeyIdx, curKey);
                 else if (curChangeKeyCode.Equals(arrStructureFuncHotkey))

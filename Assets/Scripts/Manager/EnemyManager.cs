@@ -278,8 +278,6 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
     private EnemyMapSpawnPoint[] arrMapSpawnPoint = null;
     [SerializeField]
     private GameObject enemyDeadEffect = null;
-    [SerializeField]
-    private Transform wayPoint = null;
 
 
     [Header("-Enemy Map Random Spawn(outer > inner)")]

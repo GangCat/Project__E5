@@ -759,13 +759,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56756957}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 511277590}
-  m_Father: {fileID: 989486306}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &56756959
 BoxCollider:
@@ -17311,51 +17311,6 @@ MonoBehaviour:
   buttonAttackUnit: {fileID: 1769439686}
   buttonLaunchNuclear: {fileID: 1118288390}
   buttonCancleUnit: {fileID: 458440916}
---- !u!1 &989486304
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 989486306}
-  - component: {fileID: 989486305}
-  m_Layer: 0
-  m_Name: StageManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &989486305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 989486304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 087970c606c700e41aa1bd66ac3cbcf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &989486306
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 989486304}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 56756958}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &995585504
 GameObject:
   m_ObjectHideFlags: 0
@@ -28342,6 +28297,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 524288
   rotAngleXForDoubleClick: 70
+  doubleClickDelay: 0.3
   arrUnitFuncHotkey: 71000000770000006500000072000000610000007a000000
   arrBuildFuncHotkey: 7100000077000000650000007200000061000000
   arrBarrackFuncHotkey: 71000000770000007200000061000000730000006400000066000000
@@ -28350,8 +28306,8 @@ MonoBehaviour:
   arrOtherFuncHotkey: 60000000
   cancleKey: 27
   UnitSelectComandKey: 304
-  arrDebugModeHotkey: 1801000025010000240100002301000022010000
   isDetectingChangeKey: 0
+  arrDebugModeHotkey: 1801000025010000240100002301000022010000
 --- !u!4 &1606740354
 Transform:
   m_ObjectHideFlags: 0
@@ -37715,7 +37671,7 @@ SceneRoots:
   - {fileID: 1909831832}
   - {fileID: 1606740354}
   - {fileID: 319057472}
-  - {fileID: 989486306}
+  - {fileID: 56756958}
   - {fileID: 1164142512}
   - {fileID: 214568547}
   - {fileID: 1858891527}

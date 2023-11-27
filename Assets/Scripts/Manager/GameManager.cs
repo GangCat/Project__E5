@@ -320,8 +320,6 @@ public class GameManager : MonoBehaviour, IPauseSubject
     private float worldSizeX = 100f;
     [SerializeField]
     private float worldSizeY = 100f; 
-    [SerializeField]
-    private Texture2D customCursor = null;
 
     private InputManager inputMng = null;
     private CameraManager cameraMng = null;

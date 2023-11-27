@@ -17,7 +17,7 @@ public class CommandBuildStructure : Command
         if (curMng.CanBuildStructure(tempObjType))
         {
             if (tempObjType.Equals(EObjectType.NUCLEAR))
-                if (!structureMng.CanBuildNuclear())
+                if (!structureMng.CanBuildNuclear)
                     return;
 
             structureMng.ShowBluepirnt(tempObjType);

@@ -18,15 +18,16 @@ public class StructureManager : MonoBehaviour
     public static int UpgradeLimit
     {
         get => upgradeLimit;
-        set 
+        set
         {
-            if (value < 4)
+            if (value < 3)
                 upgradeLimit = value;
             else
                 upgradeLimit = 3;
         }
     }
 
+    // 건설속도 등 빠르게 하기위한 치트
     public void SetDelayFast()
     {
         for (int i = 0; i < buildDelay.Length; ++i)
@@ -44,29 +45,24 @@ public class StructureManager : MonoBehaviour
             structure.SetUnitSpawnDelay(arrSpawnUnitDelay);
             structure.SetUpgradeDelay(upgradeDelay);
         }
-        //Structure mainBase = null;
-        //dicStructure.TryGetValue(0, out mainBase);
-        //mainBase.GetComponent<StructureMainBase>().SetUpgradeDelay(upgradeDelay);
     }
 
-    public EObjectType CurStructureType()
-    {
-        return curStructureObjType;
-    }
+    public EObjectType CurStructureType => curStructureObjType;
 
-    public bool CanBuildNuclear()
-    {
-        return upgradeLimit >= 3;
-    }
+    public bool CanBuildNuclear => upgradeLimit >= 3;
 
+    #region 건설 관련 함수
+    // 청사진 띄워주는 함수.
     public void ShowBluepirnt(EObjectType _structureType)
     {
+        // 이전에 이미 청사진을 띄운 상태면 이전 청사진 제거.
         if (isBlueprint)
         {
             Destroy(curStructure.gameObject);
             StopAllCoroutines();
         }
 
+        // 매개변수로 받은 타입에 따라 청사진 생성
         switch (_structureType)
         {
             case EObjectType.TURRET:
@@ -100,9 +96,11 @@ public class StructureManager : MonoBehaviour
             default:
                 break;
         }
+
         StartCoroutine("ShowBlueprint");
     }
 
+    // 벽의 청사진을 생성하는 함수.
     public void ShowBluepirnt(Transform _bunkerTr)
     {
         curStructureType = EStructureType.WALL;
@@ -111,28 +109,8 @@ public class StructureManager : MonoBehaviour
         StartCoroutine("ShowWallBlueprint", _bunkerTr);
     }
 
-    public void DestroyStructure(int _structureIdx, StructureNuclear _nuclear = null)
-    {
-        if (_structureIdx.Equals(0)) return;
 
-        Structure structure = null;
-        if (!dicStructure.TryGetValue(_structureIdx, out structure)) return;
-
-        if(_nuclear != null)
-            listNuclearStructure.Remove(_nuclear);
-
-        dicStructure.Remove(_structureIdx);
-        GameObject effectGo = memorypoolDestroyEffect.ActivatePoolItem(5, transform);
-        effectGo.GetComponent<EffectStructureDestroy>().Init(structure.transform.position, DeactivateEffectDestroy);
-        structure.DestroyStructure();
-        InstantiateRuin(structure);
-    }
-
-    public void DeactivateEffectDestroy(Transform _tr)
-    {
-        memorypoolDestroyEffect.DeactivatePoolItem(_tr.gameObject);
-    }
-
+    // 청사진이 마우스를 따라다니도록 하는 코루틴
     private IEnumerator ShowBlueprint()
     {
         isBlueprint = true;
@@ -152,6 +130,7 @@ public class StructureManager : MonoBehaviour
         }
     }
 
+    // 벽의 경우 사용되는 청사진 표시 코루틴
     private IEnumerator ShowWallBlueprint(Transform _bunkerTr)
     {
         isBlueprint = true;
@@ -216,6 +195,7 @@ public class StructureManager : MonoBehaviour
         }
     }
 
+    // 청사진이 띄워진 상태에서 취소할 경우 호출
     public bool CancleBuild()
     {
         StopAllCoroutines();
@@ -225,51 +205,76 @@ public class StructureManager : MonoBehaviour
         return false;
     }
 
+    // 실제 건물을 건설하는 함수.
     public bool BuildStructure()
     {
-        if (curStructure.IsBuildable)
+        if (!curStructure.IsBuildable)
+            return false;
+
+        StopBuildCoroutine();
+
+        Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, curStructure.transform.rotation).GetComponent<Structure>();
+        newStructure.Init(grid);
+        newStructure.Init(structureIdx);
+        newStructure.SetUpgradeDelay(upgradeDelay);
+        dicStructure.Add(structureIdx, newStructure);
+        ++structureIdx;
+        switch (curStructureType)
         {
-            StopBuildCoroutine();
-
-            Structure newStructure = Instantiate(arrStructurePrefab[(int)curStructureType], curStructure.transform.position, curStructure.transform.rotation).GetComponent<Structure>();
-            newStructure.Init(grid);
-            newStructure.Init(structureIdx);
-            newStructure.SetUpgradeDelay(upgradeDelay);
-            dicStructure.Add(structureIdx, newStructure);
-            ++structureIdx;
-            switch (curStructureType)
-            {
-                case EStructureType.BARRACK:
-                    newStructure.SetUnitSpawnDelay(arrSpawnUnitDelay);
-                    break;
-                case EStructureType.NUCLEAR:
-                    newStructure.SetNuclearSpawnDelay(nuclearSpawnDelay);
-                    break;
-                case EStructureType.WALL:
-                    newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
-                    newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
-                    break;
-                default:
-                    break;
-            }
-
-            Destroy(curStructure.gameObject);
-            newStructure.transform.parent = transform;
-            newStructure.BuildStart(buildDelay[(int)curStructureType]);
-            isBlueprint = false;
-
-            return true;
+            case EStructureType.BARRACK:
+                newStructure.SetUnitSpawnDelay(arrSpawnUnitDelay);
+                break;
+            case EStructureType.NUCLEAR:
+                newStructure.SetNuclearSpawnDelay(nuclearSpawnDelay);
+                break;
+            case EStructureType.WALL:
+                newStructure.SetGrid(curStructure.GridX, curStructure.GridY);
+                newStructure.SetFactor(curStructure.FactorX, curStructure.FactorY);
+                break;
+            default:
+                break;
         }
-        return false;
+
+        Destroy(curStructure.gameObject);
+        newStructure.transform.parent = transform;
+        newStructure.BuildStart(buildDelay[(int)curStructureType]);
+        isBlueprint = false;
+
+        return true;
     }
 
+    // 건설 시작할 경우 호출되는 함수.
     private void StopBuildCoroutine()
     {
         StopCoroutine("ShowWallBlueprint");
         StopCoroutine("ShowBlueprint");
     }
+    #endregion
 
+    #region 건물파괴 관련
+    // 건물이 파괴될 때 호출되는 함수.
+    public void DestroyStructure(int _structureIdx, StructureNuclear _nuclear = null)
+    {
+        if (_structureIdx.Equals(0)) return;
 
+        Structure structure = null;
+        if (!dicStructure.TryGetValue(_structureIdx, out structure)) return;
+
+        if (_nuclear != null)
+            listNuclearStructure.Remove(_nuclear);
+
+        dicStructure.Remove(_structureIdx);
+        GameObject effectGo = memorypoolDestroyEffect.ActivatePoolItem(5, transform);
+        effectGo.GetComponent<EffectStructureDestroy>().Init(structure.transform.position, DeactivateEffectDestroy);
+        structure.DestroyStructure();
+        InstantiateRuin(structure);
+    }
+
+    public void DeactivateEffectDestroy(Transform _tr)
+    {
+        memorypoolDestroyEffect.DeactivatePoolItem(_tr.gameObject);
+    }
+    #endregion
 
     #region Ruin
     private void InstantiateRuin(Structure _structure)
@@ -279,12 +284,12 @@ public class StructureManager : MonoBehaviour
         for (int i = 0; i < arrCol.Length; ++i)
         {
             GameObject ruinGo = Instantiate(ruinPrefab, arrCol[i].transform.position, Quaternion.identity);
-            //grid.UpdateNodeWalkable(grid.GetNodeFromWorldPoint(ruinGo.transform.position),true);
             ruinGo.GetComponent<Structure>().Init();
         }
     }
     #endregion
 
+    #region 핵건물 관련
     public void SpawnNuclear(int _structureIdx)
     {
         Structure nuclearStructure = null;
@@ -315,11 +320,11 @@ public class StructureManager : MonoBehaviour
             listNuclearStructure.RemoveAt(0);
         }
     }
+    #endregion
 
     public bool UpgradeStructure(int _structureIdx)
     {
-        Structure structure = null;
-        dicStructure.TryGetValue(_structureIdx, out structure);
+        dicStructure.TryGetValue(_structureIdx, out var structure);
         return structure.StartUpgrade();
     }
 

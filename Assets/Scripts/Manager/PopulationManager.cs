@@ -13,16 +13,6 @@ public class PopulationManager : MonoBehaviour, IPublisher
 
     public uint CurPopulation => curPopulation;
 
-    ///// <summary>
-    ///// 현재 유닛 생산이 가능한지 예상해서 반환해주는 함수.
-    ///// </summary>
-    ///// <param name="_unitType"></param>
-    ///// <returns></returns>
-    //public bool CanSpawnUnit(EUnitType _unitType)
-    //{
-    //    return curPopulation + unitPopulation[(int)_unitType] < curMaxPopulation;
-    //}
-
     public bool CanUpgradePopulation()
     {
         return curMaxPopulation < maxPopulation;
@@ -42,7 +32,7 @@ public class PopulationManager : MonoBehaviour, IPublisher
         DecreasePopulation(unitPopulation[(int)_unitType]);
     }
 
-    public void DecreasePopulation(uint _decreaseAmount)
+    private void DecreasePopulation(uint _decreaseAmount)
     {
         curPopulation -= _decreaseAmount;
         ArrayPopulationCommand.Use(EPopulationCommand.UPDATE_CURRENT_POPULATION_HUD, curPopulation);
