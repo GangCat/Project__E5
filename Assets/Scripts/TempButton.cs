@@ -13,8 +13,10 @@ public class TempButton : MonoBehaviour
             () =>
             {
                 ArrayChangeHotkeyCommand.Use(EChangeHotkeyCommand.SELECT_UNIT_FUNC_BUTTON, EUnitFuncKey.ATTACK);
+                keyChangeImage.SetActive(true);
             });
     }
 
+    public GameObject keyChangeImage;
 
 }
