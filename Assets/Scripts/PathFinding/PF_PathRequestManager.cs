@@ -100,5 +100,4 @@ public class PF_PathRequestManager : MonoBehaviour
     private PF_PathFinding pathFinding = null;
 
     private bool isProcessingPath = false;
-
 }

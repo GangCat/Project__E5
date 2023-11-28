@@ -343,7 +343,7 @@ public class PF_Grid : MonoBehaviour
                 if (!node.walkable)
                 {
                     Gizmos.color = Color.red;
-                    Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 2, 0.1f, nodeRadius * 2));
+                    Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 1.7f, 0.1f, nodeRadius * 1.7f));
                 }
             }
         }
@@ -357,7 +357,7 @@ public class PF_Grid : MonoBehaviour
                     Color color = Color.white;
                     color.a = 0.3f;
                     Gizmos.color = color;
-                    Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 2, 0.1f, nodeRadius * 2));
+                    Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 1.7f, 0.1f, nodeRadius * 1.7f));
                 }
             }
         }
@@ -371,7 +371,7 @@ public class PF_Grid : MonoBehaviour
                     Color color = Color.green;
                     color.a = 0.3f;
                     Gizmos.color = color;
-                    Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 2, 0.1f, nodeRadius * 2));
+                    Gizmos.DrawCube(node.worldPos, new Vector3(nodeRadius * 1.9f, 0.1f, nodeRadius * 1.9f));
                 }
             }
         }
