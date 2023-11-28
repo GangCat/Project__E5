@@ -400,7 +400,8 @@ public class SelectableObjectManager : MonoBehaviour, IPublisher
         }
         else
         {
-            AudioManager.instance.PlayAudio_Select(listSelectedFriendlyObject[0].GetObjectType());
+            if(!IsListEmpty)
+                AudioManager.instance.PlayAudio_Select(listSelectedFriendlyObject[0].GetObjectType());
         }
         
         // 임시 리스트에 적 유닛만 있을 경우
