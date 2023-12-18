@@ -39,22 +39,6 @@ public class FogManager : MonoBehaviour, IPauseObserver
         isDebugMode = _isDebugMode;
     }
 
-    //private void UpdateFog()
-    //{
-    //    RenderTexture rt = RenderTexture.active;
-
-    //    RenderTexture.active = newBackBuffRenderTexture;
-
-    //    GL.PushMatrix();
-    //    GL.Clear(true, true, Color.black);
-    //    GL.PopMatrix();
-
-    //    RenderTexture.active = rt;
-
-    //    UpdateFogTexture();
-    //}
-
-
     private void UpdateFogTexture()
     {
         if (isPause)
@@ -90,10 +74,16 @@ public class FogManager : MonoBehaviour, IPauseObserver
         // 해당 모드일 경우 현재 위치를 기록하는 포그와 지나간 위치를 기록하는 포그를 보여줌.
         if (isDebugMode)
         {
-            Sprite spriteFog = Sprite.Create(curFogTexture, new Rect(0, 0, curFogTexture.width, curFogTexture.height), new Vector2(0.5f, 0.5f));
+            Sprite spriteFog = Sprite.Create(
+                curFogTexture, 
+                new Rect(0, 0, curFogTexture.width, curFogTexture.height), 
+                new Vector2(0.5f, 0.5f));
             spriteFog.name = "Fog";
             fogImage.sprite = spriteFog;
-            Sprite spriteBuffer = Sprite.Create(backBufftexture, new Rect(0, 0, backBufftexture.width, backBufftexture.height), new Vector2(0.5f, 0.5f));
+            Sprite spriteBuffer = Sprite.Create(
+                backBufftexture, 
+                new Rect(0, 0, backBufftexture.width, backBufftexture.height), 
+                new Vector2(0.5f, 0.5f));
             spriteBuffer.name = "Buffer";
             bufferImage.sprite = spriteBuffer;
         }

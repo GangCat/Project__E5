@@ -13,12 +13,9 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
         tempEnemyNodeList = new List<PF_Node>();
         listStructureNode = new List<PF_Node>();
 
-        ArrayPauseCommand.Use(EPauseCommand.REGIST,this);
+        ArrayPauseCommand.Use(EPauseCommand.REGIST, this);
         imageMinimap = GetComponent<Image>();
         tex2d = new Texture2D(256, 256);
-        // 보이는 영역만 미니맵에 그리려고 만든 텍스쳐, 하지만 작동을 제대로 하지 않음..
-        visibleAreaTexture = new Texture2D(256, 256);
-        //tex2d.name = "Set Pixel";
         texW = tex2d.width;
         texH = tex2d.height;
 
@@ -84,7 +81,7 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
             UpdateTexture(ref tex2d);
             imageMinimap.sprite = Sprite.Create(tex2d, texRect, pivotVec);
-            
+
             yield return new WaitForSeconds(1f);
         }
     }
@@ -97,10 +94,10 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
     {
         // 이전에 적군, 아군 위치를 모두 검은색으로 초기화
         // 이렇게 하지 않으면 모든 픽셀을 검사해야 하기 때문에 부하가 매우 심함.
-        for(int i = 0; i < tempFriendlyNodeList.Count; ++i) 
+        for (int i = 0; i < tempFriendlyNodeList.Count; ++i)
             tex2d.SetPixel(tempFriendlyNodeList[i].gridX, tempFriendlyNodeList[i].gridY, Color.black);
 
-        for(int i = 0; i < tempEnemyNodeList.Count; ++i)
+        for (int i = 0; i < tempEnemyNodeList.Count; ++i)
             tex2d.SetPixel(tempEnemyNodeList[i].gridX, tempEnemyNodeList[i].gridY, Color.black);
 
         tempFriendlyNodeList.Clear();
@@ -108,20 +105,14 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
         foreach (PF_Node node in SelectableObjectManager.DicNodeUnderFriendlyUnit.Values)
         {
-            //if (visibleAreaTexture.GetPixel(node.gridX, node.gridY).Equals(Color.white))
-            //{
-                tempFriendlyNodeList.Add(node);
-                tex2d.SetPixel(node.gridX, node.gridY, Color.green);
-            //}
+            tempFriendlyNodeList.Add(node);
+            tex2d.SetPixel(node.gridX, node.gridY, Color.green);
         }
 
         foreach (PF_Node node in SelectableObjectManager.DicNodeUnderEnemyUnit.Values)
         {
-            //if (visibleAreaTexture.GetPixel(node.gridX, node.gridY).Equals(Color.white))
-            //{
-                tempEnemyNodeList.Add(node);
-                tex2d.SetPixel(node.gridX, node.gridY, Color.red);
-            //}
+            tempEnemyNodeList.Add(node);
+            tex2d.SetPixel(node.gridX, node.gridY, Color.red);
         }
 
         PF_Node tempNode = null;
@@ -141,7 +132,12 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
                 if (arrBigEnemyTr[i] && arrBigEnemyTr[i].gameObject.activeSelf)
                 {
                     isBigEnemySignalDisplay = true;
-                    arrImageBigEnemySignal[i].rectTransform.anchoredPosition = WorldToMinimapPosition(arrBigEnemyTr[i].position, imageMinimap.rectTransform, 128, 128);
+                    arrImageBigEnemySignal[i].rectTransform.anchoredPosition =
+                        WorldToMinimapPosition(
+                            arrBigEnemyTr[i].position, 
+                            imageMinimap.rectTransform, 
+                            128, 
+                            128);
                 }
                 else
                     arrImageBigEnemySignal[i].gameObject.SetActive(false);

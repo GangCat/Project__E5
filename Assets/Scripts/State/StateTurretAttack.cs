@@ -32,8 +32,7 @@ public class StateTurretAttack : IState
 
             GameObject missile = GameObject.Instantiate(projectileGo, spawnTr.position, spawnTr.rotation);
             missile.GetComponent<MissileTurret>().Init(spawnTr.position);
-
-            // �̻��� �߻�
+            
             AudioManager.instance.PlayAudio_Attack(objectType);
         }
     }

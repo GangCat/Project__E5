@@ -36,11 +36,12 @@ public class PF_Grid : MonoBehaviour
         // 그리드에 2차원 노드 배열 공간 할당
         grid = new PF_Node[gridSizeX, gridSizeY];
         // 그리드의 중심이 0,0에 있다고 가정하고 좌하단의 좌표를 구함.
-        Vector3 worldBottomLeft = transform.position - (Vector3.right * (gridWorldSize.x * 0.5f)) - (Vector3.forward * (gridWorldSize.y * 0.5f));
+        Vector3 worldBottomLeft = 
+            transform.position - 
+            (Vector3.right * (gridWorldSize.x * 0.5f)) - 
+            (Vector3.forward * (gridWorldSize.y * 0.5f));
 
         // grid에 좌하단에서부터 하나씩 노드를 할당해주는 반복문
-        // 위에 2중 반복문이랑 비교했을때 장점이 뭘까
-        // 비교를 좀 적게한다.
         int idx = 0;
         int maxNodeCount = gridSizeX * gridSizeY;
         int idxX = 0;
@@ -50,12 +51,15 @@ public class PF_Grid : MonoBehaviour
         {
             idxX = idx % gridSizeX;
             idxY = idx / gridSizeY;
-            Vector3 worldPos = worldBottomLeft + Vector3.right * (idxX * nodeDiameter + nodeRadius) + Vector3.forward * (idxY * nodeDiameter + nodeRadius);
+            Vector3 worldPos = 
+                worldBottomLeft + 
+                Vector3.right * (idxX * nodeDiameter + nodeRadius) + 
+                Vector3.forward * (idxY * nodeDiameter + nodeRadius);
+
             bool walkable = !Physics.CheckSphere(worldPos, nodeRadius, unWalkableMask);
             grid[idxX, idxY] = new PF_Node(walkable, worldPos, idxX, idxY);
             ++idx;
         }
-        
     }
 
     public void CheckBuildableTest(PF_Node[] _arrFriendlyObject)
@@ -70,56 +74,6 @@ public class PF_Grid : MonoBehaviour
             SetBuildableNode(_arrFriendlyObject[i], 18);
         }
     }
-
-    //public void CheckBuildableTest()
-    //{
-    //    int maxNodeCount = gridSizeX * gridSizeY;
-    //    int idxX = 0;
-    //    int idxY = 0;
-    //    PF_Node node = null;
-
-    //    for (int idx = 0; idx < grid.Length; ++idx)
-    //    {
-    //        idxX = idx % gridSizeX;
-    //        idxY = idx / gridSizeY;
-    //        node = grid[idxX, idxY];
-    //        if (node.walkable)
-    //            node.buildable = Physics.CheckSphere(node.worldPos, nodeRadius, buildableMask);
-    //    }
-
-    //    Invoke("CheckBuildableTest", 1f);
-    //}
-
-    //private void GetBuildableNode(PF_Node _targetWorldPos, int _radius)
-    //{
-    //    int centerX = _targetWorldPos.gridX;
-    //    int centerY = _targetWorldPos.gridY;
-    //    int factor = 1;
-    //    int i = 0;
-
-    //    do
-    //    {
-    //        int startX = Mathf.Max(centerX - i, 0);
-    //        int endX = Mathf.Min(centerX + i, grid.GetLength(0) - 1);
-    //        int startY = Mathf.Max(centerY - i, 0);
-    //        int endY = Mathf.Min(centerY + i, grid.GetLength(1) - 1);
-
-    //        for (int x = startX; x <= endX; x++)
-    //        {
-    //            for (int y = startY; y <= endY; y++)
-    //            {
-    //                grid[x, y].buildable = true;
-    //                listPrevBuildableNode.Add(grid[x, y]);
-    //            }
-    //        }
-
-    //        if (i == _radius)
-    //            factor = -1;
-    //        i += factor;
-    //    }
-    //    while (i >= 0);
-    //}
-
     private void SetBuildableNode(PF_Node _targetWorldPos, int _radius)
     {
         int centerX = _targetWorldPos.gridX;
@@ -150,79 +104,7 @@ public class PF_Grid : MonoBehaviour
             }
         }
 
-        //do
-        //{
-        //    k = centerX - i;
-        //    j = centerX + i + 1;
-        //    l = centerY + (_radius - i) * factor;
-        //    while (k < j)
-        //    {
-        //        grid[k, l].buildable = true;
-        //        listPrevBuildableNode.Add(grid[k, l]);
-        //        ++k;
-        //    }
-        //    if (i.Equals(_radius))
-        //        factor = -1;
-        //    i += factor;
-        //}
-        //while (i >= 0);
-
     }
-
-    //private void GetBuildableNode(Vector3 _targetWorldPos, int _radius)
-    //{
-    //    PF_Node centerNode = GetNodeFromWorldPoint(_targetWorldPos);
-    //    int centerX = centerNode.gridX;
-    //    int centerY = centerNode.gridY;
-    //    int factor = 1;
-    //    int i = 0;
-    //    int j = 0;
-    //    int k = 0;
-    //    int l = 0;
-
-    //    do
-    //    {
-    //        k = centerX - i;
-    //        j = centerX + i + 1;
-    //        l = centerY + (_radius - i) * factor;
-    //        while (k < j)
-    //        {
-    //            grid[k, l].buildable = true;
-    //            ++k;
-    //        }
-    //        if (i.Equals(_radius))
-    //            factor = -1;
-    //        i += factor;
-    //    }
-    //    while (i >= 0);
-
-    //}
-
-    //private IEnumerator CheckBuildableTest()
-    //{
-    //    int maxNodeCount = gridSizeX * gridSizeY;
-    //    int idxX = 0;
-    //    int idxY = 0;
-    //    PF_Node node = null;
-    //    while (true)
-    //    {
-    //        for (int idx = 0; idx < grid.Length; ++idx)
-    //        {
-    //            idxX = idx % gridSizeX;
-    //            idxY = idx / gridSizeY;
-    //            node = grid[idxX, idxY];
-    //            if (node.walkable)
-    //                node.buildable = Physics.CheckSphere(node.worldPos, nodeRadius, buildableMask);
-
-    //            if (idx / 128 == 0)
-    //                yield return null;
-    //        }
-
-    //        yield return null;
-    //    }
-
-    //}
-
 
     /// <summary>
     /// 해당 Pos의 노드를 반환하는 함수.
@@ -329,7 +211,6 @@ public class PF_Grid : MonoBehaviour
 
     public PF_Node GetNodeWithGrid(int _gridX, int _gridY)
     {
-        // 예외처리
         return grid[Mathf.Clamp(_gridX, 0, gridSizeX), Mathf.Clamp(_gridY,0,gridSizeY)];
     }
 

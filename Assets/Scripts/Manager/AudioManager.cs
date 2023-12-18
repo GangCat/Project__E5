@@ -69,8 +69,6 @@ public class AudioManager : MonoBehaviour
         
         for (int i = 0; i < listBGMPlayer.Count; ++i)
             listBGMPlayer[i].SetVolume(audioVolume_BGM);
-        
-        
     }
 
     // Effect 볼륨 조절 함수

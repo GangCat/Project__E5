@@ -289,6 +289,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Shadow
       objectReference: {fileID: 0}
+    - target: {fileID: 4035115774906040397, guid: 59caab50207fba64e955f7acb0b2c8b4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8119688093374592859, guid: 59caab50207fba64e955f7acb0b2c8b4,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -372,6 +377,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_PickEnemyDisplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 52691291055329485, guid: 58ef200a9ea84df48a81a49db5dc2f39,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2618410652004385338, guid: 58ef200a9ea84df48a81a49db5dc2f39,
         type: 3}

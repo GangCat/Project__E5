@@ -93,14 +93,6 @@ public class StateMachine : MonoBehaviour
     }
     public void ChangeState(EState _newState)
     {
-        //curState.End(ref unitState);
-        //if (curStateEnum != _newState)
-        //{
-        //    stackStateEnum.Push(curStateEnum);
-        //    curStateEnum = _newState;
-        //    curState = arrState[(int)curStateEnum];
-        //}
-        //curState.Start(ref unitState);
 
 #if UNITY_EDITOR
         if (GetComponent<UnitHero>())
@@ -108,7 +100,6 @@ public class StateMachine : MonoBehaviour
 #endif
         curState.End(ref unitStateInfo);
 
-        //stackStateEnum.Push(curStateEnum);
         curStateEnum = _newState;
         curState = arrState[(int)curStateEnum];
 
@@ -117,15 +108,7 @@ public class StateMachine : MonoBehaviour
 
     public void FinishState()
     {
-        //curState.End(ref unitState);
-
-        //curStateEnum = stackStateEnum.Pop();
-        //curState = arrState[(int)curStateEnum];
-        //if (stackStateEnum.Count < 1)
-        //    curStateEnumCallback?.Invoke(EState.IDLE);
         curStateEnumCallback?.Invoke(stackStateEnum.Pop());
-
-        //curState.Start(ref unitState);
     }
 
     public void PushCurState()

@@ -3546,7 +3546,6 @@ MonoBehaviour:
   - {fileID: 200666303}
   enemyDeadEffect: {fileID: 6072096622258992709, guid: a40000f02c6b5104da4738f532796c48,
     type: 3}
-  wayPoint: {fileID: 1503467032}
   outerCircleRad: 10
   innerCircleRad: 0
   mapSpawnCnt: 15
@@ -8868,7 +8867,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 210678cf591785b45a668b28f4be7170, type: 2}
+      objectReference: {fileID: 2100000, guid: 4cf3213efdec4a041a7cbcfd06e729f6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22035,7 +22034,6 @@ MonoBehaviour:
   combineGo: {fileID: 1350332499}
   mainCam: {fileID: 816140938}
   isDebugMode: 0
-  testImage: {fileID: 0}
 --- !u!4 &1256384916
 Transform:
   m_ObjectHideFlags: 0
@@ -25871,6 +25869,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839df6b60ac23c54c8fc34328b06ec20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTest: 0
+  waitTimeForTest: 0
   searchLimitCnt: 300
 --- !u!1 &1446712261
 GameObject:

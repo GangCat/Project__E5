@@ -70,7 +70,10 @@ public class MemoryPool
     /// 해당 오브젝트를 활성화
     /// </summary>
     /// <returns></returns>
-    public GameObject ActivatePoolItem(int _increaseCnt = 5, Transform _parentTr = null)
+    public GameObject ActivatePoolItem(
+        int _increaseCnt = 5, 
+        Transform _parentTr = null
+        )
     {
         if (poolListEnable == null || poolQueueDisable == null) return null;
 
