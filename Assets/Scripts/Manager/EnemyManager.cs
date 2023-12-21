@@ -143,6 +143,21 @@ public class EnemyManager : MonoBehaviour, IPauseObserver
             yield return waitOneSecond;
         }
 
+        bool isBigEnemyAlive = true;
+
+        while (isBigEnemyAlive)
+        {
+            yield return waitOneSecond;
+
+            isBigEnemyAlive = false;
+
+            foreach (var tr in arrBigEnemyTr)
+            {
+                if (tr.gameObject.activeSelf == true)
+                    isBigEnemyAlive = true;
+            }
+        }
+
         ArrayHUDCommand.Use(EHUDCommand.WAVE_FINISH);
     }
 

@@ -224,7 +224,7 @@ MonoBehaviour:
     effectCtrl: {fileID: 0}
     moveSpeed: 0
     attRate: 5
-    attDmg: 0
+    attDmg: 30
     objectType: 4
     ProjectileGo: {fileID: 3865807368766108358, guid: 6b29ddb4969f467459c9090eacc547a5,
       type: 3}

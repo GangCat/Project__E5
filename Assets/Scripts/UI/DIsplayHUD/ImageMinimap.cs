@@ -53,8 +53,8 @@ public class ImageMinimap : MonoBehaviour, IPointerClickHandler, IMinimapSubject
 
         // 렌더 텍스쳐를 사용할때는 이렇게 사용할 ㅇ렌더 텍스쳐를 설정해야함
         RenderTexture.active = rt;
-        visibleAreaTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
-        visibleAreaTexture.Apply();
+        //visibleAreaTexture.ReadPixels(new Rect(0, 0, 256, 256), 0, 0);
+        //visibleAreaTexture.Apply();
 
         // 렌더 텍스쳐 사용 후에는 해제해야함.
         RenderTexture.active = null;

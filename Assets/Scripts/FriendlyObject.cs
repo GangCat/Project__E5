@@ -840,7 +840,7 @@ public class FriendlyObject : SelectableObject, ISubscriber
 
     private void UpgradeDmg(int _level)
     {
-        stateMachine.UpgradeAttDmg((_level - 1) * 2);
+        stateMachine.UpgradeAttDmg(_level - 1);
     }
 
     public Vector3 GetPosition()

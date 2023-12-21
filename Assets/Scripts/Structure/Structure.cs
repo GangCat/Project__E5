@@ -389,7 +389,7 @@ public class Structure : MonoBehaviour, IPauseObserver
     protected int upgradeLevel = 0;
 
     protected float progressPercent = 0f;
-    protected float upgradeDelay = 0f;
+    protected float upgradeDelay = 30f;
 
     protected bool isBuildable = false;
     protected bool isProcessingUpgrade = false;
