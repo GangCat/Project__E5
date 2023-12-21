@@ -310,6 +310,7 @@ public class GameManager : MonoBehaviour, IPauseSubject
 
     public void TogglePause()
     {
+        // 일시정지 상태 변경 후 알림
         isPause = !isPause;
         for (int i = 0; i < pauseObserverList.Count; ++i)
             pauseObserverList[i].CheckPause(isPause);

@@ -47,7 +47,7 @@ public class FogManager : MonoBehaviour, IPauseObserver
             return;
         }
 
-        // 카메라를 이용해 포그를 렌더첵스쳐에 기록
+        // 카메라를 이용해 포그를 렌더텍스쳐에 기록
         mainCam.RenderFog();
 
         // 카메라로 찍은 포그를 복사

@@ -11,6 +11,7 @@ public class StateIdle : IState
 
     public void Update(ref SUnitState _structState)
     {
+        // 일시정지 상태 처리
         if (_structState.isPause)
         {
             if (anim)

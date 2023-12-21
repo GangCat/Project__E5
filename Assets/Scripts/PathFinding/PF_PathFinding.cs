@@ -43,8 +43,10 @@ public class PF_PathFinding : MonoBehaviour
 
     private async UniTaskVoid UpdateUniTask(PF_Node startNode, PF_Node targetNode)
     {
+        // 경로 탐색 결과를 기본적으로 실패로 설정
         bool isPathSuccess = false;
 
+        // 타겟노드에 접근 불가능일 경우 해당 노드 주위의 접근 가능한 노드 탐색, 타겟 노드 갱신
         if (!targetNode.walkable)
         {
             targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
@@ -52,70 +54,74 @@ public class PF_PathFinding : MonoBehaviour
 
         if (targetNode != null)
         {
+            // 기존에 저장되어있던 데이터들 모두 리셋
             listWayNode.Clear();
             listNeighbor.Clear();
             curNode = null;
-            neighbor = null;
-
-            listNeighbor = grid.GetNeighbors(targetNode);
-
-            bool isTargetAccessible = false;
-            for (int i = 0; i < listNeighbor.Count; ++i)
-            {
-                if (listNeighbor[i].walkable)
-                {
-                    isTargetAccessible = true;
-                    break;
-                }
-            }
-            if (!isTargetAccessible)
-                targetNode = grid.GetAccessibleNodeWithoutTargetNode(targetNode);
+            neighborNode = null;
 
             while (openSet.Count > 0)
                 openSet.RemoveFirstItem();
 
+            // 클로즈드셋은 검사 완료한 대상들 저장하는 해쉬셋
             closedSet.Clear();
+
+            // 시작노드 해쉬셋에 저장
+            // 오픈셋은 검사할 대상들 저장하는 해쉬셋
             openSet.Add(startNode);
 
             while (openSet.Count > 0)
             {
-
                 listNeighbor.Clear();
                 curNode = openSet.RemoveFirstItem();
 
                 closedSet.Add(curNode);
 
+                // 부하 조절을 위해 openset이
+                // 설정 개수 이상 저장시 탐색종료
                 if (openSet.Count > searchLimitCnt)
                 {
                     isPathSuccess = true;
                     break;
                 }
 
+                // 현재 탐색중인 노드가 타겟 노드일 경우
+                // 경로탐색 완료이므로 탐색 종료
                 if (curNode.Equals(targetNode))
                 {
                     isPathSuccess = true;
                     break;
                 }
 
+                ///여기부터 A* 알고리즘
+                ///현재 노드의 이웃 노드 저장
                 listNeighbor = grid.GetNeighbors(curNode);
 
+                // 이웃 노드 모두 검사
                 for (int i = 0; i < listNeighbor.Count; ++i)
                 {
-                    neighbor = listNeighbor[i];
-                    if (!neighbor.walkable || closedSet.Contains(neighbor)) continue;
+                    neighborNode = listNeighbor[i];
+                    // 검사 제외 조건
+                    if (!neighborNode.walkable || closedSet.Contains(neighborNode)) continue;
 
-                    newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighbor);
+                    // 새로운 코스트 계산
+                    newGCostToNeighbor = curNode.gCost + CalcLowestCostWithNode(curNode, neighborNode);
+                    newHCostToNeighbor = CalcLowestCostWithNode(neighborNode, targetNode);
+                    newFCostToNeighbor = newGCostToNeighbor + newHCostToNeighbor;
 
-                    if (newGCostToNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
+                    // FCost를 비교하여 저장
+                    if (newFCostToNeighbor < neighborNode.FCost || !openSet.Contains(neighborNode))
                     {
-                        neighbor.gCost = newGCostToNeighbor;
-                        neighbor.hCost = CalcLowestCostWithNode(neighbor, targetNode);
-                        neighbor.parentNode = curNode;
+                        neighborNode.gCost = newGCostToNeighbor;
+                        neighborNode.hCost = newHCostToNeighbor;
+                        neighborNode.parentNode = curNode;
 
-                        if (!openSet.Contains(neighbor))
-                            openSet.Add(neighbor);
+                        // openSet에 저장되지 않았으면 추가, 이미 있다면 해당 노드의 값이 변경되었으므로
+                        // 들어있는 노드들 재정렬
+                        if (!openSet.Contains(neighborNode))
+                            openSet.Add(neighborNode);
                         else
-                            openSet.UpdateItem(neighbor);
+                            openSet.UpdateItem(neighborNode);
                     }
                 }
             }
@@ -123,21 +129,22 @@ public class PF_PathFinding : MonoBehaviour
 
         await UniTask.Yield(PlayerLoopTiming.Update);
 
+        // 경로 탐색 성공시 최종경로 반환
         if (isPathSuccess)
-        {
-            listWayNode = RetracePath(startNode, curNode);
-        }
+            listWayNode = RetracePath(startNode);
+
+        /// @@@@@@@@@@@@@@테스트 위한 조건문 추후에 삭제할 것@@@@@@@@@@@@@@
+        /// @@@@@@@@@@@@@@테스트 위한 조건문 추후에 삭제할 것@@@@@@@@@@@@@@
+        /// @@@@@@@@@@@@@@테스트 위한 조건문 추후에 삭제할 것@@@@@@@@@@@@@@
         if (isTest)
             await UniTask.Delay(TimeSpan.FromSeconds(waitTimeForTest));
 
         finishPathFindCallback?.Invoke(listWayNode.ToArray(), isPathSuccess, targetNode);
-
-
     }
 
    
 
-    private List<PF_Node> RetracePath(PF_Node _startNode, PF_Node _endNode)
+    private List<PF_Node> RetracePath(PF_Node _startNode)
     {
         path.Clear();
 
@@ -171,7 +178,7 @@ public class PF_PathFinding : MonoBehaviour
 
     private PF_Grid grid;
     private PF_Node curNode = null;
-    private PF_Node neighbor = null;
+    private PF_Node neighborNode = null;
 
     private FinishPathFindDelegate finishPathFindCallback = null;
 
@@ -182,6 +189,8 @@ public class PF_PathFinding : MonoBehaviour
     List<PF_Node> path = new List<PF_Node>();
 
     private int newGCostToNeighbor = 0;
+    private int newHCostToNeighbor = 0;
+    private int newFCostToNeighbor = 0;
 
     private PF_Node startNode = null;
     private PF_Node targetNode = null;
